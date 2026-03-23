@@ -1,0 +1,229 @@
+<!-- ── LANDING (visible to all) ── -->
+<div id="lt-landing" class="lt-landing">
+  <div class="lt-hero">
+    <div class="lt-hero-text">
+      <div class="lt-hero-eyebrow">🤝 LoanTracker</div>
+      <h2 class="lt-hero-title">Track personal loans<br><em>with clarity</em></h2>
+      <p class="lt-hero-sub">No awkwardness. No confusion. Just a shared record both people can trust — lender and borrower, same truth.</p>
+      <button class="lt-google-btn" onclick="ltSignInGoogle()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Continue with Google
+      </button>
+    </div>
+    <div class="lt-hero-visual">
+      <div class="lt-hero-mini-card">
+        <div class="lt-hero-mini-label">Total lent out</div>
+        <div class="lt-hero-mini-val lent">₹45,000</div>
+      </div>
+      <div class="lt-hero-mini-card">
+        <div class="lt-hero-mini-label">Total borrowed</div>
+        <div class="lt-hero-mini-val borrowed">₹12,500</div>
+      </div>
+      <div class="lt-hero-mini-card">
+        <div class="lt-hero-mini-label">Next due</div>
+        <div class="lt-hero-mini-val" style="font-size:15px;color:var(--c5)">Rahul · 3 days</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lt-features">
+    <div class="lt-feature-card">
+      <div class="lt-feature-icon">🟢</div>
+      <div class="lt-feature-title">Lend with confidence</div>
+      <div class="lt-feature-desc">Track what you've lent, to whom, with what terms. Exact amounts, dates, and interest — nothing left ambiguous.</div>
+    </div>
+    <div class="lt-feature-card">
+      <div class="lt-feature-icon">📊</div>
+      <div class="lt-feature-title">Interest that calculates itself</div>
+      <div class="lt-feature-desc">Simple or compound, per day/month/year. The outstanding balance updates automatically. No spreadsheet needed.</div>
+    </div>
+    <div class="lt-feature-card">
+      <div class="lt-feature-icon">💸</div>
+      <div class="lt-feature-title">Every payment, explained</div>
+      <div class="lt-feature-desc">See exactly how much goes to interest vs. principal before you confirm. Full transaction history on every loan.</div>
+    </div>
+  </div>
+
+  <div class="lt-how-section">
+    <div class="lt-section-label">How it works</div>
+    <div class="lt-steps">
+      <div class="lt-step">
+        <div class="lt-step-num">1</div>
+        <div class="lt-step-text">
+          <div class="lt-step-text-title">Create a loan</div>
+          <div class="lt-step-text-desc">Set the amount, start date, due date, and interest terms. Takes under a minute.</div>
+        </div>
+      </div>
+      <div class="lt-step">
+        <div class="lt-step-num">2</div>
+        <div class="lt-step-text">
+          <div class="lt-step-text-title">Record payments</div>
+          <div class="lt-step-text-desc">Each payment is split between interest and principal automatically, with a preview before confirming.</div>
+        </div>
+      </div>
+      <div class="lt-step">
+        <div class="lt-step-num">3</div>
+        <div class="lt-step-text">
+          <div class="lt-step-text-title">Always know where you stand</div>
+          <div class="lt-step-text-desc">Dashboard shows outstanding balances across all loans — lent and borrowed — at a glance.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lt-cta-section">
+    <div class="lt-cta-title">Ready to get started?</div>
+    <div class="lt-cta-sub">Sign in with Google. Your loans sync across all your devices.</div>
+    <button class="lt-cta-btn" onclick="ltSignInGoogle()">
+      <svg width="16" height="16" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Sign in with Google
+    </button>
+  </div>
+  <p class="lt-disclaimer">LoanTracker is a personal record-keeping tool. It is not legal proof of debt or financial advice.</p>
+</div>
+
+<!-- ── APP (authenticated) ── -->
+<div id="lt-app" class="lt-app" style="display:none">
+  <div class="lt-app-header">
+    <div class="lt-app-user">
+      <div class="lt-avatar" id="lt-avatar-initial">?</div>
+      <span id="lt-user-name" style="font-weight:500;font-size:14px">Loading…</span>
+    </div>
+    <div class="lt-app-actions">
+      <button class="lt-btn lt-btn-primary" onclick="ltOpenCreateLoan()">+ New Loan</button>
+      <button class="lt-btn" onclick="ltSignOut()">Sign Out</button>
+    </div>
+  </div>
+  <div class="lt-summary">
+    <div class="lt-summary-card lent">
+      <div class="lt-summary-label">Total Lent Out</div>
+      <div class="lt-summary-val" id="lt-total-lent">—</div>
+    </div>
+    <div class="lt-summary-card borrowed">
+      <div class="lt-summary-label">Total Borrowed</div>
+      <div class="lt-summary-val" id="lt-total-borrowed">—</div>
+    </div>
+  </div>
+  <div class="lt-loan-grid" id="lt-loan-list"><div class="lt-loading">Loading loans…</div></div>
+</div>
+
+<!-- ── LOAN DETAIL MODAL ── -->
+<div class="lt-modal-overlay" id="lt-detail-modal" onclick="if(event.target===this)ltCloseDetail()">
+  <div class="lt-modal-box">
+    <button class="lt-modal-close" onclick="ltCloseDetail()">✕</button>
+    <div id="lt-detail-body"></div>
+  </div>
+</div>
+
+<!-- ── CREATE LOAN MODAL ── -->
+<div class="lt-modal-overlay" id="lt-create-modal" onclick="if(event.target===this)ltCloseCreateLoan()">
+  <div class="lt-modal-box">
+    <button class="lt-modal-close" onclick="ltCloseCreateLoan()">✕</button>
+    <div class="lt-modal-title">New Loan</div>
+    <form id="lt-create-form" onsubmit="return false">
+      <div class="lt-field">
+        <label>Your role *</label>
+        <select id="lt-role">
+          <option value="lender">I am lending money</option>
+          <option value="borrower">I am borrowing money</option>
+        </select>
+      </div>
+      <div class="lt-field">
+        <label>Description / Who is this with? *</label>
+        <input type="text" id="lt-notes" placeholder="e.g. Loan to Rahul for renovation">
+      </div>
+      <div class="lt-field-row">
+        <div class="lt-field">
+          <label>Principal Amount *</label>
+          <input type="number" id="lt-principal" placeholder="50000" min="1">
+        </div>
+        <div class="lt-field">
+          <label>Currency</label>
+          <select id="lt-currency">
+            <option value="INR">INR ₹</option>
+            <option value="USD">USD $</option>
+            <option value="EUR">EUR €</option>
+            <option value="GBP">GBP £</option>
+          </select>
+        </div>
+      </div>
+      <div class="lt-field-row">
+        <div class="lt-field">
+          <label>Start Date *</label>
+          <input type="date" id="lt-start-date">
+        </div>
+        <div class="lt-field">
+          <label>Due Date (optional)</label>
+          <input type="date" id="lt-due-date">
+        </div>
+      </div>
+      <div class="lt-field">
+        <label>Interest</label>
+        <select id="lt-interest-type" onchange="ltToggleInterest()">
+          <option value="none">No interest</option>
+          <option value="simple">Simple interest</option>
+          <option value="compound">Compound interest</option>
+        </select>
+      </div>
+      <div id="lt-interest-fields" style="display:none">
+        <div class="lt-field-row">
+          <div class="lt-field">
+            <label>Rate (%)</label>
+            <input type="number" id="lt-rate" placeholder="1" min="0" step="0.01">
+          </div>
+          <div class="lt-field">
+            <label>Per</label>
+            <select id="lt-rate-period">
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+              <option value="day">Day</option>
+            </select>
+          </div>
+        </div>
+        <div class="lt-field-hint">Payments apply to interest first, then principal.</div>
+      </div>
+      <button type="button" class="lt-btn lt-btn-primary" id="lt-create-submit-btn" onclick="ltSubmitCreateLoan()" style="width:100%;margin-top:8px;padding:13px 0">Create Loan</button>
+    </form>
+  </div>
+</div>
+
+<!-- ── RECORD PAYMENT MODAL ── -->
+<div class="lt-modal-overlay" id="lt-pay-modal" onclick="if(event.target===this)ltCloseRecordPayment()">
+  <div class="lt-modal-box">
+    <button class="lt-modal-close" onclick="ltCloseRecordPayment()">✕</button>
+    <div class="lt-modal-title">Record Payment</div>
+    <form id="lt-pay-form" onsubmit="return false">
+      <div class="lt-field">
+        <label>Amount (<span id="lt-pay-currency-label">INR</span>) *</label>
+        <input type="number" id="lt-pay-amount" placeholder="5000" min="0.01" step="0.01" oninput="ltUpdatePaymentPreview()">
+      </div>
+      <div class="lt-pay-preview">
+        <div class="lt-pay-preview-label">How this payment will be applied</div>
+        <div class="lt-pay-preview-row"><span>→ To interest</span><span id="lt-pay-preview-interest">—</span></div>
+        <div class="lt-pay-preview-row"><span>→ To principal</span><span id="lt-pay-preview-principal">—</span></div>
+      </div>
+      <div class="lt-field-row" style="margin-top:16px">
+        <div class="lt-field">
+          <label>Date *</label>
+          <input type="date" id="lt-pay-date">
+        </div>
+        <div class="lt-field">
+          <label>Method</label>
+          <select id="lt-pay-method">
+            <option value="">— optional —</option>
+            <option value="cash">Cash</option>
+            <option value="upi">UPI</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="cheque">Cheque</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="lt-field">
+        <label>Notes (optional)</label>
+        <input type="text" id="lt-pay-notes" placeholder="e.g. UPI ref 123456">
+      </div>
+      <button type="button" class="lt-btn lt-btn-primary" id="lt-pay-submit-btn" onclick="ltSubmitPayment()" style="width:100%;padding:13px 0">Record Payment</button>
+    </form>
+  </div>
+</div>

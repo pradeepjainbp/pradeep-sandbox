@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pradeep's Sandbox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/site.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-dot"></span>
+    Pradeep's Sandbox
+  </div>
+  <div class="tagline">Ideas worth simulating</div>
+</header>
+
+<nav>
+  <button class="tab-btn active" data-tab="home" onclick="switchTab('home')">
+    <span class="tab-icon">🏠</span> Home
+  </button>
+  <button class="tab-btn" data-tab="about" onclick="switchTab('about')">
+    <span class="tab-icon">👤</span> About Me
+  </button>
+  <button class="tab-btn" data-tab="economy" onclick="switchTab('economy')">
+    <span class="tab-icon">📈</span> Economy & Debt <span class="tab-badge">Live</span>
+  </button>
+  <button class="tab-btn" data-tab="loans" onclick="switchTab('loans')">
+    <span class="tab-icon">🤝</span> Loan Tracker <span class="tab-badge">Live</span>
+  </button>
+  <button class="tab-btn" data-tab="plants" onclick="switchTab('plants')">
+    <span class="tab-icon">🌱</span> Plant Simulator <span class="tab-badge soon">Soon</span>
+  </button>
+  <button class="tab-btn" data-tab="judicial" onclick="switchTab('judicial')">
+    <span class="tab-icon">⚖️</span> Judicial System <span class="tab-badge soon">Soon</span>
+  </button>
+</nav>
+
+<div id="content"></div>
+
+<script src="main.js"></script>
+</body>
+</html>

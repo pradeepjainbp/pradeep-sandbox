@@ -1,0 +1,172 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --c1: #FF6B6B;
+  --c2: #FFD93D;
+  --c3: #6BCB77;
+  --c4: #4D96FF;
+  --c5: #FF922B;
+  --c6: #CC5DE8;
+  --bg: #FFFBF0;
+  --bg2: #FFF8E7;
+  --ink: #1a1208;
+  --ink2: #5a4a2a;
+  --ink3: #9a8a6a;
+  --card: #ffffff;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(26,18,8,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  padding: 0 32px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  border-bottom: 2px solid var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--c1);
+  display: inline-block;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); background: var(--c1); }
+  33% { transform: scale(1.2); background: var(--c2); }
+  66% { transform: scale(1.1); background: var(--c4); }
+}
+
+.tagline {
+  font-size: 13px;
+  color: var(--ink3);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* ── NAV TABS ── */
+nav {
+  background: var(--bg2);
+  border-bottom: 2px solid var(--ink);
+  padding: 0 32px;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  color: var(--ink3);
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-btn .tab-icon {
+  font-size: 16px;
+}
+
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 3px;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.tab-btn:hover { color: var(--ink); }
+
+.tab-btn.active { color: var(--ink); font-weight: 500; }
+.tab-btn[data-tab="home"].active::after { background: var(--c5); }
+.tab-btn[data-tab="economy"].active::after { background: var(--c4); }
+.tab-btn[data-tab="loans"].active::after { background: var(--c3); }
+.tab-btn[data-tab="plants"].active::after { background: var(--c3); }
+.tab-btn[data-tab="judicial"].active::after { background: var(--c6); }
+.tab-btn[data-tab="about"].active::after { background: var(--c1); }
+
+.tab-badge {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 500;
+}
+
+.tab-badge.soon {
+  background: var(--bg);
+  color: var(--ink3);
+  border: 1px solid var(--ink3);
+}
+
+/* ── CONTENT AREA ── */
+#content { min-height: 400px; }
+.tab-loading { text-align: center; padding: 80px 20px; color: var(--ink3); font-size: 14px; }
+
+/* ── COMING SOON TABS ── */
+.coming-soon {
+  padding: 80px 32px;
+  text-align: center;
+}
+
+.coming-soon-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.coming-soon h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.coming-soon p {
+  color: var(--ink3);
+  font-size: 15px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  header, nav { padding-left: 16px; padding-right: 16px; }
+}

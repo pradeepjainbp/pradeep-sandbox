@@ -1,0 +1,2 @@
+// ── ABOUT TAB ──
+function aboutInit() {}

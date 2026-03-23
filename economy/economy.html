@@ -1,0 +1,126 @@
+<div class="hero">
+  <div>
+    <div class="hero-title">Economy &<br><span>Debt</span> Sim</div>
+  </div>
+  <div class="hero-desc">
+    Move the sliders, step forward in time, and watch how central bank decisions and government policy shape a society. How long before debt spirals? Can you hit the goldilocks zone?
+  </div>
+</div>
+
+<div class="sim-wrap">
+  <div class="sim-grid">
+
+    <!-- CONTROLS -->
+    <div class="sim-controls">
+      <div class="controls-header">
+        <div class="controls-title">Policy Levers</div>
+        <div class="year-badge" id="yr">2024</div>
+      </div>
+
+      <div class="ctrl-section">
+        <div class="ctrl-section-title">🏦 Central Bank</div>
+        <div class="ctrl-item">
+          <div class="ctrl-row">
+            <span class="ctrl-name">Interest Rate</span>
+            <span class="ctrl-val" id="v-rate">4.5%</span>
+          </div>
+          <input type="range" id="rate" min="0" max="20" step="0.5" value="4.5" oninput="updateVal('rate','%')">
+        </div>
+        <div class="ctrl-item">
+          <div class="ctrl-row">
+            <span class="ctrl-name">Money Supply Growth</span>
+            <span class="ctrl-val" id="v-money">3%</span>
+          </div>
+          <input type="range" id="money" min="-5" max="25" step="1" value="3" oninput="updateVal('money','%')">
+        </div>
+      </div>
+
+      <div class="ctrl-section">
+        <div class="ctrl-section-title">🏛️ Finance Ministry</div>
+        <div class="ctrl-item">
+          <div class="ctrl-row">
+            <span class="ctrl-name">Govt Spending (% GDP)</span>
+            <span class="ctrl-val" id="v-spend">20%</span>
+          </div>
+          <input type="range" id="spend" min="10" max="60" step="1" value="20" oninput="updateVal('spend','%')">
+        </div>
+        <div class="ctrl-item">
+          <div class="ctrl-row">
+            <span class="ctrl-name">Tax Rate</span>
+            <span class="ctrl-val" id="v-tax">25%</span>
+          </div>
+          <input type="range" id="tax" min="5" max="65" step="1" value="25" oninput="updateVal('tax','%')">
+        </div>
+        <div class="ctrl-item">
+          <div class="ctrl-row">
+            <span class="ctrl-name">Public Debt (% GDP)</span>
+            <span class="ctrl-val" id="v-debt">60%</span>
+          </div>
+          <input type="range" id="debt" min="0" max="250" step="5" value="60" oninput="updateVal('debt','%')">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="sim-btn go" onclick="stepYear()">▶ +1 Year</button>
+        <button class="sim-btn" id="auto-btn" onclick="autoRun()">⏩ Auto</button>
+        <button class="sim-btn" onclick="resetSim()">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-area">
+      <div class="metrics-row">
+        <div class="metric-card gdp">
+          <div class="metric-label">GDP Growth</div>
+          <div class="metric-val" id="gdp-val" style="color:var(--c3)">+2.8%</div>
+          <div class="metric-desc" id="gdp-desc">Moderate expansion</div>
+          <div class="metric-delta" id="gdp-delta"></div>
+          <canvas class="sparkline" id="sp-gdp"></canvas>
+        </div>
+        <div class="metric-card inf">
+          <div class="metric-label">Inflation</div>
+          <div class="metric-val" id="inf-val" style="color:var(--c1)">3.1%</div>
+          <div class="metric-desc" id="inf-desc">Slightly elevated</div>
+          <div class="metric-delta" id="inf-delta"></div>
+          <canvas class="sparkline" id="sp-inf"></canvas>
+        </div>
+        <div class="metric-card une">
+          <div class="metric-label">Unemployment</div>
+          <div class="metric-val" id="une-val" style="color:var(--c2)">5.2%</div>
+          <div class="metric-desc" id="une-desc">Near natural rate</div>
+          <div class="metric-delta" id="une-delta"></div>
+          <canvas class="sparkline" id="sp-une"></canvas>
+        </div>
+        <div class="metric-card dbt">
+          <div class="metric-label">Debt / GDP</div>
+          <div class="metric-val" id="dbt-val" style="color:var(--c4)">60%</div>
+          <div class="metric-desc" id="dbt-desc">Manageable</div>
+          <div class="metric-delta" id="dbt-delta"></div>
+          <canvas class="sparkline" id="sp-dbt"></canvas>
+        </div>
+      </div>
+
+      <div class="bottom-row">
+        <!-- SOCIETY -->
+        <div class="soc-card">
+          <div class="soc-title">🌍 Society Health</div>
+          <div class="soc-grid" id="soc-grid"></div>
+        </div>
+        <!-- LOG -->
+        <div class="log-card">
+          <div class="log-title">
+            <div class="log-dot"></div>
+            Event Log
+          </div>
+          <div class="log-inner" id="log">
+            <div class="log-entry">
+              <span class="log-year">2024</span>
+              <span class="log-msg">Simulation started. Adjust policy and step forward.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

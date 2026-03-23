@@ -1,0 +1,93 @@
+<div class="home-wrap">
+
+  <div class="home-greeting">
+    <div class="eyebrow">Welcome back</div>
+    <h1>Pradeep's<br><em>Sandbox</em></h1>
+    <p class="sub">Your personal corner of the internet. Build, simulate, track — everything in one place. Pick up where you left off.</p>
+  </div>
+
+  <div class="summary-strip">
+    <div class="summary-pill"><div class="pill-dot" style="background:var(--c3)"></div> 1 Live</div>
+    <div class="summary-pill"><div class="pill-dot" style="background:var(--c2)"></div> 3 In Progress</div>
+    <div class="summary-pill"><div class="pill-dot" style="background:var(--c6)"></div> 2 Ideas</div>
+  </div>
+
+  <div class="projects-label">Your Projects</div>
+  <div class="projects-grid">
+
+    <div class="project-card" onclick="switchTab('economy')">
+      <div class="card-color-bar" style="background:var(--c4)"></div>
+      <span class="card-icon">📈</span>
+      <div class="card-title">Economy &amp; Debt Simulator</div>
+      <div class="card-desc">Set interest rates, spending, and taxes. Watch GDP, inflation and society health evolve over decades.</div>
+      <div class="card-footer">
+        <span class="card-status status-live">● Live</span>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-bg-emoji">📈</div>
+    </div>
+
+    <div class="project-card disabled" onclick="switchTab('loans')">
+      <div class="card-color-bar" style="background:var(--c3)"></div>
+      <span class="card-icon">🤝</span>
+      <div class="card-title">Loan Tracker</div>
+      <div class="card-desc">Record and monitor personal loans between two people — who owes what, interest, repayment history.</div>
+      <div class="card-footer">
+        <span class="card-status status-soon">⏳ Coming Soon</span>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-bg-emoji">🤝</div>
+    </div>
+
+    <div class="project-card disabled" onclick="switchTab('plants')">
+      <div class="card-color-bar" style="background:#74C365)"></div>
+      <span class="card-icon">🌱</span>
+      <div class="card-title">Plant Growth Simulator</div>
+      <div class="card-desc">Configure soil conditions and NPK nutrients. Watch plants thrive or wither based on real agri parameters.</div>
+      <div class="card-footer">
+        <span class="card-status status-soon">⏳ Coming Soon</span>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-bg-emoji">🌱</div>
+    </div>
+
+    <div class="project-card disabled" onclick="switchTab('judicial')">
+      <div class="card-color-bar" style="background:var(--c6)"></div>
+      <span class="card-icon">⚖️</span>
+      <div class="card-title">Judicial System Simulator</div>
+      <div class="card-desc">Model how justice systems, conviction rates, and reform policies improve or erode a society over time.</div>
+      <div class="card-footer">
+        <span class="card-status status-soon">⏳ Coming Soon</span>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-bg-emoji">⚖️</div>
+    </div>
+
+  </div>
+
+  <!-- IDEAS SECTION -->
+  <div class="ideas-section">
+    <div class="projects-label">Ideas Backlog</div>
+    <div class="ideas-grid">
+
+      <div class="idea-card">
+        <span class="idea-icon">🏥</span>
+        <div class="idea-title">Healthcare System Sim</div>
+        <div class="idea-desc">Model how insurance, public spending and prevention affect population health.</div>
+      </div>
+
+      <div class="idea-card">
+        <span class="idea-icon">🏙️</span>
+        <div class="idea-title">City Builder Model</div>
+        <div class="idea-desc">Zoning, transport, tax — simulate how a city grows or declines over 50 years.</div>
+      </div>
+
+      <div class="add-idea-card" onclick="addIdea()">
+        <span class="plus">+</span>
+        <span>Add idea</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
