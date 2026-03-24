@@ -1,91 +1,282 @@
 <div class="about-wrap">
 
-  <!-- SECTION 1: HERO -->
+  <!-- ══ HERO ══ -->
   <section class="about-hero">
-    <div class="about-hero-text">
-      <h1 class="about-name">PRADEEP<br>JAIN B P</h1>
+    <div class="about-hero-left">
+      <p class="about-eyebrow">Marketing Operations · Bangalore, India</p>
+      <h1 class="about-name">Pradeep Jain B P</h1>
       <p class="about-role">Marketing Operations Manager · Data Obsessive · Builder of Useful Things</p>
-      <blockquote class="about-pull-quote">
-        "I'm the kind of person who opens a spreadsheet for fun, finds a pattern no one asked for, and builds a system to automate it — all before the first coffee."
-      </blockquote>
+      <div class="about-pull-quote">
+        <span class="about-quote-mark">"</span>
+        <p>I open a spreadsheet for fun, find a pattern nobody asked for, and automate it before lunch.</p>
+      </div>
       <div class="about-pill-row">
         <a class="about-pill" href="https://www.linkedin.com/in/pradeep-jain-3671ab20" target="_blank" rel="noopener">LinkedIn ↗</a>
         <a class="about-pill" href="mailto:pradeepjainbp@gmail.com">Email ↗</a>
       </div>
     </div>
-    <div class="about-photo-box">
-      <img id="about-photo" src="" alt="Pradeep Jain" style="display:none; width:140px; height:140px; border-radius:20px; border:2px solid var(--ink); object-fit:cover;">
-      <div class="about-photo-placeholder" id="about-photo-fallback">Photo<br>coming<br>soon</div>
+    <div class="about-hero-right">
+      <div class="about-photo-wrap">
+        <img id="about-photo" src="../Images/pradeep.jpg" alt="Pradeep Jain"
+          onerror="this.style.display='none'; document.getElementById('about-initials').style.display='flex';">
+        <div class="about-initials" id="about-initials">PJ</div>
+      </div>
     </div>
   </section>
 
-  <!-- SECTION 2: BY THE NUMBERS -->
+  <!-- ══ STAT CARDS ══ -->
   <section class="about-numbers">
-    <div class="about-stat-card blue">
+    <div class="about-stat-card">
       <div class="about-stat-num">18+</div>
       <div class="about-stat-label">years in data &amp; marketing</div>
     </div>
-    <div class="about-stat-card green">
+    <div class="about-stat-card">
       <div class="about-stat-num">15+</div>
       <div class="about-stat-label">magazine titles managed</div>
     </div>
-    <div class="about-stat-card coral">
+    <div class="about-stat-card">
       <div class="about-stat-num">$2M+</div>
       <div class="about-stat-label">subscriber revenue overseen</div>
     </div>
-    <div class="about-stat-card yellow">
+    <div class="about-stat-card">
       <div class="about-stat-num">Millions</div>
       <div class="about-stat-label">mail pieces per year</div>
     </div>
   </section>
 
-  <!-- SECTION 3: THE STORY -->
-  <section class="about-story">
-    <div class="about-story-left">
-      <div class="about-section-label">What I do</div>
-      <p>I run subscriber marketing operations for some of America's most recognised magazine brands — including Better Homes &amp; Gardens, Midwest Living and Flea Market Décor — from Bangalore, India. Seven to ten campaigns a year, millions of pieces mailed, and every number tracked.</p>
-      <p>What I actually love is the system underneath the campaign — the forecast model, the automated dashboard, the macro that saves three hours every Monday. I've spent 18 years building those, first at Thomson Reuters, then across the Time Inc → Meredith → Dotdash Meredith journey.</p>
-      <p>Lately I've been teaching myself Python and building AI agent systems to automate the work I used to do manually. You can see some of that in the other tabs on this site.</p>
+  <!-- ══ CAREER GANTT ══ -->
+  <section class="about-career-section">
+    <div class="about-section-label">Career Timeline</div>
+    <div class="gantt-scroll-wrap">
+      <div class="gantt-inner">
+
+        <!-- Year ticks row -->
+        <div class="gantt-header-row">
+          <div class="gantt-label-cell"></div>
+          <div class="gantt-ticks-cell">
+            <span style="left:0%">2006</span>
+            <span style="left:10%">2008</span>
+            <span style="left:20%">2010</span>
+            <span style="left:30%">2012</span>
+            <span style="left:40%">2014</span>
+            <span style="left:50%">2016</span>
+            <span style="left:60%">2018</span>
+            <span style="left:70%">2020</span>
+            <span style="left:80%">2022</span>
+            <span style="left:90%">2024</span>
+          </div>
+        </div>
+
+        <!-- Row 1: Kotak / Padmamba -->
+        <div class="gantt-row">
+          <div class="gantt-label-cell">Kotak &amp; Padmamba</div>
+          <div class="gantt-track-cell">
+            <div class="gantt-bar gb-amber" style="left:0%;width:10%">
+              <span>Asst Sales Mgr · Proprietor</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Thomson Reuters -->
+        <div class="gantt-row">
+          <div class="gantt-label-cell">Thomson Reuters</div>
+          <div class="gantt-track-cell">
+            <div class="gantt-bar gb-red" style="left:6%;width:27%">
+              <span>Market Analyst → Sr Content Analyst</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: People Inc. / Meredith / DotdashMeredith -->
+        <div class="gantt-row">
+          <div class="gantt-label-cell">People Inc. <em>(Meredith)</em></div>
+          <div class="gantt-track-cell">
+            <div class="gantt-bar gb-p1" style="left:33%;width:10%"><span>Analyst</span></div>
+            <div class="gantt-bar gb-p2" style="left:43%;width:11%"><span>Sr Analyst</span></div>
+            <div class="gantt-bar gb-p3" style="left:54%;width:18%"><span>Asst Manager</span></div>
+            <div class="gantt-bar gb-p4" style="left:72%;width:28%"><span>Manager ●</span></div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="about-story-right">
-      <div class="about-mini-card">
-        <div class="about-mini-card-title">Working style</div>
-        <div class="about-badges">
-          <span class="about-badge">ENTJ</span>
-          <span class="about-badge">Systems Thinker</span>
-          <span class="about-badge">Data Obsessive</span>
-          <span class="about-badge">Self-Starter</span>
-          <span class="about-badge">Detail Oriented</span>
+    <!-- Education footnote -->
+    <div class="career-edu-row">
+      <span class="edu-chip">🎓 B.Sc Physics, Maths &amp; Electronics · National College, Bangalore · 2001–2004</span>
+      <span class="edu-chip">🏛️ MBA Business Administration (Distinction) · BMSCE, VTU · 2004–2006</span>
+    </div>
+  </section>
+
+  <!-- ══ SKILLS + DAY SPLIT ══ -->
+  <div class="about-two-col">
+
+    <div class="about-viz-card">
+      <div class="about-section-label">Skills &amp; Expertise</div>
+      <div class="skill-bars">
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Campaign Operations</span><span class="skill-pct">92</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:92%;--c:#6366F1;--d:0ms"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Data Analysis &amp; Forecasting</span><span class="skill-pct">90</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:90%;--c:#10B981;--d:80ms"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Stakeholder Reporting</span><span class="skill-pct">88</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:88%;--c:#2563EB;--d:160ms"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Automation (VBA / Power Query)</span><span class="skill-pct">85</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:85%;--c:#F59E0B;--d:240ms"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Process Design</span><span class="skill-pct">83</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:83%;--c:#818CF8;--d:320ms"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Python &amp; AI Tools</span><span class="skill-pct">65</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:65%;--c:#EC4899;--d:400ms"></div></div>
         </div>
       </div>
-      <div class="about-mini-card">
-        <div class="about-mini-card-title">A few things I'm proud of</div>
-        <ul class="about-proud-list">
-          <li>🏆 Solo-managed migration of US forecasting workflows to Bangalore</li>
-          <li>📊 Automated reporting across 15+ titles — hours saved every week</li>
-          <li>🌍 Consistently the person senior stakeholders describe as "first one I'd call"</li>
-          <li>🎓 MBA with Distinction, VTU · PMP Certified</li>
-        </ul>
+    </div>
+
+    <div class="about-viz-card">
+      <div class="about-section-label">A Day In My Life</div>
+      <div class="donut-outer">
+        <canvas id="time-donut" width="200" height="200"></canvas>
+      </div>
+      <div class="donut-legend">
+        <div class="dl-item"><span class="dl-dot" style="background:#6366F1"></span><span>Campaign Coordination</span><span class="dl-pct">30%</span></div>
+        <div class="dl-item"><span class="dl-dot" style="background:#10B981"></span><span>Data &amp; Forecasting</span><span class="dl-pct">25%</span></div>
+        <div class="dl-item"><span class="dl-dot" style="background:#F59E0B"></span><span>Automation / Python</span><span class="dl-pct">20%</span></div>
+        <div class="dl-item"><span class="dl-dot" style="background:#2563EB"></span><span>Stakeholders &amp; Calls</span><span class="dl-pct">15%</span></div>
+        <div class="dl-item"><span class="dl-dot" style="background:#EC4899"></span><span>Learning &amp; Building</span><span class="dl-pct">10%</span></div>
       </div>
     </div>
-  </section>
 
-  <!-- SECTION 4: KIND WORDS -->
-  <section class="about-testimonial-section">
-    <div class="about-section-heading">WHAT COLLEAGUES SAY</div>
-    <div class="about-testimonial-card">
-      <span class="about-quote-mark">"</span>
-      <p class="about-testimonial-text">Strong communication, thorough analyses, great teamwork, and a thoughtful approach to stakeholder collaboration. Demonstrated strong mentorship and management potential. Any team would be lucky to have Pradeep.</p>
-      <div class="about-testimonial-attr">— Senior stakeholders, across global teams</div>
+  </div>
+
+  <!-- ══ STRENGTHS + LANGUAGES ══ -->
+  <div class="about-two-col">
+
+    <div class="about-viz-card">
+      <div class="about-section-label">Working Style</div>
+      <div class="about-badges">
+        <span class="about-badge b1">ENTJ — The Commander</span>
+        <span class="about-badge b2">Systems Thinker</span>
+        <span class="about-badge b3">Data Obsessive</span>
+        <span class="about-badge b4">Self-Starter</span>
+        <span class="about-badge b5">Detail Oriented</span>
+        <span class="about-badge b1">People Manager</span>
+        <span class="about-badge b3">Process Redesigner</span>
+      </div>
+      <div class="about-section-label" style="margin-top:28px">Life Beyond Work</div>
+      <div class="life-grid">
+        <div class="life-item">🌱 Container gardening</div>
+        <div class="life-item">📚 Montessori with kids</div>
+        <div class="life-item">🤖 Building AI agents</div>
+        <div class="life-item">📈 Tracking Indian equities</div>
+      </div>
     </div>
-    <p class="about-testimonial-note">Recommendations available on <a href="https://www.linkedin.com/in/pradeep-jain-3671ab20" target="_blank" rel="noopener">LinkedIn →</a></p>
-  </section>
 
-  <!-- SECTION 5: FOOTER CTA -->
-  <section class="about-footer-cta">
-    <h2>Explore the Sandbox</h2>
-    <p>The best way to understand how I think is to play with something I built.</p>
-    <button class="about-back-btn" onclick="switchTab('home')">← Back to Home</button>
+    <div class="about-viz-card">
+      <div class="about-section-label">Languages</div>
+      <div class="lang-rings">
+        <div class="lang-item">
+          <div class="lang-ring" style="--pct:360deg;--c:#6366F1">
+            <div class="lang-inner"><span class="lang-val">100%</span></div>
+          </div>
+          <div class="lang-name">English</div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-ring" style="--pct:331deg;--c:#10B981">
+            <div class="lang-inner"><span class="lang-val">92%</span></div>
+          </div>
+          <div class="lang-name">Kannada</div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-ring" style="--pct:259deg;--c:#F59E0B">
+            <div class="lang-inner"><span class="lang-val">72%</span></div>
+          </div>
+          <div class="lang-name">Hindi</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ PROUD OF + AWARDS ══ -->
+  <div class="about-two-col">
+
+    <div class="about-viz-card">
+      <div class="about-section-label">Most Proud Of</div>
+      <div class="proud-list">
+        <div class="proud-item">
+          <div class="proud-icon">🗺️</div>
+          <div class="proud-body">
+            <div class="proud-title">Migrated US workflows solo</div>
+            <div class="proud-desc">Forecasting, AMS &amp; production — fully owned end-to-end from Bangalore</div>
+          </div>
+        </div>
+        <div class="proud-item">
+          <div class="proud-icon">⚡</div>
+          <div class="proud-body">
+            <div class="proud-title">Automated reporting at scale</div>
+            <div class="proud-desc">Eliminated manual effort across 15+ titles with VBA &amp; Power Pivot</div>
+          </div>
+        </div>
+        <div class="proud-item">
+          <div class="proud-icon">⭐</div>
+          <div class="proud-body">
+            <div class="proud-title">Top-rated in every role</div>
+            <div class="proud-desc">Consistently highest scores in 360° reviews across all managers &amp; peers</div>
+          </div>
+        </div>
+        <div class="proud-item">
+          <div class="proud-icon">📞</div>
+          <div class="proud-body">
+            <div class="proud-title">"First person I'd call"</div>
+            <div class="proud-desc">How senior global stakeholders describe working with Pradeep</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-viz-card">
+      <div class="about-section-label">Awards &amp; Recognition</div>
+      <div class="awards-list">
+        <div class="award-item"><span class="award-star">★</span><span>4+ Star Performer Awards (2012–2018)</span></div>
+        <div class="award-item"><span class="award-star">★</span><span>4+ "Over &amp; Above" — VBA Automation</span></div>
+        <div class="award-item"><span class="award-star">★</span><span>Trainer Award — Electronic Contribution (2010)</span></div>
+        <div class="award-item"><span class="award-star">★</span><span>Business Continuity Award (2009)</span></div>
+        <div class="award-item"><span class="award-star">★</span><span>Multiple Spot Awards across career</span></div>
+      </div>
+
+      <div class="about-section-label" style="margin-top:28px">Education</div>
+      <div class="edu-list">
+        <div class="edu-item">
+          <div class="edu-year">2004–2006</div>
+          <div class="edu-body">
+            <div class="edu-degree">MBA — Business Administration (Distinction)</div>
+            <div class="edu-school">BMSCE, Vishweshwaraya Technological University</div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-year">2001–2004</div>
+          <div class="edu-body">
+            <div class="edu-degree">B.Sc — Physics, Mathematics &amp; Electronics</div>
+            <div class="edu-school">National College, Bangalore University</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ CTA ══ -->
+  <section class="about-cta-strip">
+    <p class="about-cta-text">Want to see how I think? Explore the simulations →</p>
+    <button class="about-cta-btn" onclick="switchTab('home')">Back to Home</button>
   </section>
 
 </div>

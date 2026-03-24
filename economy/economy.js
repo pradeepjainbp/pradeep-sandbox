@@ -41,15 +41,15 @@ function simulate(s) {
 }
 
 function socColor(v) {
-  if (v > 70) return 'var(--c3)';
-  if (v > 45) return 'var(--c5)';
-  return 'var(--c1)';
+  if (v > 70) return '#00C896';
+  if (v > 45) return '#FFB800';
+  return '#FF4D4F';
 }
 
 function socBarColor(v) {
-  if (v > 70) return '#6BCB77';
-  if (v > 45) return '#FF922B';
-  return '#FF6B6B';
+  if (v > 70) return '#00C896';
+  if (v > 45) return '#FFB800';
+  return '#FF4D4F';
 }
 
 function renderSoc() {
@@ -145,10 +145,10 @@ function stepYear() {
   document.getElementById('dbt-desc').textContent = descDbt(r.dbt);
   document.getElementById('dbt-delta').innerHTML = deltaHtml(r.dbt, prev.dbt, false);
 
-  sparkline('sp-gdp', hist.gdp, '#6BCB77');
-  sparkline('sp-inf', hist.inf, '#FF6B6B');
-  sparkline('sp-une', hist.une, '#FFD93D');
-  sparkline('sp-dbt', hist.dbt, '#4D96FF');
+  sparkline('sp-gdp', hist.gdp, '#00C896');
+  sparkline('sp-inf', hist.inf, '#FF4D4F');
+  sparkline('sp-une', hist.une, '#FFB800');
+  sparkline('sp-dbt', hist.dbt, '#818CF8');
 
   updateSociety(r);
 
@@ -208,19 +208,19 @@ function resetSim() {
   document.getElementById('log').innerHTML = '<div class="log-entry"><span class="log-year">2024</span><span class="log-msg">Simulation reset. Ready.</span></div>';
   renderSoc();
   setTimeout(() => {
-    sparkline('sp-gdp',[2.8],'#6BCB77');
-    sparkline('sp-inf',[3.1],'#FF6B6B');
-    sparkline('sp-une',[5.2],'#FFD93D');
-    sparkline('sp-dbt',[60],'#4D96FF');
+    sparkline('sp-gdp',[2.8],'#00C896');
+    sparkline('sp-inf',[3.1],'#FF4D4F');
+    sparkline('sp-une',[5.2],'#FFB800');
+    sparkline('sp-dbt',[60],'#818CF8');
   }, 50);
 }
 
 function economyInit() {
   renderSoc();
   setTimeout(function() {
-    sparkline('sp-gdp', hist.gdp, '#6BCB77');
-    sparkline('sp-inf', hist.inf, '#FF6B6B');
-    sparkline('sp-une', hist.une, '#FFD93D');
-    sparkline('sp-dbt', hist.dbt, '#4D96FF');
+    sparkline('sp-gdp', hist.gdp, '#00C896');
+    sparkline('sp-inf', hist.inf, '#FF4D4F');
+    sparkline('sp-une', hist.une, '#FFB800');
+    sparkline('sp-dbt', hist.dbt, '#818CF8');
   }, 50);
 }

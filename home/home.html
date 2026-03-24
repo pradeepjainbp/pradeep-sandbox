@@ -1,93 +1,164 @@
-<div class="home-wrap">
+<div class="home-page">
 
-  <div class="home-greeting">
-    <div class="eyebrow">Welcome back</div>
-    <h1>Pradeep's<br><em>Sandbox</em></h1>
-    <p class="sub">Your personal corner of the internet. Build, simulate, track — everything in one place. Pick up where you left off.</p>
-  </div>
+  <!-- HERO: full-bleed dark -->
+  <section class="home-hero">
+    <div class="home-hero-inner">
 
-  <div class="summary-strip">
-    <div class="summary-pill"><div class="pill-dot" style="background:var(--c3)"></div> 1 Live</div>
-    <div class="summary-pill"><div class="pill-dot" style="background:var(--c2)"></div> 3 In Progress</div>
-    <div class="summary-pill"><div class="pill-dot" style="background:var(--c6)"></div> 2 Ideas</div>
-  </div>
-
-  <div class="projects-label">Your Projects</div>
-  <div class="projects-grid">
-
-    <div class="project-card" onclick="switchTab('economy')">
-      <div class="card-color-bar" style="background:var(--c4)"></div>
-      <span class="card-icon">📈</span>
-      <div class="card-title">Economy &amp; Debt Simulator</div>
-      <div class="card-desc">Set interest rates, spending, and taxes. Watch GDP, inflation and society health evolve over decades.</div>
-      <div class="card-footer">
-        <span class="card-status status-live">● Live</span>
-        <span class="card-arrow">→</span>
-      </div>
-      <div class="card-bg-emoji">📈</div>
-    </div>
-
-    <div class="project-card disabled" onclick="switchTab('loans')">
-      <div class="card-color-bar" style="background:var(--c3)"></div>
-      <span class="card-icon">🤝</span>
-      <div class="card-title">Loan Tracker</div>
-      <div class="card-desc">Record and monitor personal loans between two people — who owes what, interest, repayment history.</div>
-      <div class="card-footer">
-        <span class="card-status status-soon">⏳ Coming Soon</span>
-        <span class="card-arrow">→</span>
-      </div>
-      <div class="card-bg-emoji">🤝</div>
-    </div>
-
-    <div class="project-card disabled" onclick="switchTab('plants')">
-      <div class="card-color-bar" style="background:#74C365)"></div>
-      <span class="card-icon">🌱</span>
-      <div class="card-title">Plant Growth Simulator</div>
-      <div class="card-desc">Configure soil conditions and NPK nutrients. Watch plants thrive or wither based on real agri parameters.</div>
-      <div class="card-footer">
-        <span class="card-status status-soon">⏳ Coming Soon</span>
-        <span class="card-arrow">→</span>
-      </div>
-      <div class="card-bg-emoji">🌱</div>
-    </div>
-
-    <div class="project-card disabled" onclick="switchTab('judicial')">
-      <div class="card-color-bar" style="background:var(--c6)"></div>
-      <span class="card-icon">⚖️</span>
-      <div class="card-title">Judicial System Simulator</div>
-      <div class="card-desc">Model how justice systems, conviction rates, and reform policies improve or erode a society over time.</div>
-      <div class="card-footer">
-        <span class="card-status status-soon">⏳ Coming Soon</span>
-        <span class="card-arrow">→</span>
-      </div>
-      <div class="card-bg-emoji">⚖️</div>
-    </div>
-
-  </div>
-
-  <!-- IDEAS SECTION -->
-  <div class="ideas-section">
-    <div class="projects-label">Ideas Backlog</div>
-    <div class="ideas-grid">
-
-      <div class="idea-card">
-        <span class="idea-icon">🏥</span>
-        <div class="idea-title">Healthcare System Sim</div>
-        <div class="idea-desc">Model how insurance, public spending and prevention affect population health.</div>
+      <div class="home-hero-left">
+        <p class="home-eyebrow">Personal Simulations Lab</p>
+        <h1 class="home-title">Pradeep's<br><em>Sandbox</em></h1>
+        <p class="home-sub">Real models. Real data. Built to think out loud — about economies, loans, plants, and justice.</p>
+        <div class="home-hero-stats">
+          <div class="hero-stat">
+            <span class="hs-num">2</span>
+            <span class="hs-label">Live tools</span>
+          </div>
+          <div class="hs-divider"></div>
+          <div class="hero-stat">
+            <span class="hs-num">4</span>
+            <span class="hs-label">Simulations</span>
+          </div>
+          <div class="hs-divider"></div>
+          <div class="hero-stat">
+            <span class="hs-num">∞</span>
+            <span class="hs-label">Ideas</span>
+          </div>
+        </div>
       </div>
 
-      <div class="idea-card">
-        <span class="idea-icon">🏙️</span>
-        <div class="idea-title">City Builder Model</div>
-        <div class="idea-desc">Zoning, transport, tax — simulate how a city grows or declines over 50 years.</div>
-      </div>
-
-      <div class="add-idea-card" onclick="addIdea()">
-        <span class="plus">+</span>
-        <span>Add idea</span>
+      <div class="home-hero-right">
+        <div class="home-terminal">
+          <div class="ht-bar">
+            <span class="ht-dot d-r"></span>
+            <span class="ht-dot d-y"></span>
+            <span class="ht-dot d-g"></span>
+            <span class="ht-label">economy_sim · running</span>
+            <span class="ht-live">● LIVE</span>
+          </div>
+          <div class="ht-body">
+            <div class="ht-row"><span class="ht-k">SIMULATION YEAR</span><span class="ht-v ht-white">2025</span></div>
+            <div class="ht-row"><span class="ht-k">GDP GROWTH</span><span class="ht-v ht-green">↑ 2.4%</span></div>
+            <div class="ht-row"><span class="ht-k">INFLATION</span><span class="ht-v ht-amber">⚠ 3.8%</span></div>
+            <div class="ht-row"><span class="ht-k">NATIONAL DEBT / GDP</span><span class="ht-v ht-red">94.2%</span></div>
+            <div class="ht-row"><span class="ht-k">SOC. HEALTH INDEX</span><span class="ht-v ht-green">68 / 100</span></div>
+            <div class="ht-row"><span class="ht-k">GINI COEFFICIENT</span><span class="ht-v ht-amber">0.41</span></div>
+            <div class="ht-cursor">▋</div>
+          </div>
+          <div class="ht-footer">Press Enter to run next decade →</div>
+        </div>
       </div>
 
     </div>
-  </div>
+  </section>
+
+  <!-- PROJECT CARDS -->
+  <section class="home-projects-section">
+    <div class="home-inner">
+      <p class="home-section-label">Simulations &amp; Tools</p>
+      <div class="home-projects-grid">
+
+        <!-- Economy -->
+        <div class="hpc hpc-economy" onclick="switchTab('economy')">
+          <div class="hpc-preview">
+            <div class="hpc-eco-data">
+              <span class="eco-metric eco-green">GDP<br><strong>+2.4%</strong></span>
+              <span class="eco-metric eco-amber">INF<br><strong>3.8%</strong></span>
+              <span class="eco-metric eco-red">DEBT<br><strong>94%</strong></span>
+            </div>
+          </div>
+          <div class="hpc-body">
+            <div class="hpc-top"><span class="hpc-status st-live">● Live</span><span class="hpc-arrow">→</span></div>
+            <div class="hpc-title">Economy &amp; Debt</div>
+            <div class="hpc-desc">Set rates, spending and taxes. Watch GDP, inflation and society evolve over decades.</div>
+          </div>
+        </div>
+
+        <!-- Loans -->
+        <div class="hpc hpc-loans" onclick="switchTab('loans')">
+          <div class="hpc-preview">
+            <div class="hpc-loan-data">
+              <div class="loan-big-num">₹ 45,000</div>
+              <div class="loan-big-label">outstanding balance</div>
+              <div class="loan-mini-row">
+                <span class="loan-mini lm-green">↑ ₹5,000 received</span>
+                <span class="loan-mini lm-red">↓ ₹2,000 paid</span>
+              </div>
+            </div>
+          </div>
+          <div class="hpc-body">
+            <div class="hpc-top"><span class="hpc-status st-blue">● Live</span><span class="hpc-arrow arr-blue">→</span></div>
+            <div class="hpc-title title-blue">Loan Tracker</div>
+            <div class="hpc-desc">Record and monitor personal loans — who owes what, interest, repayment history.</div>
+          </div>
+        </div>
+
+        <!-- Plants -->
+        <div class="hpc hpc-plants" onclick="switchTab('plants')">
+          <div class="hpc-preview">
+            <div class="hpc-plant-art">
+              <span class="plant-emoji">🌱</span>
+              <div class="plant-meters">
+                <div class="plant-meter-row"><span>Soil pH</span><div class="plant-bar"><div style="width:65%"></div></div></div>
+                <div class="plant-meter-row"><span>NPK</span><div class="plant-bar"><div style="width:40%"></div></div></div>
+                <div class="plant-meter-row"><span>Water</span><div class="plant-bar"><div style="width:80%"></div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="hpc-body">
+            <div class="hpc-top"><span class="hpc-status st-soon-green">⏳ Soon</span><span class="hpc-arrow arr-forest">→</span></div>
+            <div class="hpc-title title-forest">Plant Simulator</div>
+            <div class="hpc-desc">Configure soil and NPK nutrients. Watch plants thrive or wither in real time.</div>
+          </div>
+        </div>
+
+        <!-- Judicial -->
+        <div class="hpc hpc-judicial" onclick="switchTab('judicial')">
+          <div class="hpc-preview">
+            <div class="hpc-judicial-art">
+              <span class="judicial-emoji">⚖️</span>
+              <div class="judicial-case">
+                <div class="jc-line">CASE #2024-891</div>
+                <div class="jc-line">Conviction Rate: 67%</div>
+                <div class="jc-line">Reform Score: C+</div>
+              </div>
+            </div>
+          </div>
+          <div class="hpc-body">
+            <div class="hpc-top"><span class="hpc-status st-soon-indigo">⏳ Soon</span><span class="hpc-arrow arr-indigo">→</span></div>
+            <div class="hpc-title title-indigo">Judicial System</div>
+            <div class="hpc-desc">Model how justice, conviction rates and reform policies shape society over time.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IDEAS BACKLOG -->
+  <section class="home-ideas-section">
+    <div class="home-inner">
+      <p class="home-section-label">Ideas Backlog</p>
+      <div class="ideas-grid">
+
+        <div class="idea-card">
+          <span class="idea-icon">🏥</span>
+          <div class="idea-title">Healthcare System Sim</div>
+          <div class="idea-desc">Model how insurance, public spending and prevention affect population health.</div>
+        </div>
+
+        <div class="idea-card">
+          <span class="idea-icon">🏙️</span>
+          <div class="idea-title">City Builder Model</div>
+          <div class="idea-desc">Zoning, transport, tax — simulate how a city grows or declines over 50 years.</div>
+        </div>
+
+        <div class="add-idea-card" onclick="addIdea()">
+          <span class="add-idea-plus">+</span>
+          <span>Add idea</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
 </div>

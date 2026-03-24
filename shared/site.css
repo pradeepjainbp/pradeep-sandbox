@@ -7,8 +7,8 @@
   --c4: #4D96FF;
   --c5: #FF922B;
   --c6: #CC5DE8;
-  --bg: #FFFBF0;
-  --bg2: #FFF8E7;
+  --bg: #F8FAFC;
+  --bg2: #F8FAFC;
   --ink: #1a1208;
   --ink2: #5a4a2a;
   --ink3: #9a8a6a;
@@ -20,7 +20,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Sora', sans-serif;
   background: var(--bg);
   color: var(--ink);
   min-height: 100vh;
@@ -33,8 +33,8 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg);
-  border-bottom: 2px solid var(--ink);
+  background: #0A0F1E;
+  border-bottom: none;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -44,7 +44,7 @@ header {
   font-family: 'Fraunces', serif;
   font-size: 26px;
   font-weight: 900;
-  color: var(--ink);
+  color: #ffffff;
   letter-spacing: -1px;
   display: flex;
   align-items: center;
@@ -54,28 +54,28 @@ header {
 .logo-dot {
   width: 12px; height: 12px;
   border-radius: 50%;
-  background: var(--c1);
+  background: #6366F1;
   display: inline-block;
   animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse {
-  0%,100% { transform: scale(1); background: var(--c1); }
-  33% { transform: scale(1.2); background: var(--c2); }
-  66% { transform: scale(1.1); background: var(--c4); }
+  0%,100% { transform: scale(1);   background: #6366F1; }
+  33%      { transform: scale(1.2); background: #10B981; }
+  66%      { transform: scale(1.1); background: #F59E0B; }
 }
 
 .tagline {
   font-size: 13px;
-  color: var(--ink3);
+  color: rgba(255,255,255,0.55);
   font-weight: 300;
   letter-spacing: 0.5px;
 }
 
 /* ── NAV TABS ── */
 nav {
-  background: var(--bg2);
-  border-bottom: 2px solid var(--ink);
+  background: #0D1424;
+  border-bottom: none;
   padding: 0 32px;
   display: flex;
   gap: 4px;
@@ -85,13 +85,13 @@ nav {
 nav::-webkit-scrollbar { display: none; }
 
 .tab-btn {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Sora', sans-serif;
   font-size: 13px;
   font-weight: 500;
   padding: 14px 20px;
   border: none;
   background: transparent;
-  color: var(--ink3);
+  color: rgba(255,255,255,0.5);
   cursor: pointer;
   white-space: nowrap;
   position: relative;
@@ -108,35 +108,36 @@ nav::-webkit-scrollbar { display: none; }
 .tab-btn::after {
   content: '';
   position: absolute;
-  bottom: -2px; left: 0; right: 0;
+  bottom: 0; left: 0; right: 0;
   height: 3px;
   background: transparent;
   transition: background 0.2s;
 }
 
-.tab-btn:hover { color: var(--ink); }
+.tab-btn:hover { color: #ffffff; }
 
-.tab-btn.active { color: var(--ink); font-weight: 500; }
-.tab-btn[data-tab="home"].active::after { background: var(--c5); }
-.tab-btn[data-tab="economy"].active::after { background: var(--c4); }
-.tab-btn[data-tab="loans"].active::after { background: var(--c3); }
-.tab-btn[data-tab="plants"].active::after { background: var(--c3); }
-.tab-btn[data-tab="judicial"].active::after { background: var(--c6); }
-.tab-btn[data-tab="about"].active::after { background: var(--c1); }
+.tab-btn.active { color: #ffffff; font-weight: 500; }
+
+.tab-btn[data-tab="home"].active::after     { background: #6366F1; }
+.tab-btn[data-tab="about"].active::after    { background: #F59E0B; }
+.tab-btn[data-tab="economy"].active::after  { background: #10B981; }
+.tab-btn[data-tab="loans"].active::after    { background: #2563EB; }
+.tab-btn[data-tab="plants"].active::after   { background: #4ADE80; }
+.tab-btn[data-tab="judicial"].active::after { background: #818CF8; }
 
 .tab-badge {
   font-size: 10px;
   padding: 2px 7px;
   border-radius: 20px;
-  background: var(--ink);
-  color: var(--bg);
+  background: #10B981;
+  color: #ffffff;
   font-weight: 500;
 }
 
 .tab-badge.soon {
-  background: var(--bg);
-  color: var(--ink3);
-  border: 1px solid var(--ink3);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.4);
+  border: none;
 }
 
 /* ── CONTENT AREA ── */
