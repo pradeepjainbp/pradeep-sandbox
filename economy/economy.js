@@ -1,771 +1,831 @@
 // ══════════════════════════════════════════
-//  ECONOMY & DEBT SIMULATOR
-//  World Map + Real Historical Data + Reveal
+//  ECONOMY & DEBT SIMULATOR v3
 // ══════════════════════════════════════════
 
-// ── REAL DATA ──
-let econDB = null;           // full economic_data.json
-let selectedISO = null;      // e.g. "USA"
-let selectedYear = null;     // e.g. 1980
-let realHistory = {};        // {gdp:[], inf:[], une:[], dbt:[], years:[]}
-let lockedFirstStep = false; // true while on historical lock
-let simYearsElapsed = 0;     // how many steps user has taken
+const TAB_CONFIG = {
+  economic:    { accent:'#00C896', indicators:[
+    {key:'gdp_growth',    label:'GDP GROWTH',    suffix:'%',   dp:1, goodUp:true },
+    {key:'inflation',     label:'INFLATION',     suffix:'%',   dp:1, goodUp:false},
+    {key:'unemployment',  label:'UNEMPLOYMENT',  suffix:'%',   dp:1, goodUp:false},
+    {key:'debt_gdp',      label:'DEBT / GDP',    suffix:'%',   dp:0, goodUp:false},
+    {key:'trade_gdp',     label:'TRADE / GDP',   suffix:'%',   dp:1, goodUp:true },
+    {key:'govt_spending', label:'GOVT SPENDING', suffix:'%',   dp:1, goodUp:null },
+    {key:'tax_rate',      label:'TAX RATE',      suffix:'%',   dp:1, goodUp:null },
+    {key:'gdp_per_capita',label:'GDP/CAPITA',    suffix:'',    dp:0, goodUp:true, prefix:'$'},
+  ]},
+  population:  { accent:'#4fc3f7', indicators:[
+    {key:'population',       label:'POPULATION',    suffix:'',  dp:0, goodUp:null},
+    {key:'pop_growth',       label:'POP GROWTH',    suffix:'%', dp:2, goodUp:null},
+    {key:'urbanization',     label:'URBANIZATION',  suffix:'%', dp:1, goodUp:true},
+    {key:'dependency_ratio', label:'DEPENDENCY',    suffix:'%', dp:1, goodUp:false},
+    {key:'net_migration',    label:'NET MIGRATION', suffix:'',  dp:0, goodUp:null},
+  ]},
+  health:      { accent:'#ef9a9a', indicators:[
+    {key:'life_expectancy',    label:'LIFE EXPECT',  suffix:' yrs', dp:1, goodUp:true },
+    {key:'child_mortality',    label:'CHILD MORT',   suffix:'',     dp:1, goodUp:false},
+    {key:'hospital_beds',      label:'HOSP BEDS',    suffix:'/1k',  dp:1, goodUp:true },
+    {key:'physicians_per1000', label:'PHYSICIANS',   suffix:'/1k',  dp:2, goodUp:true },
+    {key:'health_expenditure', label:'HEALTH SPEND', suffix:'%GDP', dp:1, goodUp:true },
+  ]},
+  education:   { accent:'#fff176', indicators:[
+    {key:'literacy_rate',         label:'LITERACY',   suffix:'%',    dp:1, goodUp:true},
+    {key:'primary_enrollment',    label:'PRIMARY',    suffix:'%',    dp:1, goodUp:true},
+    {key:'secondary_enrollment',  label:'SECONDARY',  suffix:'%',    dp:1, goodUp:true},
+    {key:'tertiary_enrollment',   label:'TERTIARY',   suffix:'%',    dp:1, goodUp:true},
+    {key:'education_expenditure', label:'EDU SPEND',  suffix:'%GDP', dp:1, goodUp:true},
+  ]},
+  environment: { accent:'#a5d6a7', indicators:[
+    {key:'co2_per_capita',        label:'CO\u2082/CAPITA',  suffix:' t',     dp:1, goodUp:false},
+    {key:'forest_area',           label:'FOREST AREA', suffix:'%',      dp:1, goodUp:true },
+    {key:'energy_use_per_capita', label:'ENERGY USE',  suffix:' kg',    dp:0, goodUp:null },
+    {key:'freshwater_use',        label:'FRESHWATER',  suffix:'%',      dp:1, goodUp:false},
+    {key:'pm25_air_pollution',    label:'PM2.5',       suffix:'\u03bcg', dp:1, goodUp:false},
+  ]},
+  governance:  { accent:'#ce93d8', indicators:[
+    {key:'govt_transparency',     label:'TRANSPARENCY', suffix:'', dp:2, goodUp:true },
+    {key:'govt_effectiveness',    label:'EFFECT',       suffix:'', dp:2, goodUp:true },
+    {key:'control_of_corruption', label:'CORRUPTION',   suffix:'', dp:2, goodUp:true },
+    {key:'rule_of_law',           label:'RULE OF LAW',  suffix:'', dp:2, goodUp:true },
+    {key:'gini_index',            label:'GINI INDEX',   suffix:'', dp:1, goodUp:false},
+  ]},
+};
 
-// ── SIM STATE ──
+const G20_PTS = {
+  USA:{label:'USA',cx:-100,cy:38},  CAN:{label:'CAN',cx:-96,cy:58},
+  MEX:{label:'MEX',cx:-102,cy:24}, BRA:{label:'BRA',cx:-52,cy:-12},
+  ARG:{label:'ARG',cx:-65,cy:-35}, GBR:{label:'UK',cx:-2,cy:54},
+  FRA:{label:'FRA',cx:2,cy:46},    DEU:{label:'DEU',cx:10,cy:51},
+  ITA:{label:'ITA',cx:12,cy:43},   RUS:{label:'RUS',cx:95,cy:62},
+  CHN:{label:'CHN',cx:104,cy:35},  IND:{label:'IND',cx:78,cy:22},
+  JPN:{label:'JPN',cx:138,cy:37},  KOR:{label:'KOR',cx:128,cy:37},
+  AUS:{label:'AUS',cx:134,cy:-26}, SAU:{label:'SAU',cx:45,cy:24},
+  TUR:{label:'TUR',cx:35,cy:39},   ZAF:{label:'ZAF',cx:25,cy:-30},
+  IDN:{label:'IDN',cx:117,cy:-3},
+};
+
+// ── STATE ──
+let econDB = null, selectedISO = null, selectedYear = null;
+let realHistory = {};
+let simHist = {gdp:[],inf:[],une:[],dbt:[],years:[]};
+let simYearsElapsed = 0, simMode = 'history', interferePending = false;
+let deviationHistory = [], activeTab = 'economic', groupSparkData = {};
 let year = 2024, autoTimer = null, autoRunning = false;
-let hist = { gdp:[2.8], inf:[3.1], une:[5.2], dbt:[60] };
-let simHist = { gdp:[], inf:[], une:[], dbt:[], years:[] }; // user path for reveal
-let soc = { equality:55, trust:60, innovation:65, stability:70, welfare:58, confidence:62 };
+let hist = {gdp:[2.8],inf:[3.1],une:[5.2],dbt:[60]};
+let soc = {equality:55,trust:60,innovation:65,stability:70,welfare:58,confidence:62};
+let revealCharts = [];
 
-// ══════════════════════════════════════════
-//  LOAD DATA
-// ══════════════════════════════════════════
+// ── DATA LOADING ──
 function loadEconData() {
-  logEntry('—', '// LOADING ECONOMIC DATABASE...', 'warn');
+  logEntry('—','// LOADING ECONOMIC DATABASE...','warn');
   fetch('economy/economic_data.json')
-    .then(r => r.json())
-    .then(data => {
+    .then(r=>r.json())
+    .then(data=>{
       econDB = data;
-      logEntry('—', '// DATABASE READY — ' + Object.keys(data).length + ' COUNTRIES LOADED', 'good');
-      initMap();
+      logEntry('—','// DATABASE READY — '+Object.keys(data).length+' COUNTRIES','good');
+      loadD3ThenMap();
     })
-    .catch(() => {
-      logEntry('—', '// DATA LOAD FAILED — running in manual mode', 'bad');
-      initMap(); // still show map, just no data highlighting
-    });
+    .catch(()=>{ logEntry('—','// DATA LOAD FAILED','bad'); loadD3ThenMap(); });
+}
+
+function loadScript(src,cb){
+  if(document.querySelector('script[src="'+src+'"]')){cb();return;}
+  const s=document.createElement('script');
+  s.src=src; s.onload=cb; s.onerror=cb;
+  document.head.appendChild(s);
+}
+
+function loadD3ThenMap(){
+  loadScript('https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js',()=>{
+    loadScript('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js',initMap);
+  });
 }
 
 // ══════════════════════════════════════════
-//  WORLD MAP
+//  D3 WORLD MAP
 // ══════════════════════════════════════════
-
-// Minimal Natural Earth SVG paths (simplified world map)
-// We load from a CDN-hosted GeoJSON and render it as SVG paths
-function initMap() {
-  const loading = document.getElementById('map-loading');
-  const svg = document.getElementById('world-svg');
-
-  // Load Natural Earth TopoJSON from CDN, convert to SVG paths
+function initMap(){
+  const loading=document.getElementById('map-loading');
   fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
-    .then(r => r.json())
-    .then(world => {
-      if (loading) loading.style.display = 'none';
-      renderMapFromTopo(world, svg);
-    })
-    .catch(() => {
-      if (loading) loading.textContent = '// MAP UNAVAILABLE — type a country name to search';
-    });
+    .then(r=>r.json())
+    .then(world=>{ if(loading)loading.style.display='none'; renderD3Map(world); })
+    .catch(()=>{ if(loading)loading.textContent='// MAP UNAVAILABLE — use search'; });
 }
 
-function renderMapFromTopo(topo, svg) {
-  // Convert topojson to SVG using simple mercator-like projection
-  const countries = topo.objects.countries.geometries;
-  const arcs = topo.arcs;
-  const transform = topo.transform || { scale: [1,1], translate: [0,0] };
-
-  // Build ISO numeric → ISO3 lookup from econDB names
-  // topojson countries-110m uses ISO numeric codes as 'id'
-  const numericToISO3 = buildNumericLookup();
-
-  const W = 2000, H = 1001;
-
-  countries.forEach(geo => {
-    const iso3 = numericToISO3[String(geo.id)] || '';
-    const hasData = iso3 && econDB && econDB[iso3] && Object.keys(econDB[iso3].years || {}).length > 0;
-
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    const d = topoToPath(geo, arcs, transform, W, H);
-    if (!d) return;
-
-    path.setAttribute('d', d);
-    path.setAttribute('data-iso3', iso3);
-    path.classList.add(hasData ? 'has-data' : 'no-data');
-
-    if (hasData) {
-      path.addEventListener('click', () => selectCountry(iso3, path));
-      path.addEventListener('mouseenter', () => {
-        if (!path.classList.contains('selected')) {
-          path.style.fill = '#00C896';
-        }
-      });
-      path.addEventListener('mouseleave', () => {
-        if (!path.classList.contains('selected')) {
-          path.style.fill = '';
-        }
-      });
-    }
-
-    svg.appendChild(path);
-  });
-}
-
-// ISO numeric to ISO3 lookup (UN M49 / ISO 3166)
-function buildNumericLookup() {
-  // Key subset of the ~250 countries in the Natural Earth data
-  return {
-    "4":"AFG","8":"ALB","12":"DZA","24":"AGO","32":"ARG","36":"AUS","40":"AUT",
-    "50":"BGD","56":"BEL","68":"BOL","76":"BRA","100":"BGR","116":"KHM","120":"CMR",
-    "124":"CAN","144":"LKA","152":"CHL","156":"CHN","170":"COL","188":"CRI",
-    "191":"HRV","192":"CUB","203":"CZE","204":"BEN","208":"DNK","214":"DOM",
-    "218":"ECU","818":"EGY","222":"SLV","231":"ETH","246":"FIN","250":"FRA",
-    "266":"GAB","276":"DEU","288":"GHA","300":"GRC","320":"GTM","332":"HTI",
-    "340":"HND","348":"HUN","356":"IND","360":"IDN","364":"IRN","368":"IRQ",
-    "372":"IRL","376":"ISR","380":"ITA","388":"JAM","392":"JPN","400":"JOR",
-    "398":"KAZ","404":"KEN","408":"PRK","410":"KOR","414":"KWT","418":"LAO",
-    "422":"LBN","430":"LBR","434":"LBY","458":"MYS","484":"MEX","504":"MAR",
-    "508":"MOZ","516":"NAM","524":"NPL","528":"NLD","540":"NCL","554":"NZL",
-    "558":"NIC","566":"NGA","578":"NOR","586":"PAK","591":"PAN","600":"PRY",
-    "604":"PER","608":"PHL","616":"POL","620":"PRT","630":"PRI","642":"ROU",
-    "643":"RUS","646":"RWA","682":"SAU","686":"SEN","694":"SLE","706":"SOM",
-    "710":"ZAF","724":"ESP","729":"SDN","752":"SWE","756":"CHE","760":"SYR",
-    "762":"TJK","764":"THA","788":"TUN","792":"TUR","800":"UGA","804":"UKR",
-    "784":"ARE","826":"GBR","840":"USA","858":"URY","860":"UZB","862":"VEN",
-    "704":"VNM","887":"YEM","894":"ZMB","716":"ZWE","450":"MDG","466":"MLI",
-    "478":"MRT","440":"LTU","428":"LVA","233":"EST","703":"SVK","705":"SVN",
-    "191":"HRV","70":"BIH","807":"MKD","688":"SRB","499":"MNE","8":"ALB",
-    "112":"BLR","440":"LTU","372":"IRL","348":"HUN","498":"MDA","051":"ARM",
-    "031":"AZE","268":"GEO","795":"TKM","417":"KGZ","762":"TJK","860":"UZB",
-    "051":"ARM","031":"AZE","398":"KAZ","116":"KHM","418":"LAO","104":"MMR",
-    "608":"PHL","626":"TLS","562":"NER","854":"BFA","148":"TCD","072":"BWA",
-    "426":"LSO","748":"SWZ","454":"MWI","834":"TZA","800":"UGA","174":"COM",
-    "174":"COM","262":"DJI","232":"ERI","480":"MUS","175":"MYT","638":"REU",
-    "540":"NCL","258":"PYF","090":"SLB","242":"FJI","598":"PNG","548":"VUT",
-    "776":"TON","882":"WSM","296":"KIR","584":"MHL","583":"FSM","585":"PLW",
-    "520":"NRU","798":"TUV","180":"COD","178":"COG","140":"CAF","706":"SOM",
-    "064":"BTN","462":"MDV","144":"LKA"
-  };
-}
-
-function topoToPath(geo, arcs, transform, W, H) {
-  // Simple TopoJSON arc decoder + Mercator projection
-  const s = transform.scale;
-  const t = transform.translate;
-
-  function decodeArc(arcIdx) {
-    const reversed = arcIdx < 0;
-    const arc = arcs[reversed ? ~arcIdx : arcIdx];
-    let x = 0, y = 0;
-    const pts = arc.map(([dx, dy]) => {
-      x += dx; y += dy;
-      const lon = x * s[0] + t[0];
-      const lat = y * s[1] + t[1];
-      return project(lon, lat, W, H);
-    });
-    return reversed ? pts.reverse() : pts;
-  }
-
-  function ringToD(ring) {
-    const pts = ring.flatMap(idx => decodeArc(idx));
-    if (pts.length < 2) return '';
-    return 'M' + pts.map(([x,y]) => x.toFixed(1)+','+y.toFixed(1)).join('L') + 'Z';
-  }
-
-  try {
-    if (geo.type === 'Polygon') {
-      return geo.arcs.map(ringToD).join(' ');
-    } else if (geo.type === 'MultiPolygon') {
-      return geo.arcs.map(poly => poly.map(ringToD).join(' ')).join(' ');
-    }
-  } catch(e) { return ''; }
-  return '';
-}
-
-function project(lon, lat, W, H) {
-  // Simple equirectangular projection
-  const x = (lon + 180) / 360 * W;
-  const latRad = lat * Math.PI / 180;
-  const mercN = Math.log(Math.tan(Math.PI/4 + latRad/2));
-  const y = H/2 - (mercN / (Math.PI) * (H/2));
-  return [x, Math.max(0, Math.min(H, y))];
-}
-
-// ── Map search ──
-function mapSearch(q) {
-  const box = document.getElementById('map-search-results');
-  if (!q || q.length < 2) { box.innerHTML = ''; return; }
-  if (!econDB) { box.innerHTML = ''; return; }
-  const lower = q.toLowerCase();
-  const matches = Object.entries(econDB)
-    .filter(([, v]) => v.name.toLowerCase().includes(lower))
-    .slice(0, 8);
-  box.innerHTML = matches.map(([iso3, v]) =>
-    `<div class="map-sr-item" onclick="selectCountryByISO('${iso3}')">${v.name}</div>`
-  ).join('');
-}
-
-function selectCountryByISO(iso3) {
-  document.getElementById('map-search-results').innerHTML = '';
-  document.getElementById('map-search').value = '';
-  // highlight on map
-  document.querySelectorAll('.world-svg path.selected').forEach(p => {
-    p.classList.remove('selected');
-    p.style.fill = '';
-  });
-  const path = document.querySelector(`.world-svg path[data-iso3="${iso3}"]`);
-  if (path) {
-    path.classList.add('selected');
-    path.style.fill = '#00C896';
-  }
-  selectCountry(iso3, path);
-}
-
-// ── Country selection ──
-function selectCountry(iso3, pathEl) {
-  if (!econDB || !econDB[iso3]) return;
-
-  // deselect previous
-  document.querySelectorAll('.world-svg path.selected').forEach(p => {
-    p.classList.remove('selected');
-    p.style.fill = '';
-  });
-  if (pathEl) { pathEl.classList.add('selected'); pathEl.style.fill = '#00C896'; }
-
-  selectedISO = iso3;
-  const country = econDB[iso3];
-
-  // find valid years (at least 2 non-null indicators)
-  const validYears = Object.entries(country.years)
-    .filter(([, v]) => Object.values(v).filter(x => x !== null).length >= 2)
-    .map(([y]) => parseInt(y))
-    .sort((a,b) => a-b);
-
-  if (validYears.length === 0) return;
-
-  const minY = validYears[0];
-  const maxY = Math.min(validYears[validYears.length-1], 2022);
-
-  const slider = document.getElementById('panel-year-slider');
-  slider.min = minY;
-  slider.max = maxY;
-  slider.value = Math.min(1990, maxY);
-
-  // flag emoji from iso2
-  const iso2 = country.iso2 || '';
-  const flag = iso2 ? iso2ToFlag(iso2) : '';
-  document.getElementById('panel-flag').textContent = flag;
-  document.getElementById('panel-name').textContent = country.name;
-  document.getElementById('panel-iso').textContent = iso3;
-
-  document.getElementById('country-panel').classList.remove('hidden');
-  panelYearChange(slider.value);
-}
-
-function iso2ToFlag(iso2) {
-  if (!iso2 || iso2.length !== 2) return '';
-  const offset = 127397;
-  return String.fromCodePoint(...iso2.toUpperCase().split('').map(c => c.charCodeAt(0) + offset));
-}
-
-function panelYearChange(yr) {
-  selectedYear = parseInt(yr);
-  document.getElementById('panel-year-display').textContent = yr;
-  if (!econDB || !selectedISO) return;
-  const yData = (econDB[selectedISO].years || {})[String(yr)] || {};
-  const fmt = (v, suffix) => v !== null && v !== undefined ? (+v).toFixed(1) + suffix : '—';
-  document.getElementById('pp-gdp').textContent = fmt(yData.gdp_growth, '%');
-  document.getElementById('pp-inf').textContent = fmt(yData.inflation, '%');
-  document.getElementById('pp-une').textContent = fmt(yData.unemployment, '%');
-  document.getElementById('pp-dbt').textContent = fmt(yData.debt_gdp, '%');
-}
-
-function closePanel() {
-  document.getElementById('country-panel').classList.add('hidden');
-  document.querySelectorAll('.world-svg path.selected').forEach(p => {
-    p.classList.remove('selected');
-    p.style.fill = '';
-  });
-  selectedISO = null;
-}
-
-// ── Begin simulation ──
-function beginSimulation() {
-  if (!selectedISO || !selectedYear || !econDB) return;
-
-  const country = econDB[selectedISO];
-  const yData = (country.years || {})[String(selectedYear)] || {};
-
-  // store real history for reveal
-  const startYr = selectedYear;
-  realHistory = { gdp:[], inf:[], une:[], dbt:[], years:[] };
-  for (let y = startYr; y <= Math.min(startYr + 40, 2024); y++) {
-    const d = (country.years || {})[String(y)] || {};
-    realHistory.years.push(y);
-    realHistory.gdp.push(d.gdp_growth !== undefined ? d.gdp_growth : null);
-    realHistory.inf.push(d.inflation  !== undefined ? d.inflation  : null);
-    realHistory.une.push(d.unemployment !== undefined ? d.unemployment : null);
-    realHistory.dbt.push(d.debt_gdp !== undefined ? d.debt_gdp : null);
-  }
-
-  // switch screens
-  document.getElementById('eco-map-screen').classList.add('hidden');
-  document.getElementById('eco-sim-screen').classList.remove('hidden');
-
-  // set title
-  document.getElementById('sim-country-title').innerHTML =
-    `${country.name}<br><span>${selectedYear}</span>`;
-
-  // initialise sim with real values
-  const gdp0 = val(yData.gdp_growth, 2.8);
-  const inf0 = val(yData.inflation,  3.1);
-  const une0 = val(yData.unemployment, 5.2);
-  const dbt0 = val(yData.debt_gdp,   60);
-  const spe0 = val(yData.govt_spending, 20);
-  const tax0 = val(yData.tax_rate,   25);
-
-  year = selectedYear;
-  hist = { gdp:[gdp0], inf:[inf0], une:[une0], dbt:[dbt0] };
-  simHist = { gdp:[gdp0], inf:[inf0], une:[une0], dbt:[dbt0], years:[year] };
-  simYearsElapsed = 0;
-  lockedFirstStep = true;
-
-  soc = { equality:55, trust:60, innovation:65, stability:70, welfare:58, confidence:62 };
-
-  // set sliders to real values
-  setSlider('spend', spe0, 10, 60, '%');
-  setSlider('tax',   tax0,  5, 65, '%');
-  setSlider('rate',  4.5,   0, 20, '%');
-  setSlider('money', 3,    -5, 25, '%');
-  setSlider('debt',  dbt0,  0, 250, '%');
-
-  // lock sliders
-  document.getElementById('sim-controls').classList.add('sliders-locked');
-
-  // show REAL badges
-  ['gdp','inf','une','dbt'].forEach(k => {
-    document.getElementById('badge-' + k).classList.remove('hidden');
-  });
-
-  // lock banner
-  document.getElementById('lock-banner').classList.remove('hidden');
-  document.getElementById('lock-banner-text').textContent =
-    `// HISTORICAL DATA — ${selectedYear} ${selectedISO} — STEP FORWARD TO TAKE CONTROL`;
-
-  // update cards with real values
-  document.getElementById('yr').textContent = year;
-  document.getElementById('gdp-val').textContent = fmtGDP(gdp0);
-  document.getElementById('inf-val').textContent = inf0.toFixed(1) + '%';
-  document.getElementById('une-val').textContent = une0.toFixed(1) + '%';
-  document.getElementById('dbt-val').textContent = Math.round(dbt0) + '%';
-  document.getElementById('gdp-desc').textContent = descGDP(gdp0);
-  document.getElementById('inf-desc').textContent = descInf(inf0);
-  document.getElementById('une-desc').textContent = descUne(une0);
-  document.getElementById('dbt-desc').textContent = descDbt(dbt0);
-  ['gdp-delta','inf-delta','une-delta','dbt-delta'].forEach(id =>
-    document.getElementById(id).innerHTML = '');
-
-  document.getElementById('sim-status-text').textContent =
-    `${selectedISO} ${selectedYear} — LOCKED`;
-
-  // hide reveal btn
-  document.getElementById('reveal-btn').classList.add('hidden');
-
-  // clear log
-  document.getElementById('log').innerHTML = '';
-  logEntry(year, `Loaded real ${country.name} data. Step forward to begin your tenure.`, 'good');
-
-  renderSoc();
-  setTimeout(() => {
-    sparkline('sp-gdp', hist.gdp, '#00C896');
-    sparkline('sp-inf', hist.inf, '#FF4D4F');
-    sparkline('sp-une', hist.une, '#FFB800');
-    sparkline('sp-dbt', hist.dbt, '#818CF8');
-  }, 50);
-}
-
-function val(v, fallback) {
-  return (v !== null && v !== undefined) ? parseFloat(v) : fallback;
-}
-
-function setSlider(id, v, min, max, suffix) {
-  const el = document.getElementById(id);
-  const display = document.getElementById('v-' + id);
-  el.min = min; el.max = max;
-  el.value = Math.max(min, Math.min(max, v));
-  display.textContent = (+el.value).toFixed(id === 'rate' ? 1 : 0) + suffix;
-}
-
-function backToMap() {
-  clearInterval(autoTimer); autoRunning = false;
-  document.getElementById('eco-sim-screen').classList.add('hidden');
-  document.getElementById('eco-map-screen').classList.remove('hidden');
-  document.getElementById('reveal-btn').classList.add('hidden');
-}
-
-// ══════════════════════════════════════════
-//  SIMULATOR ENGINE (original, preserved)
-// ══════════════════════════════════════════
-
-function updateVal(id, suf) {
-  const v = parseFloat(document.getElementById(id).value);
-  document.getElementById('v-' + id).textContent = v + (suf || '');
-}
-
-function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-
-function getState() {
-  return {
-    rate:  parseFloat(document.getElementById('rate').value),
-    money: parseFloat(document.getElementById('money').value),
-    spend: parseFloat(document.getElementById('spend').value),
-    tax:   parseFloat(document.getElementById('tax').value),
-    debt:  parseFloat(document.getElementById('debt').value)
-  };
-}
-
-function simulate(s) {
-  let gdp = 2.5 + (s.spend-20)*0.05 + (s.money-3)*0.08 - (s.rate-4)*0.18
-            - (s.tax-25)*0.04 - Math.max(0,s.debt-80)*0.01 + (Math.random()-0.5)*0.6;
-  gdp = clamp(gdp, -6, 9);
-
-  let inf = 1.5 + (s.money-3)*0.22 + (s.spend-20)*0.04 - (s.rate-4)*0.14
-            + (Math.random()-0.5)*0.5;
-  inf = clamp(inf, -1, 18);
-
-  let une = 4.5 - (s.spend-20)*0.04 + (s.rate-4)*0.12 + (s.tax-25)*0.05
-            + (Math.random()-0.5)*0.4;
-  une = clamp(une, 1, 22);
-
-  let deficit  = (s.spend/100) - (s.tax/100*0.9);
-  let interest = (s.debt * s.rate) / 1000;
-  let dbt = s.debt + deficit*100 - gdp*0.3 + interest + (Math.random()-0.5)*1;
-  dbt = clamp(dbt, 0, 300);
-  document.getElementById('debt').value = dbt;
-  document.getElementById('v-debt').textContent = Math.round(dbt) + '%';
-
-  return { gdp, inf, une, dbt };
-}
-
-function socColor(v) {
-  if (v > 70) return '#00C896';
-  if (v > 45) return '#FFB800';
-  return '#FF4D4F';
-}
-
-function renderSoc() {
-  const labels = { equality:'Equality', trust:'Trust', innovation:'Innovation',
-                   stability:'Stability', welfare:'Welfare', confidence:'Confidence' };
-  document.getElementById('soc-grid').innerHTML = Object.entries(soc)
-    .map(([k,v]) => `
-    <div class="soc-item">
-      <div class="soc-item-name">${labels[k]}</div>
-      <div class="soc-item-val" style="color:${socColor(v)}">${Math.round(v)}</div>
-      <div class="soc-bar-bg"><div class="soc-bar-fill"
-        style="width:${Math.round(v)}%;background:${socColor(v)}"></div></div>
-    </div>`).join('');
-}
-
-function updateSociety(r) {
-  const s = getState();
-  soc.equality   = clamp(soc.equality   + (r.gdp>3?1:-0.5) - (r.dbt>100?1.5:0) + (s.spend>30?0.5:0), 0, 100);
-  soc.trust      = clamp(soc.trust      + (r.inf<3&&r.gdp>2?1:-1) - (r.inf>7?3:0), 0, 100);
-  soc.innovation = clamp(soc.innovation + (r.gdp>3?0.8:0) - (r.une>10?2:0) + (s.rate<5?0.3:0), 0, 100);
-  soc.stability  = clamp(soc.stability  - Math.abs(r.inf-2.5)*0.4 - (r.dbt>120?1.2:0) + (r.gdp>2?0.4:0), 0, 100);
-  soc.welfare    = clamp(soc.welfare    + (s.spend>30?0.8:-0.4) - (r.une>8?1.2:0) + (r.gdp>3?0.3:0), 0, 100);
-  soc.confidence = clamp(soc.confidence + (r.gdp>0?0.4:-0.8) - (r.inf>6?1:0), 0, 100);
-  renderSoc();
-}
-
-function sparkline(id, data, color) {
-  const c = document.getElementById(id);
-  if (!c) return;
-  const w = c.parentElement.offsetWidth || 200, h = 40;
-  c.width = w; c.height = h;
-  const ctx = c.getContext('2d');
-  ctx.clearRect(0, 0, w, h);
-  if (data.length < 2) return;
-  const mn = Math.min(...data), mx = Math.max(...data), rng = mx - mn || 1;
-  const pts = data.map((v,i) => ({ x: i/(data.length-1)*w, y: h - (v-mn)/rng*(h-6) - 3 }));
-  ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
-  pts.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
-  ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
-  ctx.lineTo(pts[pts.length-1].x, h); ctx.lineTo(0, h); ctx.closePath();
-  ctx.fillStyle = color + '22'; ctx.fill();
-  const lp = pts[pts.length-1];
-  ctx.beginPath(); ctx.arc(lp.x, lp.y, 4, 0, Math.PI*2);
-  ctx.fillStyle = color; ctx.fill();
-}
-
-function fmtGDP(v) { return (v>0?'+':'') + v.toFixed(1) + '%'; }
-function descGDP(v) { return v>5?'Strong expansion':v>2?'Moderate growth':v>0?'Sluggish growth':v>-2?'Mild recession':'Deep recession'; }
-function descInf(v) { return v<0?'Deflation risk':v<2?'Below target':v<4?'Near target':v<7?'Elevated':'High inflation'; }
-function descUne(v) { return v<3?'Overheated labour':v<6?'Near natural rate':v<10?'Elevated':'High unemployment'; }
-function descDbt(v) { return v<40?'Very low':v<70?'Manageable':v<100?'Elevated':v<150?'Risk zone':'Debt crisis!'; }
-
-function deltaHtml(cur, prev, goodUp) {
-  const d = cur - prev;
-  if (Math.abs(d) < 0.05) return '';
-  const good = goodUp ? d > 0 : d < 0;
-  return `<span class="${good?'up':'dn'}">${d>0?'▲':'▼'} ${Math.abs(d).toFixed(1)}</span>`;
-}
-
-function logEntry(y, msg, type='') {
-  const log = document.getElementById('log');
-  if (!log) return;
-  const d = document.createElement('div');
-  d.className = 'log-entry ' + type;
-  d.innerHTML = `<span class="log-year">${y}</span><span class="log-msg">${msg}</span>`;
-  log.prepend(d);
-  while (log.children.length > 25) log.removeChild(log.lastChild);
-}
-
-function stepYear() {
-  // ── UNLOCK on first step ──
-  if (lockedFirstStep) {
-    lockedFirstStep = false;
-    document.getElementById('sim-controls').classList.remove('sliders-locked');
-    ['gdp','inf','une','dbt'].forEach(k =>
-      document.getElementById('badge-' + k).classList.add('hidden'));
-    document.getElementById('lock-banner').classList.add('hidden');
-    document.getElementById('sim-status-text').textContent =
-      `${selectedISO || ''} — IN PROGRESS`;
-    logEntry(year + 1, `You assumed office. Policy levers unlocked.`, 'good');
-  }
-
-  year++;
-  document.getElementById('yr').textContent = year;
-  const s = getState();
-  const r = simulate(s);
-  const prev = {
-    gdp: hist.gdp[hist.gdp.length-1],
-    inf: hist.inf[hist.inf.length-1],
-    une: hist.une[hist.une.length-1],
-    dbt: hist.dbt[hist.dbt.length-1]
-  };
-
-  hist.gdp.push(r.gdp); hist.inf.push(r.inf); hist.une.push(r.une); hist.dbt.push(r.dbt);
-  if (hist.gdp.length > 24) { hist.gdp.shift(); hist.inf.shift(); hist.une.shift(); hist.dbt.shift(); }
-
-  simHist.gdp.push(r.gdp); simHist.inf.push(r.inf);
-  simHist.une.push(r.une); simHist.dbt.push(r.dbt);
-  simHist.years.push(year);
-
-  simYearsElapsed++;
-
-  document.getElementById('gdp-val').textContent = fmtGDP(r.gdp);
-  document.getElementById('gdp-desc').textContent = descGDP(r.gdp);
-  document.getElementById('gdp-delta').innerHTML = deltaHtml(r.gdp, prev.gdp, true);
-
-  document.getElementById('inf-val').textContent = r.inf.toFixed(1) + '%';
-  document.getElementById('inf-desc').textContent = descInf(r.inf);
-  document.getElementById('inf-delta').innerHTML = deltaHtml(r.inf, prev.inf, false);
-
-  document.getElementById('une-val').textContent = r.une.toFixed(1) + '%';
-  document.getElementById('une-desc').textContent = descUne(r.une);
-  document.getElementById('une-delta').innerHTML = deltaHtml(r.une, prev.une, false);
-
-  document.getElementById('dbt-val').textContent = Math.round(r.dbt) + '%';
-  document.getElementById('dbt-desc').textContent = descDbt(r.dbt);
-  document.getElementById('dbt-delta').innerHTML = deltaHtml(r.dbt, prev.dbt, false);
-
-  sparkline('sp-gdp', hist.gdp, '#00C896');
-  sparkline('sp-inf', hist.inf, '#FF4D4F');
-  sparkline('sp-une', hist.une, '#FFB800');
-  sparkline('sp-dbt', hist.dbt, '#818CF8');
-
-  updateSociety(r);
-
-  // show reveal button after 5 steps
-  if (simYearsElapsed === 5 && selectedISO) {
-    document.getElementById('reveal-btn').classList.remove('hidden');
-  }
-
-  // events
-  if (r.inf > 9)        logEntry(year, 'Inflation out of control — purchasing power collapsing!', 'bad');
-  else if (r.gdp < -3)  logEntry(year, 'Severe recession. Unemployment surging.', 'bad');
-  else if (r.dbt > 160) logEntry(year, 'Debt crisis territory — credit markets tightening.', 'bad');
-  else if (r.gdp > 5 && r.inf < 4 && r.une < 5)
-                        logEntry(year, 'Goldilocks! Strong growth, low inflation, full employment.', 'good');
-  else if (r.une < 3)   logEntry(year, 'Labour market overheating — wage inflation building.', 'warn');
-  else if (r.inf < 0)   logEntry(year, 'Deflation detected — consumers delaying purchases.', 'warn');
-  else {
-    const msgs = [
-      `Rate ${s.rate}% — ${s.rate>7?'restrictive':'accommodative'} monetary stance.`,
-      `Govt spending at ${s.spend}% of GDP.`,
-      `Tax revenue ${s.tax<20?'low — deficit widening':'steady'}.`,
-      `Debt service cost rising with higher rates.`,
-      `Central bank monitoring inflation trends.`
-    ];
-    logEntry(year, msgs[Math.floor(Math.random()*msgs.length)]);
-  }
-}
-
-function autoRun() {
-  if (autoRunning) {
-    clearInterval(autoTimer); autoRunning = false;
-    document.getElementById('auto-btn').textContent = '\u23E9 Auto';
-    document.getElementById('auto-btn').classList.remove('auto-on');
-  } else {
-    autoRunning = true;
-    document.getElementById('auto-btn').textContent = '\u23F9 Stop';
-    document.getElementById('auto-btn').classList.add('auto-on');
-    autoTimer = setInterval(stepYear, 850);
-  }
-}
-
-function resetSim() {
-  clearInterval(autoTimer); autoRunning = false;
-  document.getElementById('auto-btn').textContent = '\u23E9 Auto';
-  document.getElementById('auto-btn').classList.remove('auto-on');
-
-  if (selectedISO && selectedYear) {
-    beginSimulation(); // re-init with same country/year
+function renderD3Map(world){
+  const svgEl=document.getElementById('world-svg');
+  const cont=document.getElementById('map-container');
+  if(!svgEl)return;
+  const W=cont?Math.max(600,cont.offsetWidth-80):1000;
+  const H=Math.round(W*0.5);
+  svgEl.setAttribute('viewBox','0 0 '+W+' '+H);
+
+  if(typeof d3==='undefined'||typeof topojson==='undefined'){
+    // fallback to built-in renderer
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+      .then(r=>r.json()).then(w=>renderMapFallback(w,svgEl));
     return;
   }
 
-  // fallback: pure reset
-  year = 2024; document.getElementById('yr').textContent = year;
-  hist = { gdp:[2.8], inf:[3.1], une:[5.2], dbt:[60] };
-  simHist = { gdp:[], inf:[], une:[], dbt:[], years:[] };
-  simYearsElapsed = 0;
-  soc  = { equality:55, trust:60, innovation:65, stability:70, welfare:58, confidence:62 };
-  ['rate','money','spend','tax','debt'].forEach(id => {
-    const defaults = { rate:'4.5', money:'3', spend:'20', tax:'25', debt:'60' };
-    document.getElementById(id).value = defaults[id];
-    document.getElementById('v-'+id).textContent = defaults[id] + '%';
-  });
-  document.getElementById('gdp-val').textContent = '+2.8%';
-  document.getElementById('inf-val').textContent = '3.1%';
-  document.getElementById('une-val').textContent = '5.2%';
-  document.getElementById('dbt-val').textContent = '60%';
-  document.getElementById('gdp-desc').textContent = 'Moderate expansion';
-  document.getElementById('inf-desc').textContent = 'Slightly elevated';
-  document.getElementById('une-desc').textContent = 'Near natural rate';
-  document.getElementById('dbt-desc').textContent = 'Manageable';
-  ['gdp-delta','inf-delta','une-delta','dbt-delta'].forEach(id =>
-    document.getElementById(id).innerHTML = '');
-  document.getElementById('log').innerHTML =
-    '<div class="log-entry"><span class="log-year">2024</span><span class="log-msg">Simulation reset. Ready.</span></div>';
-  document.getElementById('reveal-btn').classList.add('hidden');
-  renderSoc();
-  setTimeout(() => {
-    sparkline('sp-gdp',[2.8],'#00C896');
-    sparkline('sp-inf',[3.1],'#FF4D4F');
-    sparkline('sp-une',[5.2],'#FFB800');
-    sparkline('sp-dbt',[60],'#818CF8');
-  }, 50);
-}
+  const svg=d3.select('#world-svg');
+  svg.selectAll('*').remove();
+  const proj=d3.geoNaturalEarth1().fitSize([W,H],{type:'Sphere'});
+  const path=d3.geoPath(proj);
 
-// ══════════════════════════════════════════
-//  REVEAL MODAL
-// ══════════════════════════════════════════
-function openRevealModal() {
-  const modal = document.getElementById('reveal-modal');
-  modal.classList.remove('hidden');
+  // Ocean
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','#1a3a5c');
+  // Graticule
+  svg.append('path').datum(d3.geoGraticule()())
+    .attr('d',path).attr('fill','none')
+    .attr('stroke','rgba(255,255,255,0.04)').attr('stroke-width',0.6);
 
-  const endYear = year;
-  const startY = selectedYear || 2024;
-  const country = (econDB && selectedISO) ? econDB[selectedISO].name : '';
-  document.getElementById('reveal-title').textContent =
-    `HOW DID YOU DO? // ${selectedISO} ${startY}–${endYear}`;
+  const n2i=buildNumericLookup();
+  const countries=topojson.feature(world,world.objects.countries);
+  const tip=document.getElementById('map-tooltip');
 
-  // Build x-axis years from simHist
-  const simYears = simHist.years;
-  if (!simYears.length) return;
-
-  // Match real data to sim years
-  function getRealSeries(key) {
-    return simYears.map(y => {
-      const idx = realHistory.years.indexOf(y);
-      return idx >= 0 ? realHistory[key][idx] : null;
+  svg.selectAll('path.country')
+    .data(countries.features).enter().append('path')
+    .attr('class',d=>{ const i=n2i[String(d.id)]||''; return 'country '+(i&&econDB&&econDB[i]?'has-data':'no-data'); })
+    .attr('d',path)
+    .attr('data-iso3',d=>n2i[String(d.id)]||'')
+    .attr('fill',d=>{ const i=n2i[String(d.id)]||''; return i&&econDB&&econDB[i]?'#2d5a3d':'#1e3a2a'; })
+    .attr('stroke','#0f2218').attr('stroke-width',0.5)
+    .on('mousemove',function(ev,d){
+      const i=n2i[String(d.id)]||'';
+      if(!i||!econDB||!econDB[i])return;
+      if(!this.classList.contains('selected')) d3.select(this).attr('fill','#4a8c5c');
+      if(tip){
+        const r=svgEl.getBoundingClientRect();
+        let tx=ev.clientX-r.left+14, ty=ev.clientY-r.top-10;
+        if(tx+200>r.width) tx-=220;
+        tip.textContent=econDB[i].name+' — Click to simulate';
+        tip.style.left=tx+'px'; tip.style.top=ty+'px';
+        tip.classList.add('visible');
+      }
+    })
+    .on('mouseleave',function(ev,d){
+      const i=n2i[String(d.id)]||'';
+      if(!this.classList.contains('selected'))
+        d3.select(this).attr('fill',i&&econDB&&econDB[i]?'#2d5a3d':'#1e3a2a');
+      if(tip) tip.classList.remove('visible');
+    })
+    .on('click',function(ev,d){
+      const i=n2i[String(d.id)]||'';
+      if(i&&econDB&&econDB[i]) selectCountry(i,this);
     });
-  }
 
-  drawRevealChart('rc-gdp', simYears, simHist.gdp, getRealSeries('gdp'));
-  drawRevealChart('rc-inf', simYears, simHist.inf, getRealSeries('inf'));
-  drawRevealChart('rc-une', simYears, simHist.une, getRealSeries('une'));
-  drawRevealChart('rc-dbt', simYears, simHist.dbt, getRealSeries('dbt'));
+  // J&K overlay (India's claim)
+  fetch('economy/india_jk_patch.geojson').then(r=>r.json()).then(jk=>{
+    svg.selectAll('path.jk-patch').data(jk.features).enter().append('path')
+      .attr('class','jk-patch').attr('d',path)
+      .attr('fill','#2d5a3d').attr('stroke','#0f2218').attr('stroke-width',0.3)
+      .attr('pointer-events','none');
+    // J&K shown per India's official claim
+  }).catch(()=>{});
+
+  // G20 labels
+  Object.entries(G20_PTS).forEach(([iso3,info])=>{
+    const pt=proj([info.cx,info.cy]); if(!pt)return;
+    svg.append('text').attr('x',pt[0]).attr('y',pt[1])
+      .attr('text-anchor','middle')
+      .attr('font-family',"'Courier New',monospace")
+      .attr('font-size',Math.max(7,W/150)+'px')
+      .attr('fill','rgba(255,255,255,0.72)')
+      .attr('pointer-events','none').text(info.label);
+  });
 }
 
-function closeRevealModal() {
-  document.getElementById('reveal-modal').classList.add('hidden');
+function mapSearch(q){
+  const box=document.getElementById('map-search-results');
+  if(!q||q.length<2||!econDB){box.innerHTML='';return;}
+  const low=q.toLowerCase();
+  const m=Object.entries(econDB).filter(([,v])=>v.name.toLowerCase().includes(low)).slice(0,8);
+  box.innerHTML=m.map(([iso3,v])=>'<div class="map-sr-item" onclick="selectCountryByISO(\''+iso3+'\')">'+v.name+'</div>').join('');
 }
 
-function drawRevealChart(canvasId, years, simData, realData) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const dpr = window.devicePixelRatio || 1;
-  const cssW = canvas.offsetWidth || 360;
-  const cssH = 140;
-  canvas.width  = cssW * dpr;
-  canvas.height = cssH * dpr;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-
-  const pad = { t:8, r:8, b:24, l:36 };
-  const W = cssW - pad.l - pad.r;
-  const H = cssH - pad.t - pad.b;
-  const n = years.length;
-  if (n < 2) return;
-
-  // combined range
-  const allVals = [...simData, ...realData.filter(v => v !== null)];
-  const mn = Math.min(...allVals) - 1;
-  const mx = Math.max(...allVals) + 1;
-  const rng = mx - mn || 1;
-
-  const xp = i => pad.l + (i / (n-1)) * W;
-  const yp = v => pad.t + H - ((v - mn) / rng) * H;
-
-  // grid
-  ctx.strokeStyle = 'rgba(0,200,150,0.06)';
-  ctx.lineWidth = 1;
-  for (let g = 0; g <= 4; g++) {
-    const gy = pad.t + (g/4) * H;
-    ctx.beginPath(); ctx.moveTo(pad.l, gy); ctx.lineTo(pad.l + W, gy); ctx.stroke();
-  }
-
-  // x-axis labels (every ~5 years)
-  ctx.fillStyle = 'rgba(255,255,255,0.2)';
-  ctx.font = '9px Courier New';
-  ctx.textAlign = 'center';
-  years.forEach((y, i) => {
-    if (i === 0 || i === n-1 || y % 5 === 0) {
-      ctx.fillText(y, xp(i), cssH - 6);
-    }
+function selectCountryByISO(iso3){
+  document.getElementById('map-search-results').innerHTML='';
+  document.getElementById('map-search').value='';
+  document.querySelectorAll('#world-svg .country.selected').forEach(p=>{
+    p.classList.remove('selected');
+    const pi=p.getAttribute('data-iso3')||'';
+    if(typeof d3!=='undefined') d3.select(p).attr('fill',pi&&econDB&&econDB[pi]?'#2d5a3d':'#1e3a2a');
   });
+  const el=document.querySelector('#world-svg [data-iso3="'+iso3+'"]');
+  if(el){ el.classList.add('selected'); if(typeof d3!=='undefined') d3.select(el).attr('fill','#6aaa7a'); }
+  selectCountry(iso3,el);
+}
 
-  // real line (dashed green)
-  const realPts = realData.map((v, i) => v !== null ? {x: xp(i), y: yp(v)} : null).filter(Boolean);
-  if (realPts.length >= 2) {
-    ctx.beginPath();
-    ctx.setLineDash([5, 4]);
-    ctx.strokeStyle = '#00C896';
-    ctx.lineWidth = 2;
-    ctx.moveTo(realPts[0].x, realPts[0].y);
-    realPts.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  // sim line (solid amber)
-  ctx.beginPath();
-  ctx.setLineDash([]);
-  ctx.strokeStyle = '#FFB800';
-  ctx.lineWidth = 2;
-  simData.forEach((v, i) => {
-    i === 0 ? ctx.moveTo(xp(i), yp(v)) : ctx.lineTo(xp(i), yp(v));
+function selectCountry(iso3,pathEl){
+  if(!econDB||!econDB[iso3])return;
+  document.querySelectorAll('#world-svg .country.selected').forEach(p=>{
+    p.classList.remove('selected');
+    const pi=p.getAttribute('data-iso3')||'';
+    if(typeof d3!=='undefined') d3.select(p).attr('fill',pi&&econDB&&econDB[pi]?'#2d5a3d':'#1e3a2a');
   });
-  ctx.stroke();
+  if(pathEl){ pathEl.classList.add('selected'); if(typeof d3!=='undefined') d3.select(pathEl).attr('fill','#6aaa7a'); }
+
+  selectedISO=iso3;
+  const c=econDB[iso3];
+  const valid=Object.entries(c.years||{})
+    .filter(([,v])=>{ const e=v.economic||v; return Object.values(e).filter(x=>x!==null).length>=2; })
+    .map(([y])=>parseInt(y)).sort((a,b)=>a-b);
+  if(!valid.length)return;
+
+  const sl=document.getElementById('panel-year-slider');
+  sl.min=valid[0]; sl.max=Math.min(valid[valid.length-1],2022);
+  sl.value=Math.min(1990,sl.max);
+
+  const iso2=c.iso2||'';
+  document.getElementById('panel-flag').textContent=iso2?iso2ToFlag(iso2):'';
+  document.getElementById('panel-name').textContent=c.name;
+  document.getElementById('panel-iso').textContent=iso3;
+  document.getElementById('country-panel').classList.remove('hidden');
+  panelYearChange(sl.value);
+}
+
+function iso2ToFlag(iso2){
+  if(!iso2||iso2.length!==2)return'';
+  return String.fromCodePoint(...iso2.toUpperCase().split('').map(c=>c.charCodeAt(0)+127397));
+}
+
+function panelYearChange(yr){
+  selectedYear=parseInt(yr);
+  document.getElementById('panel-year-display').textContent=yr;
+  if(!econDB||!selectedISO)return;
+  const yData=(econDB[selectedISO].years||{})[String(yr)]||{};
+  const fmt=(v,s)=>(v!==null&&v!==undefined)?(+v).toFixed(1)+s:'—';
+  document.getElementById('pp-gdp').textContent=fmt(gi(yData,'economic','gdp_growth'),'%');
+  document.getElementById('pp-inf').textContent=fmt(gi(yData,'economic','inflation'),'%');
+  document.getElementById('pp-une').textContent=fmt(gi(yData,'economic','unemployment'),'%');
+  document.getElementById('pp-dbt').textContent=fmt(gi(yData,'economic','debt_gdp'),'%');
+}
+
+function closePanel(){
+  document.getElementById('country-panel').classList.add('hidden');
+  document.querySelectorAll('#world-svg .country.selected').forEach(p=>{
+    p.classList.remove('selected');
+    const pi=p.getAttribute('data-iso3')||'';
+    if(typeof d3!=='undefined') d3.select(p).attr('fill',pi&&econDB&&econDB[pi]?'#2d5a3d':'#1e3a2a');
+  });
+  selectedISO=null;
+}
+
+// backward-compat: supports both old flat {gdp_growth:x} and new grouped {economic:{gdp_growth:x}}
+function gi(yData,group,key){
+  if(!yData)return null;
+  if(yData[group]&&yData[group][key]!==undefined)return yData[group][key];
+  if(yData[key]!==undefined)return yData[key];
+  return null;
+}
+function fv(v,fb){ return (v!==null&&v!==undefined)?parseFloat(v):fb; }
+
+// ══════════════════════════════════════════
+//  APPEND A — SIMULATION SETUP
+// ══════════════════════════════════════════
+
+function beginSimulation(){
+  if(!selectedISO||!selectedYear)return;
+  const c=econDB[selectedISO];
+  document.getElementById('country-panel').classList.add('hidden');
+  document.getElementById('eco-map-screen').classList.add('hidden');
+  document.getElementById('eco-sim-screen').classList.remove('hidden');
+
+  // Top bar
+  const iso2=c.iso2||'';
+  document.getElementById('topbar-flag').textContent=iso2?iso2ToFlag(iso2):'';
+  document.getElementById('topbar-country').textContent=c.name.toUpperCase();
+  document.getElementById('topbar-year').textContent=selectedYear;
+  document.getElementById('yr').textContent=selectedYear;
+
+  year=selectedYear;
+  simMode='history'; simYearsElapsed=0; interferePending=false;
+  deviationHistory=[]; groupSparkData={};
+
+  buildRealHistory();
+  seedState();
+  initAllTabPanels();
+  updateAllIndicatorCards();
+  renderSoc();
+  logEntry('—','// SIMULATION STARTED: '+c.name+' FROM '+year,'good');
+  document.getElementById('topbar-mode').textContent='HISTORY MODE';
+  document.getElementById('btn-history').classList.add('active-mode');
+  document.getElementById('btn-interfere').classList.remove('active-mode','apply-mode');
+}
+
+function buildRealHistory(){
+  realHistory={years:[]};
+  Object.keys(TAB_CONFIG).forEach(g=>{ realHistory[g]={}; TAB_CONFIG[g].indicators.forEach(ind=>{ realHistory[g][ind.key]=[]; }); });
+  const yrs=Object.keys((econDB[selectedISO]||{}).years||{}).map(Number).sort((a,b)=>a-b);
+  yrs.forEach(yr=>{
+    const yData=(econDB[selectedISO].years||{})[String(yr)]||{};
+    realHistory.years.push(yr);
+    Object.keys(TAB_CONFIG).forEach(g=>{
+      TAB_CONFIG[g].indicators.forEach(ind=>{
+        realHistory[g][ind.key].push(gi(yData,g,ind.key));
+      });
+    });
+  });
+}
+
+function seedState(){
+  // Seed sliders + hist from real data at startYear
+  const yData=(econDB[selectedISO].years||{})[String(year)]||{};
+  const e=g=>gi(yData,'economic',g);
+  setSlider('rate',   fv(e('gdp_growth'),4.5));
+  setSlider('money',  3);
+  setSlider('spend',  fv(e('govt_spending'),20));
+  setSlider('tax',    fv(e('tax_rate'),25));
+  setSlider('trade',  fv(e('trade_gdp'),40));
+  setSlider('debt',   fv(e('debt_gdp'),60));
+  hist={
+    gdp:[fv(e('gdp_growth'),2.8)],
+    inf:[fv(e('inflation'),3.1)],
+    une:[fv(e('unemployment'),5.2)],
+    dbt:[fv(e('debt_gdp'),60)]
+  };
+  simHist={gdp:[],inf:[],une:[],dbt:[],years:[]};
+  // Seed groupSparkData from real history up to startYear
+  Object.keys(TAB_CONFIG).forEach(g=>{
+    TAB_CONFIG[g].indicators.forEach(ind=>{
+      const key=g+'.'+ind.key;
+      groupSparkData[key]=[];
+      realHistory.years.forEach((yr,i)=>{
+        if(yr<=year){
+          const v=realHistory[g][ind.key][i];
+          if(v!==null&&v!==undefined) groupSparkData[key].push(parseFloat(v));
+        }
+      });
+    });
+  });
+}
+
+function setSlider(id,val){
+  const el=document.getElementById(id); if(!el)return;
+  el.value=val;
+  const disp=document.getElementById('v-'+id);
+  if(disp) disp.textContent=parseFloat(val).toFixed(1)+'%';
+}
+
+function backToMap(){
+  document.getElementById('eco-sim-screen').classList.add('hidden');
+  document.getElementById('eco-map-screen').classList.remove('hidden');
+  if(autoRunning){ clearInterval(autoTimer); autoRunning=false; document.getElementById('auto-btn').textContent='⏩ AUTO'; }
 }
 
 // ══════════════════════════════════════════
-//  economyInit — called by main.js on tab load
+//  APPEND B — TAB PANELS + INDICATOR CARDS
 // ══════════════════════════════════════════
-function economyInit() {
-  // If first load, kick off data fetch + map
-  if (!econDB) {
-    renderSoc();
-    loadEconData();
+
+function switchTab(name){
+  activeTab=name;
+  document.querySelectorAll('.itab').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('hidden',p.id!=='tab-'+name));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+name));
+}
+
+function initAllTabPanels(){
+  Object.entries(TAB_CONFIG).forEach(([group,cfg])=>{
+    const panel=document.getElementById('tab-'+group); if(!panel)return;
+    panel.innerHTML='<div class="ind-cards-grid">'+
+      cfg.indicators.map(ind=>`
+        <div class="ind-card" id="ic-${group}-${ind.key}">
+          <div class="ind-card-label">${ind.label}</div>
+          <div class="ind-card-val" id="icv-${group}-${ind.key}" style="color:${cfg.accent}">—</div>
+          <canvas class="ind-spark" id="ics-${group}-${ind.key}" width="120" height="36"></canvas>
+          <span class="ind-badge ind-badge-na" id="icb-${group}-${ind.key}">—</span>
+        </div>`).join('')+
+    '</div>';
+  });
+}
+
+function updateAllIndicatorCards(){
+  const yData=(econDB[selectedISO]&&econDB[selectedISO].years||{})[String(year)]||{};
+  Object.entries(TAB_CONFIG).forEach(([group,cfg])=>{
+    cfg.indicators.forEach(ind=>{
+      const raw=gi(yData,group,ind.key);
+      const sparkKey=group+'.'+ind.key;
+      // In history mode use real val; in interfere mode use simulated if econ group
+      let val=raw, isReal=true;
+      if(simMode==='interfere'&&group==='economic'){
+        if(ind.key==='gdp_growth')    { val=hist.gdp[hist.gdp.length-1]; isReal=false; }
+        else if(ind.key==='inflation'){ val=hist.inf[hist.inf.length-1]; isReal=false; }
+        else if(ind.key==='unemployment'){ val=hist.une[hist.une.length-1]; isReal=false; }
+        else if(ind.key==='debt_gdp'){ val=hist.dbt[hist.dbt.length-1]; isReal=false; }
+      }
+      pushSparkData(sparkKey, val);
+      updateIndCard(group, ind, val, isReal, cfg.accent);
+    });
+  });
+}
+
+function pushSparkData(key, val){
+  if(!groupSparkData[key]) groupSparkData[key]=[];
+  if(val!==null&&val!==undefined) groupSparkData[key].push(parseFloat(val));
+  if(groupSparkData[key].length>30) groupSparkData[key].shift();
+}
+
+function updateIndCard(group, ind, val, isReal, accent){
+  const valEl=document.getElementById('icv-'+group+'-'+ind.key);
+  const badgeEl=document.getElementById('icb-'+group+'-'+ind.key);
+  const canvasEl=document.getElementById('ics-'+group+'-'+ind.key);
+  if(!valEl)return;
+  if(val===null||val===undefined){
+    valEl.textContent='—';
+    if(badgeEl){ badgeEl.textContent='N/A'; badgeEl.className='ind-badge ind-badge-na'; }
   } else {
-    // Re-entering tab: just redraw sparklines if on sim screen
-    if (!document.getElementById('eco-sim-screen').classList.contains('hidden')) {
-      renderSoc();
-      setTimeout(() => {
-        sparkline('sp-gdp', hist.gdp, '#00C896');
-        sparkline('sp-inf', hist.inf, '#FF4D4F');
-        sparkline('sp-une', hist.une, '#FFB800');
-        sparkline('sp-dbt', hist.dbt, '#818CF8');
-      }, 50);
+    const num=parseFloat(val);
+    const prefix=ind.prefix||'';
+    valEl.textContent=prefix+(ind.dp===0?Math.round(num).toLocaleString():num.toFixed(ind.dp))+ind.suffix;
+    // trend arrow
+    const sparkKey=group+'.'+ind.key;
+    const arr=groupSparkData[sparkKey]||[];
+    let trend='';
+    if(arr.length>=2){ const d=arr[arr.length-1]-arr[arr.length-2]; trend=d>0?' ▲':d<0?' ▼':''; }
+    if(badgeEl){
+      badgeEl.textContent=isReal?'REAL':'SIM';
+      badgeEl.className='ind-badge '+(isReal?'ind-badge-real':'ind-badge-sim');
     }
+    valEl.textContent=prefix+(ind.dp===0?Math.round(num).toLocaleString():num.toFixed(ind.dp))+ind.suffix+trend;
   }
+  if(canvasEl) sparkline(canvasEl, groupSparkData[group+'.'+ind.key]||[], accent);
 }
+
+function sparkline(canvas, data, color){
+  if(!canvas||data.length<2)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width, H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const mn=Math.min(...data), mx=Math.max(...data);
+  const rng=mx-mn||1;
+  const pts=data.map((v,i)=>[(i/(data.length-1))*W, H-((v-mn)/rng)*(H-4)-2]);
+  ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
+  pts.slice(1).forEach(p=>ctx.lineTo(p[0],p[1]));
+  ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.stroke();
+  // fill under line
+  const grad=ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,color+'33'); grad.addColorStop(1,color+'00');
+  ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
+  pts.slice(1).forEach(p=>ctx.lineTo(p[0],p[1]));
+  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath();
+  ctx.fillStyle=grad; ctx.fill();
+}
+
+// ══════════════════════════════════════════
+//  APPEND C — DUAL MODE + SIM ENGINE
+// ══════════════════════════════════════════
+
+function doHistoryRoll(){
+  simMode='history';
+  interferePending=false;
+  document.getElementById('topbar-mode').textContent='HISTORY MODE';
+  document.getElementById('btn-interfere').classList.remove('apply-mode');
+  // Advance one year using real data
+  const nextYr=year+1;
+  const yData=(econDB[selectedISO].years||{})[String(nextYr)]||null;
+  if(!yData){ logEntry(year,'// NO MORE HISTORICAL DATA','warn'); return; }
+  year=nextYr;
+  document.getElementById('topbar-year').textContent=year;
+  document.getElementById('yr').textContent=year;
+  // Sync sliders from real data
+  const e=k=>gi(yData,'economic',k);
+  if(e('gdp_growth')!==null)   setSlider('rate',  fv(e('gdp_growth'),4.5));
+  if(e('govt_spending')!==null) setSlider('spend', fv(e('govt_spending'),20));
+  if(e('tax_rate')!==null)      setSlider('tax',   fv(e('tax_rate'),25));
+  if(e('trade_gdp')!==null)     setSlider('trade', fv(e('trade_gdp'),40));
+  if(e('debt_gdp')!==null)      setSlider('debt',  fv(e('debt_gdp'),60));
+  hist.gdp.push(fv(e('gdp_growth'),hist.gdp[hist.gdp.length-1]));
+  hist.inf.push(fv(e('inflation'),hist.inf[hist.inf.length-1]));
+  hist.une.push(fv(e('unemployment'),hist.une[hist.une.length-1]));
+  hist.dbt.push(fv(e('debt_gdp'),hist.dbt[hist.dbt.length-1]));
+  simYearsElapsed++;
+  updateAllIndicatorCards();
+  updateSociety(hist.gdp.slice(-1)[0],hist.inf.slice(-1)[0],hist.une.slice(-1)[0],hist.dbt.slice(-1)[0]);
+  renderSoc();
+  calcEconDeviation();
+  logEntry(year,'// HISTORY: GDP '+hist.gdp.slice(-1)[0].toFixed(1)+'%  INF '+hist.inf.slice(-1)[0].toFixed(1)+'%','info');
+  if(simYearsElapsed>=5) document.getElementById('reveal-btn').classList.remove('hidden');
+}
+
+function doInterfere(){
+  if(!interferePending){
+    // First click: unlock levers, wait for second click
+    interferePending=true;
+    simMode='interfere';
+    document.getElementById('topbar-mode').textContent='INTERFERE MODE';
+    document.getElementById('btn-interfere').classList.add('apply-mode');
+    logEntry(year,'// LEVERS UNLOCKED — set your policy, then click INTERFERE again','warn');
+    return;
+  }
+  // Second click: run sim step with current lever positions
+  interferePending=false;
+  document.getElementById('btn-interfere').classList.remove('apply-mode');
+  stepYear();
+  if(simYearsElapsed>=5) document.getElementById('reveal-btn').classList.remove('hidden');
+}
+
+function getRealEconForYear(iso3,yr){
+  const yData=((econDB[iso3]||{}).years||{})[String(yr)]||{};
+  return {
+    gdp:  gi(yData,'economic','gdp_growth'),
+    inf:  gi(yData,'economic','inflation'),
+    une:  gi(yData,'economic','unemployment'),
+    dbt:  gi(yData,'economic','debt_gdp'),
+  };
+}
+
+function stepYear(){
+  const rate=parseFloat(document.getElementById('rate').value)||4.5;
+  const money=parseFloat(document.getElementById('money').value)||3;
+  const spend=parseFloat(document.getElementById('spend').value)||20;
+  const tax=parseFloat(document.getElementById('tax').value)||25;
+  const trade=parseFloat(document.getElementById('trade').value)||40;
+  const debt=parseFloat(document.getElementById('debt').value)||60;
+
+  const prevGdp=hist.gdp[hist.gdp.length-1];
+  const prevInf=hist.inf[hist.inf.length-1];
+  const prevUne=hist.une[hist.une.length-1];
+  const prevDbt=hist.dbt[hist.dbt.length-1];
+
+  // Simplified macro model
+  let gdp = prevGdp
+    + (money - 3) * 0.15          // loose money → growth
+    - (rate - 4) * 0.25           // high rates → slow growth
+    + (spend - 20) * 0.08         // fiscal stimulus
+    - (tax - 25) * 0.06           // tax drag
+    + (trade - 40) * 0.02         // openness bonus
+    + (Math.random()-0.5)*0.8;    // noise
+
+  let inf = prevInf
+    + (money - 3) * 0.3
+    - (rate - 4) * 0.2
+    + (spend - 20) * 0.05
+    + (Math.random()-0.5)*0.5;
+
+  let une = prevUne
+    - (gdp - 2) * 0.4
+    + (rate - 4) * 0.15
+    + (Math.random()-0.5)*0.3;
+
+  let dbt = prevDbt
+    + (spend - tax*0.4) * 0.5
+    - gdp * 0.3;
+
+  gdp=Math.max(-15,Math.min(15,gdp));
+  inf=Math.max(-5,Math.min(30,inf));
+  une=Math.max(1,Math.min(30,une));
+  dbt=Math.max(0,Math.min(250,dbt));
+
+  hist.gdp.push(gdp); hist.inf.push(inf); hist.une.push(une); hist.dbt.push(dbt);
+  simHist.gdp.push(gdp); simHist.inf.push(inf); simHist.une.push(une); simHist.dbt.push(dbt);
+  simHist.years.push(year+1);
+
+  year++;
+  document.getElementById('topbar-year').textContent=year;
+  document.getElementById('yr').textContent=year;
+  simYearsElapsed++;
+  updateAllIndicatorCards();
+  updateSociety(gdp,inf,une,dbt);
+  renderSoc();
+  calcEconDeviation();
+  let msg='GDP '+gdp.toFixed(1)+'%  INF '+inf.toFixed(1)+'%  UNE '+une.toFixed(1)+'%  DBT '+Math.round(dbt)+'%';
+  logEntry(year,'// '+msg, gdp>0?'good':'bad');
+}
+
+function updateVal(id,suffix){
+  const el=document.getElementById(id); if(!el)return;
+  const disp=document.getElementById('v-'+id); if(disp) disp.textContent=parseFloat(el.value).toFixed(1)+suffix;
+}
+
+function calcEconDeviation(){
+  if(!selectedISO||simHist.years.length===0)return;
+  let totalDiff=0, count=0;
+  simHist.years.forEach((yr,i)=>{
+    const real=getRealEconForYear(selectedISO,yr);
+    if(real.gdp!==null){ totalDiff+=Math.abs(simHist.gdp[i]-(real.gdp||0)); count++; }
+    if(real.inf!==null){ totalDiff+=Math.abs(simHist.inf[i]-(real.inf||0)); count++; }
+    if(real.une!==null){ totalDiff+=Math.abs(simHist.une[i]-(real.une||0)); count++; }
+  });
+  const pct=count?totalDiff/count:0;
+  deviationHistory.push(pct);
+  updateDeviationBadge(pct);
+}
+
+function updateDeviationBadge(pct){
+  const badge=document.getElementById('deviation-badge'); if(!badge)return;
+  if(pct<3){      badge.textContent='ON TRACK';    badge.className='dev-badge dev-track'; }
+  else if(pct<8){ badge.textContent='DIVERGING';   badge.className='dev-badge dev-amber'; }
+  else{           badge.textContent='OFF COURSE';  badge.className='dev-badge dev-red';   }
+}
+
+// ══════════════════════════════════════════
+//  APPEND D — SOCIETY + LOG + AUTO/RESET
+// ══════════════════════════════════════════
+
+function updateSociety(gdp,inf,une,dbt){
+  soc.equality   = Math.max(0,Math.min(100, soc.equality  - une*0.3 + gdp*0.1));
+  soc.trust      = Math.max(0,Math.min(100, soc.trust     - inf*0.2 + gdp*0.15 - (dbt>100?0.5:0)));
+  soc.innovation = Math.max(0,Math.min(100, soc.innovation+ gdp*0.2 - une*0.1));
+  soc.stability  = Math.max(0,Math.min(100, soc.stability - Math.abs(inf-2)*0.3 - (dbt>120?0.4:0)));
+  soc.welfare    = Math.max(0,Math.min(100, soc.welfare   + gdp*0.1 - une*0.25));
+  soc.confidence = Math.max(0,Math.min(100, soc.confidence+ gdp*0.2 - inf*0.15 - une*0.15));
+}
+
+function renderSoc(){
+  const grid=document.getElementById('soc-grid'); if(!grid)return;
+  const items=[
+    {k:'equality',  label:'EQUALITY',    color:'#00C896'},
+    {k:'trust',     label:'TRUST',       color:'#4fc3f7'},
+    {k:'innovation',label:'INNOVATION',  color:'#fff176'},
+    {k:'stability', label:'STABILITY',   color:'#a5d6a7'},
+    {k:'welfare',   label:'WELFARE',     color:'#ef9a9a'},
+    {k:'confidence',label:'CONFIDENCE',  color:'#ce93d8'},
+  ];
+  grid.innerHTML=items.map(it=>{
+    const v=Math.round(soc[it.k]);
+    return `<div class="soc-item">
+      <div class="soc-item-name">${it.label}</div>
+      <div class="soc-bar-bg"><div class="soc-bar-fill" style="width:${v}%;background:${it.color}"></div></div>
+      <div class="soc-item-val" style="color:${it.color}">${v}</div>
+    </div>`;
+  }).join('');
+}
+
+function logEntry(yr,msg,type){
+  const log=document.getElementById('log'); if(!log)return;
+  const cls=type==='good'?'good':type==='bad'?'bad':type==='warn'?'warn':'';
+  const div=document.createElement('div');
+  div.className='log-entry '+cls;
+  div.innerHTML='<span class="log-year">'+yr+'</span><span class="log-msg">'+msg+'</span>';
+  log.appendChild(div);
+  log.scrollTop=log.scrollHeight;
+  // keep last 60 entries
+  while(log.children.length>60) log.removeChild(log.firstChild);
+}
+
+function autoRun(){
+  if(autoRunning){
+    clearInterval(autoTimer); autoRunning=false;
+    document.getElementById('auto-btn').textContent='⏩ AUTO';
+    return;
+  }
+  autoRunning=true;
+  document.getElementById('auto-btn').textContent='⏹ STOP';
+  autoTimer=setInterval(()=>{
+    if(simMode==='history') doHistoryRoll();
+    else stepYear();
+  },900);
+}
+
+function resetSim(){
+  if(autoRunning){ clearInterval(autoTimer); autoRunning=false; document.getElementById('auto-btn').textContent='⏩ AUTO'; }
+  if(!selectedISO||!selectedYear)return;
+  year=selectedYear;
+  simMode='history'; simYearsElapsed=0; interferePending=false;
+  deviationHistory=[]; simHist={gdp:[],inf:[],une:[],dbt:[],years:[]};
+  soc={equality:55,trust:60,innovation:65,stability:70,welfare:58,confidence:62};
+  document.getElementById('topbar-year').textContent=year;
+  document.getElementById('yr').textContent=year;
+  document.getElementById('topbar-mode').textContent='HISTORY MODE';
+  document.getElementById('reveal-btn').classList.add('hidden');
+  document.getElementById('btn-interfere').classList.remove('apply-mode');
+  document.getElementById('deviation-badge').textContent='ON TRACK';
+  document.getElementById('deviation-badge').className='dev-badge dev-track';
+  document.getElementById('log').innerHTML='';
+  seedState();
+  initAllTabPanels();
+  updateAllIndicatorCards();
+  renderSoc();
+  logEntry('—','// SIMULATION RESET','warn');
+}
+
+// ══════════════════════════════════════════
+//  APPEND E — REVEAL MODAL + UTILITIES
+// ══════════════════════════════════════════
+
+function openRevealModal(){
+  document.getElementById('reveal-modal').classList.remove('hidden');
+  const avgDev=deviationHistory.length?
+    deviationHistory.reduce((a,b)=>a+b,0)/deviationHistory.length:0;
+  document.getElementById('reveal-dev-pct').textContent=avgDev.toFixed(1)+'%';
+  const verdicts=[
+    [2,'Remarkably close. You governed like a historian.'],
+    [5,'Solid stewardship. Minor divergences, but coherent.'],
+    [10,'Notable differences. Bold choices — for better or worse.'],
+    [99,'A very different path. History might judge you harshly.'],
+  ];
+  const v=verdicts.find(([t])=>avgDev<=t)||verdicts[verdicts.length-1];
+  document.getElementById('reveal-verdict').textContent=v[1];
+  document.getElementById('reveal-title').textContent=
+    'YOUR LEGACY vs REALITY — '+(econDB[selectedISO]||{}).name||'';
+  drawRevealCharts();
+}
+
+function closeRevealModal(){
+  document.getElementById('reveal-modal').classList.add('hidden');
+  revealCharts.forEach(c=>{ try{c.destroy();}catch(e){} });
+  revealCharts=[];
+}
+
+function drawRevealCharts(){
+  // Load Chart.js then draw
+  loadScript('https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js',()=>{
+    const configs=[
+      {id:'rc-economic',   group:'economic',    key:'gdp_growth',    label:'GDP Growth %',        color:'#00C896'},
+      {id:'rc-population', group:'population',  key:'pop_growth',    label:'Population Growth %', color:'#4fc3f7'},
+      {id:'rc-health',     group:'health',      key:'life_expectancy',label:'Life Expectancy',    color:'#ef9a9a'},
+      {id:'rc-education',  group:'education',   key:'literacy_rate', label:'Literacy Rate %',     color:'#fff176'},
+      {id:'rc-environment',group:'environment', key:'co2_per_capita',label:'CO₂ / Capita (t)',    color:'#a5d6a7'},
+      {id:'rc-governance', group:'governance',  key:'gini_index',    label:'Gini Index',          color:'#ce93d8'},
+    ];
+    configs.forEach(cfg=>drawRevealChart(cfg));
+  });
+}
+
+function drawRevealChart(cfg){
+  const canvas=document.getElementById(cfg.id); if(!canvas)return;
+  // Build real series from realHistory
+  const realYears=realHistory.years||[];
+  const realVals=(realHistory[cfg.group]||{})[cfg.key]||[];
+  const simYears=simHist.years||[];
+
+  // Sim vals: only available for economic group keys we tracked
+  const simKeyMap={
+    'gdp_growth':'gdp','inflation':'inf','unemployment':'une','debt_gdp':'dbt'
+  };
+  const simArr=simKeyMap[cfg.key]?simHist[simKeyMap[cfg.key]]:[];
+
+  // Merge all years
+  const allYears=[...new Set([...realYears,...simYears])].sort((a,b)=>a-b);
+  const realMap={}, simMap={};
+  realYears.forEach((y,i)=>{ if(realVals[i]!==null&&realVals[i]!==undefined) realMap[y]=realVals[i]; });
+  simYears.forEach((y,i)=>{ if(simArr[i]!==null&&simArr[i]!==undefined) simMap[y]=simArr[i]; });
+
+  const rData=allYears.map(y=>realMap[y]??null);
+  const sData=allYears.map(y=>simMap[y]??null);
+
+  const ctx=canvas.getContext('2d');
+  try{ Chart.getChart(canvas)?.destroy(); }catch(e){}
+  const ch=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:allYears,
+      datasets:[
+        {label:'Real',data:rData,borderColor:cfg.color,borderWidth:2,pointRadius:0,tension:0.3,spanGaps:true},
+        {label:'You', data:sData,borderColor:'#ffffff',borderWidth:1.5,borderDash:[4,3],pointRadius:0,tension:0.3,spanGaps:true},
+      ]
+    },
+    options:{
+      responsive:true,animation:false,
+      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+      scales:{
+        x:{ticks:{color:'#666',font:{size:9}},grid:{color:'rgba(255,255,255,0.05)'}},
+        y:{ticks:{color:'#666',font:{size:9}},grid:{color:'rgba(255,255,255,0.05)'}},
+      }
+    }
+  });
+  revealCharts.push(ch);
+}
+
+function buildNumericLookup(){
+  // Maps TopoJSON numeric country ID → ISO3 code using our econDB names
+  // We rely on a hardcoded table of ~220 numeric→ISO3 mappings
+  const tbl={4:'AFG',8:'ALB',12:'DZA',24:'AGO',32:'ARG',36:'AUS',40:'AUT',50:'BGD',
+    56:'BEL',64:'BTN',68:'BOL',76:'BRA',100:'BGR',116:'KHM',120:'CMR',124:'CAN',
+    144:'LKA',152:'CHL',156:'CHN',170:'COL',188:'CRI',191:'HRV',192:'CUB',203:'CZE',
+    208:'DNK',218:'ECU',818:'EGY',231:'ETH',246:'FIN',250:'FRA',276:'DEU',288:'GHA',
+    300:'GRC',320:'GTM',332:'HTI',340:'HND',348:'HUN',356:'IND',360:'IDN',364:'IRN',
+    368:'IRQ',372:'IRL',376:'ISR',380:'ITA',388:'JAM',392:'JPN',400:'JOR',404:'KEN',
+    408:'PRK',410:'KOR',414:'KWT',418:'LAO',422:'LBN',434:'LBY',484:'MEX',504:'MAR',
+    516:'NAM',524:'NPL',528:'NLD',554:'NZL',558:'NIC',566:'NGA',578:'NOR',586:'PAK',
+    591:'PAN',600:'PRY',604:'PER',608:'PHL',616:'POL',620:'PRT',630:'PRI',634:'QAT',
+    642:'ROU',643:'RUS',682:'SAU',686:'SEN',710:'ZAF',724:'ESP',752:'SWE',756:'CHE',
+    760:'SYR',764:'THA',780:'TTO',788:'TUN',792:'TUR',800:'UGA',804:'UKR',784:'ARE',
+    826:'GBR',840:'USA',858:'URY',862:'VEN',704:'VNM',887:'YEM',894:'ZMB',716:'ZWE',
+    012:'DZA',233:'EST',428:'LVA',440:'LTU',703:'SVK',705:'SVN',191:'HRV',
+  };
+  const out={};
+  Object.entries(tbl).forEach(([num,iso3])=>{ out[String(parseInt(num))]=iso3; });
+  return out;
+}
+
+function renderMapFallback(world, svgEl){
+  // Basic fallback: just show country outlines in gray if D3 fails
+  svgEl.innerHTML='<text x="50%" y="50%" text-anchor="middle" fill="#666" font-family="monospace" font-size="14">// MAP UNAVAILABLE — use search above</text>';
+}
+
+// ── INIT (called by main.js tab switcher) ──
+function economyInit(){
+  // Redraw sparklines for any currently visible indicator cards
+  Object.keys(groupSparkData).forEach(key=>{
+    const [group,indKey]=key.split('.');
+    const canvas=document.getElementById('ics-'+group+'-'+indKey);
+    const cfg=TAB_CONFIG[group]; if(!cfg)return;
+    const ind=cfg.indicators.find(i=>i.key===indKey); if(!ind)return;
+    if(canvas) sparkline(canvas, groupSparkData[key], cfg.accent);
+  });
+  // Kick off data load if not yet started
+  if(!econDB) loadEconData();
+}
+
+// ── BOOTSTRAP ──
+document.addEventListener('DOMContentLoaded', loadEconData);

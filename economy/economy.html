@@ -9,17 +9,20 @@
     <div class="map-hero-left">
       <div class="map-eyebrow">// ECONOMY &amp; DEBT SIMULATOR</div>
       <h1 class="map-title">Choose Your<br><span>Country</span></h1>
-      <p class="map-sub">Select a nation. Load its real historical data. Then take the controls and see if you can do better.</p>
+      <p class="map-sub">Select a nation. Load its real historical data. Then take the controls — and see if you can do better.</p>
     </div>
     <div class="map-search-wrap">
-      <input id="map-search" class="map-search" type="text" placeholder="SEARCH COUNTRY..." autocomplete="off" oninput="mapSearch(this.value)">
+      <input id="map-search" class="map-search" type="text"
+             placeholder="// search country..." autocomplete="off"
+             oninput="mapSearch(this.value)">
       <div id="map-search-results" class="map-search-results"></div>
     </div>
   </div>
 
-  <div class="map-container">
+  <div class="map-container" id="map-container">
     <div id="map-loading" class="map-loading">// LOADING WORLD MAP...</div>
-    <svg id="world-svg" class="world-svg" viewBox="0 0 2000 1001" xmlns="http://www.w3.org/2000/svg"></svg>
+    <svg id="world-svg" class="world-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div id="map-tooltip" class="map-tooltip"></div>
     <div class="map-legend">
       <span class="leg-item"><span class="leg-dot leg-data"></span>Data available</span>
       <span class="leg-item"><span class="leg-dot leg-nodata"></span>No data</span>
@@ -27,9 +30,9 @@
     </div>
   </div>
 
-  <!-- Country overlay panel -->
+  <!-- Country selection panel -->
   <div id="country-panel" class="country-panel hidden">
-    <button class="panel-close" onclick="closePanel()">✕</button>
+    <button class="panel-close" onclick="closePanel()">&#x2715;</button>
     <div class="panel-flag" id="panel-flag"></div>
     <div class="panel-name" id="panel-name">United States</div>
     <div class="panel-iso" id="panel-iso">USA</div>
@@ -37,7 +40,8 @@
     <div class="panel-year-section">
       <div class="panel-label">START YEAR</div>
       <div class="panel-year-val" id="panel-year-display">1980</div>
-      <input type="range" id="panel-year-slider" min="1960" max="2022" value="1980" oninput="panelYearChange(this.value)">
+      <input type="range" id="panel-year-slider" min="1960" max="2022" value="1980"
+             oninput="panelYearChange(this.value)">
     </div>
 
     <div class="panel-preview" id="panel-preview">
@@ -50,128 +54,138 @@
     <button class="panel-begin" onclick="beginSimulation()">BEGIN SIMULATION &#x2192;</button>
   </div>
 
-</div>
+</div><!-- /eco-map-screen -->
+
 
 <!-- ══════════════════════════════════════
      SCREEN 1 — SIMULATOR
 ══════════════════════════════════════ -->
 <div id="eco-sim-screen" class="hidden">
 
-<div class="hero">
-  <div>
-    <div class="sim-back" onclick="backToMap()">&#x2190; CHANGE COUNTRY</div>
-    <div class="hero-title" id="sim-country-title">Economy &amp;<br><span>Debt</span> Sim</div>
-    <div class="hero-desc">Move the sliders, step forward in time, and watch how policy shapes a society.</div>
-  </div>
-  <div class="hero-status">
-    <span class="hero-status-dot"></span> <span id="sim-status-text">SIM READY</span>
-  </div>
-</div>
-
-<!-- HISTORICAL LOCK BANNER -->
-<div id="lock-banner" class="lock-banner hidden">
-  <span class="lock-icon">&#x25A0;</span>
-  <span id="lock-banner-text">// HISTORICAL DATA — STEP FORWARD TO TAKE CONTROL</span>
-</div>
-
-<div class="sim-wrap">
-  <div class="sim-grid">
-
-    <!-- CONTROLS -->
-    <div class="sim-controls">
-      <div class="controls-header">
-        <div class="controls-title">Policy Levers</div>
-        <div class="year-badge" id="yr">2024</div>
-      </div>
-
-      <div class="ctrl-section">
-        <div class="ctrl-section-title">// Central Bank</div>
-        <div class="ctrl-item">
-          <div class="ctrl-row">
-            <span class="ctrl-name">Interest Rate</span>
-            <span class="ctrl-val" id="v-rate">4.5%</span>
-          </div>
-          <input type="range" id="rate" min="0" max="20" step="0.5" value="4.5" oninput="updateVal('rate','%')">
-        </div>
-        <div class="ctrl-item">
-          <div class="ctrl-row">
-            <span class="ctrl-name">Money Supply Growth</span>
-            <span class="ctrl-val" id="v-money">3%</span>
-          </div>
-          <input type="range" id="money" min="-5" max="25" step="1" value="3" oninput="updateVal('money','%')">
-        </div>
-      </div>
-
-      <div class="ctrl-section">
-        <div class="ctrl-section-title">// Finance Ministry</div>
-        <div class="ctrl-item">
-          <div class="ctrl-row">
-            <span class="ctrl-name">Govt Spending (% GDP)</span>
-            <span class="ctrl-val" id="v-spend">20%</span>
-          </div>
-          <input type="range" id="spend" min="10" max="60" step="1" value="20" oninput="updateVal('spend','%')">
-        </div>
-        <div class="ctrl-item">
-          <div class="ctrl-row">
-            <span class="ctrl-name">Tax Rate</span>
-            <span class="ctrl-val" id="v-tax">25%</span>
-          </div>
-          <input type="range" id="tax" min="5" max="65" step="1" value="25" oninput="updateVal('tax','%')">
-        </div>
-        <div class="ctrl-item">
-          <div class="ctrl-row">
-            <span class="ctrl-name">Public Debt (% GDP)</span>
-            <span class="ctrl-val" id="v-debt">60%</span>
-          </div>
-          <input type="range" id="debt" min="0" max="250" step="5" value="60" oninput="updateVal('debt','%')">
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="sim-btn go" id="step-btn" onclick="stepYear()">&#x25B6; +1 YR</button>
-        <button class="sim-btn" id="auto-btn" onclick="autoRun()">&#x23E9; AUTO</button>
-        <button class="sim-btn" onclick="resetSim()">&#x21BA; RESET</button>
+  <!-- TOP BAR -->
+  <div class="sim-topbar">
+    <div class="sim-topbar-left">
+      <button class="topbar-back" onclick="backToMap()">&#x2190; MAP</button>
+      <div class="topbar-info">
+        <span class="topbar-flag" id="topbar-flag"></span>
+        <span class="topbar-country" id="topbar-country">UNITED STATES</span>
+        <span class="topbar-sep">//</span>
+        <span class="topbar-mode-label" id="topbar-mode">SIMULATION</span>
+        <span class="topbar-sep">//</span>
+        <span class="topbar-year" id="topbar-year">1980</span>
       </div>
     </div>
+    <div class="sim-topbar-right">
+      <span id="deviation-badge" class="dev-badge dev-track">ON TRACK</span>
+      <button id="reveal-btn" class="reveal-btn hidden" onclick="openRevealModal()">&#x25CE; REVEAL HISTORY</button>
+    </div>
+  </div>
 
-    <!-- CHARTS -->
-    <div class="charts-area">
-      <div class="metrics-row">
-        <div class="metric-card gdp">
-          <div class="metric-label">GDP Growth <span class="real-badge hidden" id="badge-gdp">&#x25CF; REAL</span></div>
-          <div class="metric-val" id="gdp-val" style="color:#00C896">+2.8%</div>
-          <div class="metric-desc" id="gdp-desc">Moderate expansion</div>
-          <div class="metric-delta" id="gdp-delta"></div>
-          <canvas class="sparkline" id="sp-gdp"></canvas>
+  <!-- INDICATOR TAB BAR -->
+  <div class="indicator-tabbar">
+    <button class="itab active" data-tab="economic"   onclick="switchTab('economic')"  ><span class="itab-icon">&#x1F4CA;</span> ECONOMIC</button>
+    <button class="itab"        data-tab="population" onclick="switchTab('population')" ><span class="itab-icon">&#x1F465;</span> POPULATION</button>
+    <button class="itab"        data-tab="health"     onclick="switchTab('health')"     ><span class="itab-icon">&#x2665;</span> HEALTH</button>
+    <button class="itab"        data-tab="education"  onclick="switchTab('education')"  ><span class="itab-icon">&#x1F393;</span> EDUCATION</button>
+    <button class="itab"        data-tab="environment"onclick="switchTab('environment')"><span class="itab-icon">&#x1F33F;</span> ENVIRONMENT</button>
+    <button class="itab"        data-tab="governance" onclick="switchTab('governance')" ><span class="itab-icon">&#x2696;</span> GOVERNANCE</button>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="sim-wrap">
+    <div class="sim-grid">
+
+      <!-- ─── LEFT: POLICY LEVERS ─── -->
+      <div class="sim-controls" id="sim-controls">
+        <div class="controls-header">
+          <div class="controls-title">// POLICY LEVERS</div>
+          <div class="year-badge" id="yr">1980</div>
         </div>
-        <div class="metric-card inf">
-          <div class="metric-label">Inflation <span class="real-badge hidden" id="badge-inf">&#x25CF; REAL</span></div>
-          <div class="metric-val" id="inf-val" style="color:#FF4D4F">3.1%</div>
-          <div class="metric-desc" id="inf-desc">Slightly elevated</div>
-          <div class="metric-delta" id="inf-delta"></div>
-          <canvas class="sparkline" id="sp-inf"></canvas>
+
+        <div class="ctrl-section">
+          <div class="ctrl-section-title">// Central Bank</div>
+          <div class="ctrl-item">
+            <div class="ctrl-row">
+              <span class="ctrl-name">Interest Rate</span>
+              <span class="ctrl-val" id="v-rate">4.5%</span>
+            </div>
+            <input type="range" id="rate" min="0" max="20" step="0.5" value="4.5" oninput="updateVal('rate','%')">
+          </div>
+          <div class="ctrl-item">
+            <div class="ctrl-row">
+              <span class="ctrl-name">Money Supply Growth</span>
+              <span class="ctrl-val" id="v-money">3%</span>
+            </div>
+            <input type="range" id="money" min="-5" max="25" step="1" value="3" oninput="updateVal('money','%')">
+          </div>
         </div>
-        <div class="metric-card une">
-          <div class="metric-label">Unemployment <span class="real-badge hidden" id="badge-une">&#x25CF; REAL</span></div>
-          <div class="metric-val" id="une-val" style="color:#FFB800">5.2%</div>
-          <div class="metric-desc" id="une-desc">Near natural rate</div>
-          <div class="metric-delta" id="une-delta"></div>
-          <canvas class="sparkline" id="sp-une"></canvas>
+
+        <div class="ctrl-section">
+          <div class="ctrl-section-title">// Finance Ministry</div>
+          <div class="ctrl-item">
+            <div class="ctrl-row">
+              <span class="ctrl-name">Govt Spending % GDP</span>
+              <span class="ctrl-val" id="v-spend">20%</span>
+            </div>
+            <input type="range" id="spend" min="10" max="60" step="1" value="20" oninput="updateVal('spend','%')">
+          </div>
+          <div class="ctrl-item">
+            <div class="ctrl-row">
+              <span class="ctrl-name">Tax Rate</span>
+              <span class="ctrl-val" id="v-tax">25%</span>
+            </div>
+            <input type="range" id="tax" min="5" max="65" step="1" value="25" oninput="updateVal('tax','%')">
+          </div>
+          <div class="ctrl-item">
+            <div class="ctrl-row">
+              <span class="ctrl-name">Trade Openness % GDP</span>
+              <span class="ctrl-val" id="v-trade">40%</span>
+            </div>
+            <input type="range" id="trade" min="0" max="200" step="5" value="40" oninput="updateVal('trade','%')">
+          </div>
+          <div class="ctrl-item">
+            <div class="ctrl-row">
+              <span class="ctrl-name">Public Debt % GDP</span>
+              <span class="ctrl-val" id="v-debt">60%</span>
+            </div>
+            <input type="range" id="debt" min="0" max="250" step="5" value="60" oninput="updateVal('debt','%')">
+          </div>
         </div>
-        <div class="metric-card dbt">
-          <div class="metric-label">Debt / GDP <span class="real-badge hidden" id="badge-dbt">&#x25CF; REAL</span></div>
-          <div class="metric-val" id="dbt-val" style="color:#818CF8">60%</div>
-          <div class="metric-desc" id="dbt-desc">Manageable</div>
-          <div class="metric-delta" id="dbt-delta"></div>
-          <canvas class="sparkline" id="sp-dbt"></canvas>
+
+        <!-- MODE BUTTONS -->
+        <div class="mode-buttons">
+          <button class="mode-btn mode-history" id="btn-history" onclick="doHistoryRoll()">
+            &#x25B6; LET HISTORY ROLL
+          </button>
+          <button class="mode-btn mode-interfere" id="btn-interfere" onclick="doInterfere()">
+            &#x270E; ALLOW ME TO INTERFERE
+          </button>
+        </div>
+
+        <div class="ctrl-footer">
+          <button class="sim-btn" id="auto-btn" onclick="autoRun()">&#x23E9; AUTO</button>
+          <button class="sim-btn" onclick="resetSim()">&#x21BA; RESET</button>
         </div>
       </div>
 
-      <div class="bottom-row">
-        <div class="soc-card">
-          <div class="soc-title">// Society Health Index</div>
+      <!-- ─── RIGHT: INDICATORS + LOG ─── -->
+      <div class="charts-area">
+
+        <!-- Society Health strip (always visible) -->
+        <div class="soc-strip">
+          <div class="soc-strip-title">// SOCIETY INDEX</div>
           <div class="soc-grid" id="soc-grid"></div>
         </div>
+
+        <!-- Tab panels -->
+        <div id="tab-economic"    class="tab-panel active" data-accent="#00C896"></div>
+        <div id="tab-population"  class="tab-panel hidden" data-accent="#4fc3f7"></div>
+        <div id="tab-health"      class="tab-panel hidden" data-accent="#ef9a9a"></div>
+        <div id="tab-education"   class="tab-panel hidden" data-accent="#fff176"></div>
+        <div id="tab-environment" class="tab-panel hidden" data-accent="#a5d6a7"></div>
+        <div id="tab-governance"  class="tab-panel hidden" data-accent="#ce93d8"></div>
+
+        <!-- Event log (always visible) -->
         <div class="log-card">
           <div class="log-title">
             <div class="log-dot"></div>
@@ -184,15 +198,13 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
-</div>
-
-<!-- REVEAL HISTORY BUTTON (appears after 5 steps) -->
-<button id="reveal-btn" class="reveal-btn hidden" onclick="openRevealModal()">&#x25CE; REVEAL HISTORY</button>
 
 </div><!-- /eco-sim-screen -->
+
 
 <!-- ══════════════════════════════════════
      REVEAL MODAL
@@ -200,30 +212,45 @@
 <div id="reveal-modal" class="reveal-modal hidden">
   <div class="reveal-modal-inner">
     <div class="reveal-modal-header">
-      <div class="reveal-modal-title" id="reveal-title">HOW DID YOU DO? // USA 1980–1990</div>
+      <div class="reveal-modal-title" id="reveal-title">YOUR LEGACY vs REALITY</div>
       <button class="reveal-close" onclick="closeRevealModal()">&#x2715;</button>
+    </div>
+    <div class="reveal-dev-row">
+      <span class="reveal-dev-label">OVERALL DEVIATION</span>
+      <span class="reveal-dev-val" id="reveal-dev-pct">0.0%</span>
     </div>
     <div class="reveal-charts-grid">
       <div class="reveal-chart-wrap">
-        <div class="reveal-chart-label">GDP GROWTH %</div>
-        <canvas id="rc-gdp"></canvas>
+        <div class="reveal-chart-label" style="color:#00C896">ECONOMIC — GDP GROWTH %</div>
+        <canvas id="rc-economic"></canvas>
       </div>
       <div class="reveal-chart-wrap">
-        <div class="reveal-chart-label">INFLATION %</div>
-        <canvas id="rc-inf"></canvas>
+        <div class="reveal-chart-label" style="color:#4fc3f7">POPULATION — GROWTH %</div>
+        <canvas id="rc-population"></canvas>
       </div>
       <div class="reveal-chart-wrap">
-        <div class="reveal-chart-label">UNEMPLOYMENT %</div>
-        <canvas id="rc-une"></canvas>
+        <div class="reveal-chart-label" style="color:#ef9a9a">HEALTH — LIFE EXPECTANCY</div>
+        <canvas id="rc-health"></canvas>
       </div>
       <div class="reveal-chart-wrap">
-        <div class="reveal-chart-label">DEBT / GDP %</div>
-        <canvas id="rc-dbt"></canvas>
+        <div class="reveal-chart-label" style="color:#fff176">EDUCATION — LITERACY RATE %</div>
+        <canvas id="rc-education"></canvas>
+      </div>
+      <div class="reveal-chart-wrap">
+        <div class="reveal-chart-label" style="color:#a5d6a7">ENVIRONMENT — CO&#x2082; / CAPITA</div>
+        <canvas id="rc-environment"></canvas>
+      </div>
+      <div class="reveal-chart-wrap">
+        <div class="reveal-chart-label" style="color:#ce93d8">GOVERNANCE — GINI INDEX</div>
+        <canvas id="rc-governance"></canvas>
       </div>
     </div>
     <div class="reveal-legend">
       <span class="rl-item"><span class="rl-line rl-real"></span> Real historical path</span>
       <span class="rl-item"><span class="rl-line rl-sim"></span> Your simulation</span>
+    </div>
+    <div class="reveal-verdict" id="reveal-verdict">
+      Remarkably close. You governed like a historian.
     </div>
   </div>
 </div>

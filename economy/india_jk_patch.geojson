@@ -1,0 +1,32 @@
+{
+  "type": "FeatureCollection",
+  "comment": "// J&K shown per India's official claim — covers Pakistan-administered (AJK + GB) and China-administered (Aksai Chin) portions",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Azad Kashmir & Gilgit-Baltistan (Pakistan-administered)", "country": "IND", "claimedBy": "IND" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [73.90, 33.10], [74.00, 33.50], [74.10, 34.20], [74.20, 34.80],
+          [74.50, 35.40], [74.80, 36.00], [75.20, 36.50], [75.80, 36.90],
+          [76.40, 37.20], [76.90, 37.50], [77.30, 37.20], [77.50, 36.80],
+          [77.20, 36.20], [76.80, 35.60], [76.50, 35.00], [76.20, 34.40],
+          [75.80, 33.80], [75.20, 33.30], [74.60, 33.00], [73.90, 33.10]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Aksai Chin (China-administered)", "country": "IND", "claimedBy": "IND" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [77.50, 33.80], [77.80, 34.20], [78.40, 34.60], [79.10, 34.90],
+          [79.80, 35.20], [80.30, 35.00], [80.50, 34.50], [80.10, 34.00],
+          [79.40, 33.60], [78.60, 33.30], [77.80, 33.40], [77.50, 33.80]
+        ]]
+      }
+    }
+  ]
+}
