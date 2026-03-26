@@ -124,6 +124,7 @@ nav::-webkit-scrollbar { display: none; }
 .tab-btn[data-tab="loans"].active::after    { background: #2563EB; }
 .tab-btn[data-tab="plants"].active::after   { background: #4ADE80; }
 .tab-btn[data-tab="judicial"].active::after { background: #818CF8; }
+.tab-btn[data-tab="astrology"].active::after { background: #7B2FBE; }
 
 .tab-badge {
   font-size: 10px;

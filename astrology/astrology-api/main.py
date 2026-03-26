@@ -4,6 +4,8 @@ from pydantic import BaseModel
 from astro.chart import calculate_chart
 from astro.dasha import calculate_dasha_at_birth
 from astro.divisional import calculate_divisionals
+from geopy.geocoders import Nominatim
+from timezonefinder import TimezoneFinder
 
 app = FastAPI(title="Jyotish API")
 
@@ -34,6 +36,21 @@ def compute_chart(req: ChartRequest):
     chart['dasha'] = calculate_dasha_at_birth(moon_lon)
     
     return chart
+
+@app.get("/api/geocode")
+def geocode_city(city: str):
+    geolocator = Nominatim(user_agent="jyotish_dashboard_app")
+    location = geolocator.geocode(city)
+    if not location:
+        return {"error": "City not found"}
+    
+    tf = TimezoneFinder()
+    tz_str = tf.timezone_at(lng=location.longitude, lat=location.latitude)
+    return {
+        "lat": location.latitude,
+        "lon": location.longitude,
+        "timezone": tz_str
+    }
     
 @app.get("/health")
 def health_check():

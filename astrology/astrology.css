@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&display=swap');
+
+.jyotish-container {
+    --bg-primary: #0D0D1A;
+    --bg-secondary: #1A1A2E;
+    --gold: #C9A84C;
+    --teal: #4ECDC4;
+    --text-primary: #F0EEE6;
+    --text-secondary: #8888BB;
+    --rahu-color: #7B2FBE;
+    --ketu-color: #2F4858;
+    
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: calc(100vh - 80px); /* Adjusting for global header */
+    padding: 2rem;
+    font-family: 'Crimson Pro', serif;
+}
+
+.jyotish-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.jyotish-subtitle {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    font-weight: 400;
+}
+
+.jyotish-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    border-radius: 4px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: var(--teal);
+}
+
+.jyotish-btn {
+    width: 100%;
+    padding: 1rem;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+.jyotish-btn:hover {
+    background: var(--gold);
+    color: var(--bg-primary);
+}
+
+.jyotish-statement {
+    max-width: 550px;
+    margin: 4rem auto 0;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.om-bg {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 40vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.15;
+    color: var(--gold);
+    pointer-events: none;
+    z-index: 0;
+}

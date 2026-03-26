@@ -1,0 +1,47 @@
+<div class="jyotish-container">
+    <!-- Act One: The Orrery Unfolds -->
+    <div id="orrery-layer" class="jyotish-act" style="display: none;">
+        <div class="orrery-text-layer">
+            <div id="om-symbol" class="om-bg">ॐ</div>
+            <div id="orrery-title">The sky at the moment of your arrival</div>
+        </div>
+        <svg id="zodiac-wheel" viewBox="0 0 1000 1000">
+            <!-- GSAP animated circles and paths -->
+        </svg>
+    </div>
+
+    <!-- The Input Form (Shown Initially) -->
+    <div id="jyotish-intake">
+        <h1 class="jyotish-title">✦ J Y O T I S H ✦</h1>
+        <p class="jyotish-subtitle">Vedic Astrology Life Dashboard</p>
+        
+        <form id="astrology-birth-form" class="jyotish-form">
+            <div class="form-group">
+                <label>Date of Birth</label>
+                <input type="date" id="astro-dob" required>
+            </div>
+            <div class="form-group">
+                <label>Exact Time of Birth</label>
+                <input type="time" id="astro-tob" required>
+            </div>
+            <div class="form-group">
+                <label>City of Birth</label>
+                <input type="text" id="astro-city" placeholder="e.g. Allahabad, India" required>
+            </div>
+            <button type="submit" class="jyotish-btn">Compute Chart</button>
+        </form>
+
+        <p class="jyotish-statement">
+            <i>This system maps the conditions of your birth — the planetary consensus on each area of your life, and the timing of periods that ask more or less of you. It does not predict what will happen. It offers a structured way to think about where you are, what is being asked of you, and what resources you carry. The decisions are yours. They always have been.</i>
+        </p>
+    </div>
+
+    <!-- Act Two: The Domain Intelligence Dashboard -->
+    <div id="dashboard-layer" class="jyotish-act" style="display: none;">
+        <!-- 12 Domain Cards will be generated here -->
+    </div>
+
+    <!-- Act Three: Planetary Council (Debate Mode) -->
+    <div id="council-layer" class="jyotish-act" style="display: none;">
+    </div>
+</div>
