@@ -114,19 +114,21 @@ After loading, it calls `window[tabName + 'Init']()` if it exists.
 - **Photo:** `../Images/pradeep.jpg`, `object-position: right top`
 - **Canvas chart:** `aboutInit()` → `drawDonut('time-donut')` — 5 segments, DPR-aware
 
-### 📈 Economy & Debt Simulator
+### 📈 Economy & Debt Simulator (v3 — complete)
 - **Feel:** Bloomberg terminal / trading floor. Completely different universe.
-- **Page background:** `#050D0A` (near black)
-- **Accent:** `#00C896` terminal green
-- **Warning:** `#FFB800` amber | **Danger:** `#FF4D4F` red | **Debt:** `#818CF8`
-- **All text:** white or terminal green
-- **Labels:** `Courier New` monospace, uppercase, letter-spaced
-- **Sliders:** green track `rgba(0,200,150,0.2)`, glowing green thumb
-- **Buttons:** monospace, green outline → fills on hover; primary = solid green
-- **Event log:** pure `#000000` bg, green monospace text, colored entries
-- **Section titles:** `// Central Bank` and `// Finance Ministry` style
-- **`economyInit()`** redraws sparklines with colors: GDP=#00C896, Inflation=#FF4D4F, Unemployment=#FFB800, Debt=#818CF8
-- **Simulation logic** is all in `economy.js` — `stepYear()`, `autoRun()`, `resetSim()`
+- **Page background:** `#050D0A` | **Accent:** `#00C896` | **Warning:** `#FFB800` | **Danger:** `#FF4D4F`
+- **Two-screen flow:** Screen 0 = D3 world map (geoNaturalEarth1, earth tones) → Screen 1 = simulator
+- **Map:** ocean `#1a3a5c`, land with data `#2d5a3d`, no data `#1e3a2a`, selected `#6aaa7a`; J&K overlay from `india_jk_patch.geojson`; G20 permanent labels; search bar
+- **Simulator top bar:** ← MAP | flag + country + mode + year | deviation badge + Reveal button
+- **Dual mode:** "LET HISTORY ROLL" steps through real World Bank data; "ALLOW ME TO INTERFERE" (two-click) runs macro model from slider positions
+- **6 indicator tabs:** economic / population / health / education / environment / governance — each with accent color, indicator cards (value + sparkline + REAL/SIM badge)
+- **Deviation badge:** ON TRACK (green) / DIVERGING (amber) / OFF COURSE (red) — tracks % diff from real history
+- **Reveal modal:** Chart.js loaded dynamically; 2×3 grid comparing real vs sim paths across 6 groups
+- **Data:** `economy/economic_data.json` — 221 countries, 1960–2025, 13.5 MB, nested structure `{iso3: {name, iso2, years: {year: {economic:{}, population:{}, health:{}, education:{}, environment:{}, governance:{}}}}}`
+- **CO₂ indicator:** `EN.ATM.CO2E.PC` retired by World Bank — shows `—`. Replacement: `EN.GHG.CO2.PC.CE.AR5`
+- **Key JS functions:** `beginSimulation()`, `doHistoryRoll()`, `doInterfere()`, `stepYear()`, `calcEconDeviation()`, `openRevealModal()`, `economyInit()`, `buildNumericLookup()`
+- **`gi(yData, group, key)`** — backward-compat helper: checks nested `yData[group][key]` first, then flat `yData[key]`
+- D3 + topojson + Chart.js all loaded dynamically via `loadScript()` chain (no changes to index.html)
 
 ### 🤝 Loan Tracker
 - **Status:** HTML/CSS/JS files exist but NOT yet redesigned (still old cream theme)
@@ -170,12 +172,12 @@ After loading, it calls `window[tabName + 'Init']()` if it exists.
 - Global: dark header/nav, Sora font, per-tab underlines, pulse dot animation
 - Home: full redesign — dark hero + terminal widget + themed project cards + ideas backlog
 - About Me: full data-viz redesign — Gantt, skill bars, donut, language rings, awards
-- Economy: full Bloomberg/terminal theme — dark bg, green accents, monospace everything
+- Economy: v3 complete — D3 map, 6 indicator groups, dual-mode sim, deviation tracking, Chart.js reveal
 
 ### ⏳ Pending (next in queue)
-- Loan Tracker: fintech theme redesign
-- Plant Simulator: full coming soon page with themed design + animations
-- Judicial System: full coming soon page with institutional theme
+- Loan Tracker: fintech theme redesign (Revolut/Wise feel, `#2563EB` blue)
+- Plant Simulator: themed coming soon page (`#0D1F0D` bg, `#4ADE80` green)
+- Judicial System: themed coming soon page (`#1E1B4B` indigo, `#F59E0B` gold, Merriweather serif)
 
 ---
 
