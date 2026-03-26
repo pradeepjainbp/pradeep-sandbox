@@ -140,3 +140,25 @@
 .autocomplete-items div:hover {
     background-color: rgba(255,255,255,0.1);
 }
+
+.si-box {
+    fill: rgba(0,0,0,0.5);
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    opacity: 0;
+}
+.planet-img {
+    clip-path: circle(48% at 50% 50%);
+    opacity: 0;
+    transition: filter 0.3s ease;
+}
+.planet-img:hover {
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+}
+.si-label {
+    fill: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    opacity: 0;
+    text-transform: uppercase;
+}
