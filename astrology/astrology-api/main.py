@@ -39,18 +39,22 @@ def compute_chart(req: ChartRequest):
 
 @app.get("/api/geocode")
 def geocode_city(city: str):
-    geolocator = Nominatim(user_agent="jyotish_dashboard_app")
-    location = geolocator.geocode(city)
-    if not location:
-        return {"error": "City not found"}
-    
-    tf = TimezoneFinder()
-    tz_str = tf.timezone_at(lng=location.longitude, lat=location.latitude)
-    return {
-        "lat": location.latitude,
-        "lon": location.longitude,
-        "timezone": tz_str
-    }
+    try:
+        geolocator = Nominatim(user_agent="jyotish_dashboard_app_pradeep")
+        location = geolocator.geocode(city, timeout=10)
+        if not location:
+            return {"error": "City not found"}
+        
+        tf = TimezoneFinder()
+        tz_str = tf.timezone_at(lng=location.longitude, lat=location.latitude)
+        return {
+            "lat": location.latitude,
+            "lon": location.longitude,
+            "timezone": tz_str
+        }
+    except Exception as e:
+        import traceback
+        return {"error": "Server exception", "details": str(e), "trace": traceback.format_exc()}
     
 @app.get("/health")
 def health_check():
