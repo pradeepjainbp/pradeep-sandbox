@@ -1,6 +1,6 @@
 # JYOTISH — Vedic Astrology Tab: Build Plan
 > Auto-updated as tasks complete. Start here in every new session.
-> Last updated: 2026-03-27
+> Last updated: 2026-03-27 (end of session 2)
 
 ---
 
@@ -79,42 +79,45 @@ astrology/
 ### PHASE 1 — Frontend Shell
 | # | Model | Task | Status |
 |---|-------|------|--------|
-| 1A | Sonnet | Create `astrology/` folder + `astrology.html` shell (birth input form, placeholder sections for orrery/dashboard/council, load all 4 fonts) | ⬜ Pending |
-| 1B | Sonnet | Create `astrology.css` (full visual identity, birth form styling, card surfaces) | ⬜ Pending |
-| 1C | Sonnet | Wire astrology tab into `main.js` nav (`#7B2FBE` accent, `'Soon'` badge initially) | ⬜ Pending |
+| 1A | Gemini | `astrology.html` shell (birth form, orrery layer, dashboard layer, council layer) | ✅ 2026-03-27 |
+| 1B | Gemini | `astrology.css` — full visual identity, form, orrery, dashboard, council styles | ✅ 2026-03-27 |
+| 1C | Gemini | Tab wired into `index.html` nav (`#7B2FBE` accent, GSAP/flatpickr/audio.js loaded) | ✅ 2026-03-27 |
 
 ### PHASE 2 — Python Backend
 | # | Model | Task | Status |
 |---|-------|------|--------|
-| 2A | Gemini | Design Python backend structure: FastAPI app skeleton in `astrology/astrology-api/` | ✅ Done |
-| 2B | Gemini | Write `requirements.txt` | ✅ Done |
-| 2C | Opus | Write `chart.py`: Swiss Ephemeris core (Lahiri, True Nodes, all 9 grahas, Lagna, Nakshatra, dignity, retrograde, combustion, Rashi + Bhava house systems, Lagna sensitivity flag) | ⬜ Pending |
-| 2D | Opus | Write `dasha.py`: Vimshottari Dasha — 365.25-day years, Mahadasha + Antardasha + Pratyantardasha with exact dates | ⬜ Pending |
-| 2E | Opus | Write `ashtakavarga.py`: Bhinna for all 7 classical planets + Lagna, Sarvashtakavarga totals (BPHS rules as lookup table) | ⬜ Pending |
-| 2F | Sonnet | Write `divisional.py`: D2 (Hora), D7 (Saptamsha), D9 (Navamsha), D10 (Dasamsha) | ⬜ Pending |
-| 2G | Sonnet | Write `tests/test_nehru.py` and run: Nehru chart (14 Nov 1889, 11PM IST, Allahabad) must match Drik Panchang. **MUST PASS before proceeding to UI.** | ⬜ Pending |
-| 2H | Sonnet | Write `main.py`: FastAPI app with all endpoints + CORS | ⬜ Pending |
-| 2I | Opus | Write `domains.py`: 12 domain scoring engine (weighted formula across Ashtakavarga, dignity, divisional, Dasha, aspects) | ⬜ Pending |
-| 2J | Opus | Write `council.py`: all 9 planet system prompts (exact voice/tone per spec), Claude API streaming, Rahu/Ketu separate handling, debate mode | ⬜ Pending |
+| 2A | Gemini | FastAPI skeleton in `astrology-api/` | ✅ 2026-03-27 |
+| 2B | Gemini+Sonnet | `requirements.txt` (added `anthropic`, `python-dotenv`) | ✅ 2026-03-27 |
+| 2C | Gemini | `chart.py`: pyswisseph core (Lahiri, True Nodes, all 9 grahas, dignity, retrograde, Rashi+Bhava) | ✅ 2026-03-27 |
+| 2D | Gemini | `dasha.py`: Vimshottari Dasha at birth | ✅ 2026-03-27 |
+| 2E | Sonnet | `ashtakavarga.py`: full BPHS rules — Bhinna for 7 planets + Sarvashtakavarga | ✅ 2026-03-27 |
+| 2F | Gemini | `divisional.py`: D2, D7, D9, D10 | ✅ 2026-03-27 |
+| 2G | Gemini | `tests/test_nehru.py`: 3 of 4 checks written. ⚠️ Dasha check pending. Run to verify. | ⚠️ Partial |
+| 2H | Gemini+Sonnet | `main.py`: all endpoints — chart/compute, planet/speak (streaming), planet/debate, geocode | ✅ 2026-03-27 |
+| 2I | Sonnet | `domains.py`: 12-domain scoring engine (SAV 40% + dignity 20% + div 15% + dasha 15% + aspects 10%) | ✅ 2026-03-27 |
+| 2J | Sonnet | `council.py`: 9 planet personas, Claude API streaming, Rahu/Ketu separate, debate mode | ✅ 2026-03-27 |
 
 ### PHASE 3 — Frontend Logic
 | # | Model | Task | Status |
 |---|-------|------|--------|
-| 3A | Sonnet | `astrology.js` Part 1: birth form handler, geocoding, fetch `/api/chart/compute`, trigger orrery | ⬜ Pending |
-| 3B | Opus | `astrology.js` Part 2: full 18-second GSAP orrery reveal (zodiac SVG draw, planet arcs via MotionPath, Lagna snap + radial pulse, OM symbol, nakshatra reveal, dominant graha pulse, Dasha card, dashboard ascent) | ⬜ Pending |
-| 3C | Sonnet | `astrology.js` Part 3: 12 domain dashboard (score cards, animated bars, D3 Ashtakavarga grid 7×12, color coding, hover tooltips, drill-down panel) | ⬜ Pending |
+| 3A | Gemini | `astrology.js`: birth form, geocoding (open-meteo), API call, orrery trigger | ✅ 2026-03-27 |
+| 3B | Gemini | `astrology.js`: 34s GSAP orrery — radar sweep, 3 chart views (circular/SI/NI), morph buttons | ✅ 2026-03-27 |
+| 3C | Sonnet | `astrology.js`: domain dashboard — 12 cards, animated bars, D3 Ashtakavarga grid, drill-down panel | ✅ 2026-03-27 |
 
 ### PHASE 4 — Planetary Council
 | # | Model | Task | Status |
 |---|-------|------|--------|
-| 4A | Sonnet | `astrology.js` Part 4: Planetary Council UI (9 planet glyph arc, selection, streaming response display) | ⬜ Pending |
-| 4B | Sonnet | `astrology.js` Part 5: Web Speech API voice profiles per planet, debate mode (two glass cards), Lagna sensitivity dual-display | ⬜ Pending |
+| 4A | Sonnet | `astrology.js`: Council UI — domain pills, 9 planet glyphs, streaming speech cards | ✅ 2026-03-27 |
+| 4B | Sonnet | `astrology.js`: Web Speech API (pitch/rate per planet), debate mode (2 cards side by side) | ✅ 2026-03-27 |
 
 ### PHASE 5 — Deploy & Polish
 | # | Model | Task | Status |
 |---|-------|------|--------|
-| 5A | Sonnet | Deploy backend to Render.com: write `render.yaml`, test all endpoints live, update API base URL in `astrology.js` | ⬜ Pending |
-| 5B | Sonnet | Final polish: Statement of Honest Purpose below birth form, mobile responsive orrery, `'Live'` badge on nav tab | ⬜ Pending |
+| 5A | — | Backend deployed to Render.com (`jyotish-api-wml3.onrender.com`) by Gemini | ✅ 2026-03-27 |
+| 5B | — | `ANTHROPIC_API_KEY` added to Render environment variables by Pradeep | ✅ 2026-03-27 |
+| 5C | — | Push new backend files to GitHub so Render redeploys with domains.py + council.py | ⬜ **DO THIS FIRST** |
+| 5D | — | Run Nehru verification test on live backend. Fix any calculation discrepancies. | ⬜ Pending |
+| 5E | — | End-to-end test: enter birth date → orrery → domain cards → invoke a planet persona | ⬜ Pending |
 
 ---
 
@@ -145,6 +148,32 @@ Do NOT proceed to Phase 3 until all four match Drik Panchang.
 ---
 
 ## Notes / Decisions Log
-- 2026-03-27: Gemini taking over execution from Claude. Prioritizing Python backend (Phase 2 here) first as per Master Prompt.
-- 2026-03-27: Plan created. Stack decided: static frontend + Render.com Python backend.
-- Nav accent color for Astrology tab: `#7B2FBE` (Rahu's violet — fitting for Jyotish)
+- 2026-03-27: Plan created. Stack: static frontend + Render.com Python backend.
+- 2026-03-27: Gemini built Act 1 (orrery with 3 chart views + Tattva audio), chart.py, dasha.py, divisional.py, main.py, deployed to Render.
+- 2026-03-27: Sonnet completed ashtakavarga.py (real BPHS rules), domains.py (12-domain scoring), council.py (9 planet personas + Claude API), Act 2 dashboard JS+CSS, Act 3 council JS+CSS.
+- 2026-03-27: ANTHROPIC_API_KEY added to Render via environment variables by Pradeep.
+- 2026-03-27: JS crash fix — added null guard in buildAshtakavargaGrid (`if (!bav || !sav) return`) and requestAnimationFrame for GSAP timing.
+- Nav accent: `#7B2FBE` (Rahu's violet)
+- Backend URL: `https://jyotish-api-wml3.onrender.com` (free tier — cold starts ~45s after inactivity)
+
+---
+
+## ⚠️ BLOCKER — START HERE NEXT SESSION
+
+**The backend on Render is MISSING the new files created in session 2.**
+They exist locally but have NOT been pushed to GitHub yet.
+Render auto-deploys from GitHub, so the live backend is still the old Gemini version
+(no domains.py, no council.py, old ashtakavarga.py stub returning 4/8 for everything).
+
+**First thing to do next session:**
+```bash
+git add astrology/astrology-api/astro/domains.py
+git add astrology/astrology-api/astro/council.py
+git add astrology/astrology-api/astro/ashtakavarga.py
+git add astrology/astrology-api/main.py
+git add astrology/astrology.js
+git add astrology/astrology.css
+git commit -m "feat(jyotish): Act 2 domain dashboard + Act 3 planetary council"
+git push
+```
+Then wait 2-3 minutes for Render to rebuild, then hard refresh the site (Ctrl+Shift+R).

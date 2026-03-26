@@ -6,3 +6,5 @@ geopy
 timezonefinder
 sqlalchemy
 pytest
+anthropic
+python-dotenv

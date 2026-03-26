@@ -364,6 +364,7 @@ function runRevealAnimation(chart) {
 
     tl.to("#radar-group", { opacity: 0, duration: 1 }, 32.0);
     tl.to("#chart-controls", { display: "flex", opacity: 1, duration: 1 }, 33.0);
+    tl.call(() => triggerDashboard(chart), null, 34.0);
 
     setupMorphButtons(chart);
 }
@@ -411,4 +412,546 @@ function morphToGrid(chart, type) {
         let ty = parseFloat(type === 'south' ? el.dataset.tysi : (type === 'north' ? el.dataset.tyni : el.dataset.py));
         tl.to(`#planet-g-${p}`, { x: tx, y: ty, duration: 2.0, ease: "circ.inOut" }, 0.5);
     });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ACT TWO — DOMAIN DASHBOARD
+// ═══════════════════════════════════════════════════════════════════════════════
+
+let _chartDataGlobal = null;
+
+function showDomainDashboard(chartData) {
+    _chartDataGlobal = chartData;
+    const layer = document.getElementById('dashboard-layer');
+    layer.style.display = 'block';
+    layer.innerHTML = buildDashboardHTML(chartData);
+
+    // Stagger card entry animation — wait one frame for DOM paint
+    requestAnimationFrame(() => gsap.from('.domain-card', {
+        y: 60, opacity: 0, duration: 0.6,
+        stagger: 0.08, ease: 'power2.out', delay: 0.3
+    });
+
+    // Animate score bars after cards appear
+    setTimeout(() => animateScoreBars(chartData.domains), 800);
+
+    // Build Planetary Council section
+    const inner = document.querySelector('.dashboard-inner');
+    if (inner) buildCouncilSection(inner);
+
+    // Build D3 Ashtakavarga grid
+    if (typeof d3 !== 'undefined') {
+        buildAshtakavargaGrid(chartData.bav, chartData.sav);
+    } else {
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js', () => {
+            buildAshtakavargaGrid(chartData.bav, chartData.sav);
+        });
+    }
+}
+
+function buildDashboardHTML(chartData) {
+    const domains = chartData.domains || [];
+    const summary = chartData.bav_summary || {};
+
+    let cardsHTML = domains.map(d => {
+        const colorClass = d.score >= 61 ? 'score-gold' : d.score >= 46 ? 'score-teal' : d.score >= 25 ? 'score-amber' : 'score-red';
+        const driver1 = d.top_drivers[0] || {};
+        const driver2 = d.top_drivers[1] || {};
+        return `
+        <div class="domain-card" data-domain-id="${d.domain_id}" onclick="openDrilldown('${d.domain_id}')">
+            <div class="domain-card-header">
+                <div>
+                    <div class="domain-name">${d.domain_name}</div>
+                    <div class="domain-sanskrit">${d.sanskrit}</div>
+                </div>
+                <div class="domain-score ${colorClass}" id="score-${d.domain_id}">0</div>
+            </div>
+            <div class="domain-bar-bg">
+                <div class="domain-bar-fill ${colorClass}" id="bar-${d.domain_id}" style="width:0%"></div>
+            </div>
+            <div class="domain-drivers">
+                ${driver1.planet ? `<span class="driver-pill">${driver1.planet} · ${driver1.bav_score}/8</span>` : ''}
+                ${driver2.planet ? `<span class="driver-pill">${driver2.planet} · ${driver2.bav_score}/8</span>` : ''}
+            </div>
+            <div class="domain-sav">House ${d.house} · ${d.sav_score}/56 votes</div>
+        </div>`;
+    }).join('');
+
+    return `
+    <div class="dashboard-inner">
+        <div class="dashboard-header">
+            <h2 class="dash-title">Life Domain Intelligence</h2>
+            <p class="dash-sub">Every score is derived from the Ashtakavarga — the collective planetary vote on each area of life.</p>
+        </div>
+
+        <div class="domains-grid">${cardsHTML}</div>
+
+        <div class="avarga-section">
+            <h3 class="avarga-title">Ashtakavarga — The Planetary Vote Table</h3>
+            <p class="avarga-sub">Each number is how many of the 8 voters (7 planets + Lagna) voted favourably for that house. Hover any cell to understand why.</p>
+            <div id="avarga-d3-container"></div>
+            <div class="avarga-summary">
+                ${summary.strongest_house ? `Strongest house: <span style="color:var(--gold)">${summary.strongest_house}</span> with <span style="color:var(--gold)">${summary.strongest_score}/56</span> votes &nbsp;·&nbsp; Most challenged: <span style="color:#FF6B6B">${summary.weakest_house}</span> with <span style="color:#FF6B6B">${summary.weakest_score}/56</span>` : ''}
+            </div>
+        </div>
+
+        <div class="drilldown-overlay" id="drilldown-overlay" style="display:none;" onclick="closeDrilldown()">
+            <div class="drilldown-panel" id="drilldown-panel" onclick="event.stopPropagation()">
+                <button class="drilldown-close" onclick="closeDrilldown()">✕</button>
+                <div id="drilldown-content"></div>
+            </div>
+        </div>
+    </div>`;
+}
+
+function animateScoreBars(domains) {
+    if (!domains) return;
+    domains.forEach(d => {
+        const scoreEl = document.getElementById(`score-${d.domain_id}`);
+        const barEl = document.getElementById(`bar-${d.domain_id}`);
+        if (!scoreEl || !barEl) return;
+        // Animate score number
+        let start = 0;
+        const end = d.score;
+        const duration = 600;
+        const step = (timestamp, startTime) => {
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            scoreEl.textContent = Math.round(progress * end);
+            if (progress < 1) requestAnimationFrame(ts => step(ts, startTime));
+        };
+        requestAnimationFrame(ts => step(ts, ts));
+        // Animate bar width
+        gsap.to(barEl, { width: d.score + '%', duration: 0.8, ease: 'power2.out', delay: Math.random() * 0.3 });
+    });
+}
+
+function buildAshtakavargaGrid(bav, sav) {
+    const container = document.getElementById('avarga-d3-container');
+    if (!container || !bav || !sav) return;
+
+    const planets = ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn'];
+    const houses = Array.from({length: 12}, (_, i) => i + 1);
+
+    const margin = { top: 40, right: 20, bottom: 20, left: 90 };
+    const cellSize = 44;
+    const width = cellSize * 12 + margin.left + margin.right;
+    const height = cellSize * (planets.length + 1) + margin.top + margin.bottom;
+
+    d3.select('#avarga-d3-container').selectAll('*').remove();
+
+    const svg = d3.select('#avarga-d3-container')
+        .append('svg')
+        .attr('width', '100%')
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet')
+        .style('font-family', "'JetBrains Mono', monospace");
+
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+
+    // Color scale
+    const colorScale = score => {
+        if (score >= 7) return '#C9A84C';      // gold
+        if (score >= 5) return '#4ECDC4';      // teal
+        if (score >= 3) return '#F59E0B';      // amber
+        return '#FF6B6B';                       // red
+    };
+
+    // House column headers
+    g.selectAll('.house-label')
+        .data(houses)
+        .enter().append('text')
+        .attr('class', 'house-label')
+        .attr('x', (d, i) => i * cellSize + cellSize / 2)
+        .attr('y', -10)
+        .attr('text-anchor', 'middle')
+        .attr('fill', '#8888BB')
+        .attr('font-size', '11px')
+        .text(d => `H${d}`);
+
+    // Planet rows + cells
+    planets.forEach((planet, row) => {
+        // Planet label
+        g.append('text')
+            .attr('x', -8)
+            .attr('y', row * cellSize + cellSize / 2 + 4)
+            .attr('text-anchor', 'end')
+            .attr('fill', '#F0EEE6')
+            .attr('font-size', '12px')
+            .text(planet);
+
+        // Cells
+        const scores = bav[planet] || Array(12).fill(0);
+        g.selectAll(`.cell-${planet}`)
+            .data(scores)
+            .enter().append('rect')
+            .attr('x', (d, i) => i * cellSize + 1)
+            .attr('y', row * cellSize + 1)
+            .attr('width', cellSize - 2)
+            .attr('height', cellSize - 2)
+            .attr('rx', 3)
+            .attr('fill', d => colorScale(d))
+            .attr('fill-opacity', 0.25)
+            .attr('stroke', d => colorScale(d))
+            .attr('stroke-opacity', 0.6)
+            .attr('stroke-width', 1)
+            .style('cursor', 'pointer')
+            .on('mouseover', function(event, d) {
+                d3.select(this).attr('fill-opacity', 0.6);
+                showAvargaTooltip(event, planet, houses[scores.indexOf(d)], d);
+            })
+            .on('mouseout', function(event, d) {
+                d3.select(this).attr('fill-opacity', 0.25);
+                hideAvargaTooltip();
+            });
+
+        // Score numbers
+        g.selectAll(`.num-${planet}`)
+            .data(scores)
+            .enter().append('text')
+            .attr('x', (d, i) => i * cellSize + cellSize / 2)
+            .attr('y', row * cellSize + cellSize / 2 + 4)
+            .attr('text-anchor', 'middle')
+            .attr('fill', d => colorScale(d))
+            .attr('font-size', '13px')
+            .attr('font-weight', '500')
+            .text(d => d);
+    });
+
+    // SAV row (totals)
+    const savRow = planets.length;
+    g.append('text')
+        .attr('x', -8)
+        .attr('y', savRow * cellSize + cellSize / 2 + 4)
+        .attr('text-anchor', 'end')
+        .attr('fill', '#C9A84C')
+        .attr('font-size', '12px')
+        .attr('font-weight', '700')
+        .text('TOTAL');
+
+    g.selectAll('.sav-cell')
+        .data(sav || Array(12).fill(0))
+        .enter().append('rect')
+        .attr('x', (d, i) => i * cellSize + 1)
+        .attr('y', savRow * cellSize + 1)
+        .attr('width', cellSize - 2)
+        .attr('height', cellSize - 2)
+        .attr('rx', 3)
+        .attr('fill', d => d >= 30 ? '#C9A84C' : d >= 25 ? '#4ECDC4' : '#FF6B6B')
+        .attr('fill-opacity', 0.3)
+        .attr('stroke', d => d >= 30 ? '#C9A84C' : d >= 25 ? '#4ECDC4' : '#FF6B6B')
+        .attr('stroke-opacity', 0.8)
+        .attr('stroke-width', 1.5);
+
+    g.selectAll('.sav-num')
+        .data(sav || Array(12).fill(0))
+        .enter().append('text')
+        .attr('x', (d, i) => i * cellSize + cellSize / 2)
+        .attr('y', savRow * cellSize + cellSize / 2 + 4)
+        .attr('text-anchor', 'middle')
+        .attr('fill', d => d >= 30 ? '#C9A84C' : d >= 25 ? '#4ECDC4' : '#FF6B6B')
+        .attr('font-size', '13px')
+        .attr('font-weight', '700')
+        .text(d => d);
+}
+
+// Tooltip for Ashtakavarga grid
+let _avargaTooltip = null;
+function showAvargaTooltip(event, planet, house, score) {
+    if (!_avargaTooltip) {
+        _avargaTooltip = document.createElement('div');
+        _avargaTooltip.className = 'avarga-tooltip';
+        document.body.appendChild(_avargaTooltip);
+    }
+    const quality = score >= 6 ? 'voted strongly — speaks with authority here'
+        : score >= 4 ? 'mixed vote — moderate influence'
+        : 'voted weakly — speaks with restraint here';
+    _avargaTooltip.innerHTML = `<strong style="color:var(--gold)">${planet}</strong> → House ${house}<br><span style="color:var(--teal)">${score}/8</span> · ${quality}`;
+    _avargaTooltip.style.display = 'block';
+    _avargaTooltip.style.left = (event.pageX + 14) + 'px';
+    _avargaTooltip.style.top = (event.pageY + 14) + 'px';
+}
+function hideAvargaTooltip() {
+    if (_avargaTooltip) _avargaTooltip.style.display = 'none';
+}
+
+// Drill-down panel for a domain
+function openDrilldown(domainId) {
+    if (!_chartDataGlobal) return;
+    const domain = (_chartDataGlobal.domains || []).find(d => d.domain_id === domainId);
+    if (!domain) return;
+
+    const breakdown = domain.score_breakdown || {};
+    const bav = domain.bav_breakdown || {};
+
+    document.getElementById('drilldown-content').innerHTML = `
+        <h3 class="dd-title">${domain.domain_name} <span class="dd-sanskrit">${domain.sanskrit}</span></h3>
+        <p class="dd-desc">${domain.description}</p>
+        <div class="dd-score-big">Score: <span style="color:var(--gold)">${domain.score}</span>/100</div>
+
+        <h4 class="dd-section-title">Score Breakdown</h4>
+        <div class="dd-breakdown">
+            <div class="dd-row"><span>Ashtakavarga (40%)</span><span style="color:var(--teal)">${breakdown.sav} pts</span></div>
+            <div class="dd-row"><span>House lord dignity (20%)</span><span style="color:var(--teal)">${breakdown.dignity} pts</span></div>
+            <div class="dd-row"><span>Divisional confirmation (15%)</span><span style="color:var(--teal)">${breakdown.divisional} pts</span></div>
+            <div class="dd-row"><span>Dasha activation (15%)</span><span style="color:var(--teal)">${breakdown.dasha} pts</span></div>
+            <div class="dd-row"><span>Aspect balance (10%)</span><span style="color:var(--teal)">${breakdown.aspects} pts</span></div>
+        </div>
+
+        <h4 class="dd-section-title">Planetary Votes for House ${domain.house}</h4>
+        <div class="dd-bav-row">
+            ${Object.entries(bav).map(([p, s]) => `
+                <div class="dd-bav-cell ${s >= 6 ? 'bav-gold' : s >= 4 ? 'bav-teal' : s >= 2 ? 'bav-amber' : 'bav-red'}">
+                    <div class="dd-planet">${p}</div>
+                    <div class="dd-bav-score">${s}/8</div>
+                </div>`).join('')}
+        </div>
+
+        <div class="dd-lord">
+            House lord: <span style="color:var(--gold)">${domain.house_lord}</span>
+            · Dignity: <span style="color:var(--teal)">${domain.house_lord_dignity}</span>
+            · SAV: <span style="color:var(--gold)">${domain.sav_score}/56</span>
+        </div>
+    `;
+    document.getElementById('drilldown-overlay').style.display = 'flex';
+    gsap.fromTo('#drilldown-panel', { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
+}
+
+function closeDrilldown() {
+    gsap.to('#drilldown-panel', {
+        x: 80, opacity: 0, duration: 0.3, ease: 'power2.in',
+        onComplete: () => { document.getElementById('drilldown-overlay').style.display = 'none'; }
+    });
+}
+
+// Called from runRevealAnimation to trigger dashboard after orrery
+function triggerDashboard(chartData) {
+    showDomainDashboard(chartData);
+    const layer = document.getElementById('dashboard-layer');
+    gsap.from(layer, { y: 80, opacity: 0, duration: 1.2, ease: 'power2.out' });
+}
+
+function loadScript(src, callback) {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = callback;
+    document.head.appendChild(s);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ACT THREE — PLANETARY COUNCIL
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const PLANET_META = {
+    Sun:     { glyph: '☉', color: '#C9A84C', speech: { pitch: 0.85, rate: 0.90 } },
+    Moon:    { glyph: '☽', color: '#8888BB', speech: { pitch: 1.05, rate: 0.88 } },
+    Mars:    { glyph: '♂', color: '#FF6B6B', speech: { pitch: 0.80, rate: 1.05 } },
+    Mercury: { glyph: '☿', color: '#4ECDC4', speech: { pitch: 1.30, rate: 1.15 } },
+    Jupiter: { glyph: '♃', color: '#6BCB77', speech: { pitch: 0.90, rate: 0.82 } },
+    Venus:   { glyph: '♀', color: '#F472B6', speech: { pitch: 1.15, rate: 0.92 } },
+    Saturn:  { glyph: '♄', color: '#94A3B8', speech: { pitch: 0.60, rate: 0.75 } },
+    Rahu:    { glyph: '☊', color: '#7B2FBE', speech: { pitch: 0.70, rate: 0.95 } },
+    Ketu:    { glyph: '☋', color: '#2F4858', speech: { pitch: 1.10, rate: 0.65 } },
+};
+
+const DOMAIN_NAMES = {
+    dharma: 'Dharma & Purpose', wealth: 'Wealth & Accumulation',
+    siblings: 'Siblings & Courage', home: 'Home & Roots',
+    children: 'Children & Creativity', health: 'Health & Service',
+    marriage: 'Marriage & Partnership', transformation: 'Transformation',
+    fortune: 'Fortune & Higher Learning', career: 'Career & Status',
+    gains: 'Gains & Networks', liberation: 'Liberation',
+};
+
+let _activePlanet = null;
+let _activeDomain = null;
+let _councilSpeaking = false;
+
+function buildCouncilSection(container) {
+    const planets = Object.keys(PLANET_META);
+    const domains = Object.keys(DOMAIN_NAMES);
+
+    const html = `
+    <div class="council-section">
+        <div class="council-header-block">
+            <h3 class="council-title">The Planetary Council</h3>
+            <p class="council-sub">Select a life domain, then choose a planet to hear its voice. Or ask two planets to debate.</p>
+        </div>
+
+        <div class="council-domain-pills" id="council-domain-pills">
+            ${domains.map(d => `<button class="domain-pill" data-domain="${d}" onclick="selectCouncilDomain('${d}')">${DOMAIN_NAMES[d]}</button>`).join('')}
+        </div>
+
+        <div class="council-planet-arc" id="council-planet-arc">
+            ${planets.map(p => `
+            <button class="planet-glyph" data-planet="${p}" onclick="selectCouncilPlanet('${p}')"
+                style="--planet-color: ${PLANET_META[p].color}">
+                <span class="planet-symbol">${PLANET_META[p].glyph}</span>
+                <span class="planet-label">${p}</span>
+            </button>`).join('')}
+        </div>
+
+        <div class="council-actions" id="council-actions" style="display:none;">
+            <button class="council-btn speak-btn" onclick="invokePlanetSpeak()">Hear this planet speak</button>
+            <button class="council-btn debate-btn" onclick="openDebateSelector()">Ask two planets to debate</button>
+        </div>
+
+        <div class="council-question-wrap" id="council-question-wrap" style="display:none;">
+            <input class="council-question-input" id="council-question"
+                placeholder="Ask a question, or leave blank for an open reading…" type="text">
+        </div>
+
+        <div class="council-speech-area" id="council-speech-area"></div>
+
+        <div class="debate-selector" id="debate-selector" style="display:none;">
+            <p class="debate-selector-label">Choose a second planet to debate</p>
+            <div class="debate-planet-row">
+                ${planets.map(p => `<button class="planet-glyph small" data-planet="${p}" onclick="invokePlanetDebate('${p}')"
+                    style="--planet-color: ${PLANET_META[p].color}">
+                    ${PLANET_META[p].glyph} <span style="font-size:0.7rem">${p}</span>
+                </button>`).join('')}
+            </div>
+        </div>
+    </div>`;
+
+    container.insertAdjacentHTML('beforeend', html);
+}
+
+function selectCouncilDomain(domainId) {
+    _activeDomain = domainId;
+    document.querySelectorAll('.domain-pill').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.domain-pill[data-domain="${domainId}"]`).classList.add('active');
+    checkCouncilReady();
+}
+
+function selectCouncilPlanet(planetName) {
+    _activePlanet = planetName;
+    document.querySelectorAll('.planet-glyph').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll(`.planet-glyph[data-planet="${planetName}"]`).forEach(el => el.classList.add('active'));
+    checkCouncilReady();
+}
+
+function checkCouncilReady() {
+    const actions = document.getElementById('council-actions');
+    const qWrap = document.getElementById('council-question-wrap');
+    if (_activePlanet && _activeDomain) {
+        actions.style.display = 'flex';
+        qWrap.style.display = 'block';
+    }
+}
+
+async function invokePlanetSpeak() {
+    if (!_activePlanet || !_activeDomain || !_chartDataGlobal || _councilSpeaking) return;
+    _councilSpeaking = true;
+    document.getElementById('debate-selector').style.display = 'none';
+
+    const question = document.getElementById('council-question').value;
+    const area = document.getElementById('council-speech-area');
+    area.innerHTML = buildSpeechCard(_activePlanet, '', true);
+
+    try {
+        const res = await fetch(`${API_BASE}/api/planet/speak`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                planet: _activePlanet,
+                chart: _chartDataGlobal,
+                domain: _activeDomain,
+                question: question,
+            }),
+        });
+        if (!res.ok) throw new Error('API error');
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let fullText = '';
+        const textEl = document.getElementById(`speech-text-${_activePlanet}`);
+        const loaderEl = document.getElementById(`speech-loader-${_activePlanet}`);
+        if (loaderEl) loaderEl.remove();
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            fullText += decoder.decode(value, { stream: true });
+            if (textEl) textEl.textContent = fullText;
+        }
+
+        // Speak aloud
+        speakAloud(fullText, _activePlanet);
+
+    } catch (err) {
+        const textEl = document.getElementById(`speech-text-${_activePlanet}`);
+        if (textEl) textEl.textContent = 'The planet is silent right now. Please try again.';
+        console.error(err);
+    }
+    _councilSpeaking = false;
+}
+
+function openDebateSelector() {
+    const sel = document.getElementById('debate-selector');
+    sel.style.display = sel.style.display === 'none' ? 'block' : 'none';
+}
+
+async function invokePlanetDebate(secondPlanet) {
+    if (!_activePlanet || !_activeDomain || !_chartDataGlobal || _councilSpeaking) return;
+    if (secondPlanet === _activePlanet) return;
+    _councilSpeaking = true;
+    document.getElementById('debate-selector').style.display = 'none';
+
+    const question = document.getElementById('council-question').value;
+    const area = document.getElementById('council-speech-area');
+    area.innerHTML = `<div class="debate-loading">Summoning the council…<span class="blink">▋</span></div>`;
+
+    try {
+        const res = await fetch(`${API_BASE}/api/planet/debate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                planet_a: _activePlanet,
+                planet_b: secondPlanet,
+                chart: _chartDataGlobal,
+                domain: _activeDomain,
+                question: question,
+            }),
+        });
+        const data = await res.json();
+        area.innerHTML = `
+            <div class="debate-pair">
+                ${buildSpeechCard(data.planet_a, data.response_a, false)}
+                ${buildSpeechCard(data.planet_b, data.response_b, false)}
+            </div>`;
+        gsap.from('.speech-card', { y: 30, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'power2.out' });
+    } catch (err) {
+        area.innerHTML = '<div class="council-error">The debate could not be summoned. Please try again.</div>';
+        console.error(err);
+    }
+    _councilSpeaking = false;
+}
+
+function buildSpeechCard(planetName, text, loading) {
+    const meta = PLANET_META[planetName] || {};
+    return `
+    <div class="speech-card" id="speech-card-${planetName}" style="border-color: ${meta.color}40">
+        <div class="speech-card-header" style="color: ${meta.color}">
+            <span class="speech-glyph">${meta.glyph || ''}</span>
+            <span class="speech-planet-name">${planetName}</span>
+            ${!loading ? `<button class="speak-aloud-btn" onclick="speakAloud(document.getElementById('speech-text-${planetName}').textContent, '${planetName}')" title="Speak aloud">🔊</button>` : ''}
+        </div>
+        <div class="speech-text" id="speech-text-${planetName}">
+            ${loading ? `<span id="speech-loader-${planetName}" class="speech-loader">…</span>` : text}
+        </div>
+    </div>`;
+}
+
+// Web Speech API
+function speakAloud(text, planetName) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    const profile = PLANET_META[planetName]?.speech || { pitch: 1, rate: 1 };
+    utter.pitch = profile.pitch;
+    utter.rate = profile.rate;
+    // Try to pick a good voice
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(v => v.lang.startsWith('en') && !v.name.includes('Google'));
+    if (preferred) utter.voice = preferred;
+    window.speechSynthesis.speak(utter);
 }
