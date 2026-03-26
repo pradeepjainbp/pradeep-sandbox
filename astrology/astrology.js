@@ -1,39 +1,97 @@
 const API_BASE = "https://jyotish-api-wml3.onrender.com";
+let selectedCityData = null;
 
 function astrologyInit() {
     if (typeof gsap === 'undefined') {
         console.error("GSAP not loaded yet.");
     }
 
+    // Initialize Flatpickr
+    flatpickr("#astro-dob", {
+        dateFormat: "Y-m-d",
+        theme: "dark"
+    });
+    flatpickr("#astro-tob", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: false,
+        theme: "dark"
+    });
+
+    // Autocomplete for City
+    const cityInput = document.getElementById('astro-city');
+    const autoList = document.getElementById('city-autocomplete-list');
+    let debounceTimer;
+
+    cityInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        const val = this.value;
+        autoList.innerHTML = '';
+        selectedCityData = null; // reset
+        
+        if (!val || val.length < 3) return;
+
+        debounceTimer = setTimeout(async () => {
+            try {
+                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(val)}&count=5&format=json`);
+                const data = await res.json();
+                
+                if (data.results && data.results.length > 0) {
+                    data.results.forEach(cityObj => {
+                        const item = document.createElement('div');
+                        let label = `${cityObj.name}`;
+                        if (cityObj.admin1) label += `, ${cityObj.admin1}`;
+                        if (cityObj.country) label += `, ${cityObj.country}`;
+                        item.textContent = label;
+                        
+                        item.addEventListener('click', () => {
+                            cityInput.value = label;
+                            selectedCityData = {
+                                lat: cityObj.latitude,
+                                lon: cityObj.longitude,
+                                timezone: cityObj.timezone
+                            };
+                            autoList.innerHTML = '';
+                        });
+                        autoList.appendChild(item);
+                    });
+                }
+            } catch(e) { console.error(e); }
+        }, 400);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target !== cityInput) {
+            autoList.innerHTML = '';
+        }
+    });
+
     const form = document.getElementById('astrology-birth-form');
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            if (!selectedCityData) {
+                alert("Please select a precise city from the dropdown suggestions.");
+                return;
+            }
+
             const btn = form.querySelector('.jyotish-btn');
             btn.textContent = "Computing Cosmos...";
             btn.disabled = true;
 
             try {
-                const city = document.getElementById('astro-city').value;
                 const dob = document.getElementById('astro-dob').value;
                 const tob = document.getElementById('astro-tob').value;
-
-                const geoRes = await fetch(`${API_BASE}/api/geocode?city=${encodeURIComponent(city)}`);
-                const geoData = await geoRes.json();
-                
-                if (geoData.error) {
-                    alert("City not found. Try again.");
-                    btn.textContent = "Compute Chart";
-                    btn.disabled = false;
-                    return;
-                }
 
                 const [year, month, day] = dob.split('-').map(Number);
                 const [hour, minute] = tob.split(':').map(Number);
 
                 const chartPayload = {
                     year, month, day, hour, minute,
-                    lat: geoData.lat, lon: geoData.lon, timezone: geoData.timezone
+                    lat: selectedCityData.lat, 
+                    lon: selectedCityData.lon, 
+                    timezone: selectedCityData.timezone
                 };
 
                 const chartRes = await fetch(`${API_BASE}/api/chart/compute`, {
@@ -65,6 +123,7 @@ function startOrreryReveal(chart) {
     orreryLayer.style.alignItems = 'center';
     orreryLayer.style.justifyContent = 'center';
     orreryLayer.style.height = 'calc(100vh - 80px)';
+    orreryLayer.style.overflow = 'hidden';
 
     document.getElementById('orrery-title').style.opacity = '0';
     document.getElementById('orrery-title').style.position = 'absolute';
@@ -74,6 +133,7 @@ function startOrreryReveal(chart) {
     document.getElementById('orrery-title').style.fontFamily = 'Cinzel';
     document.getElementById('orrery-title').style.color = 'var(--text-primary)';
     document.getElementById('orrery-title').style.fontSize = '1.2rem';
+    document.getElementById('orrery-title').style.zIndex = '10';
 
     drawOrrerySVG(chart);
     runRevealAnimation(chart);
@@ -81,9 +141,13 @@ function startOrreryReveal(chart) {
 
 function drawOrrerySVG(chart) {
     const svg = document.getElementById('zodiac-wheel');
-    svg.style.width = '600px';
-    svg.style.height = '600px';
+    svg.style.width = '100%';
+    svg.style.height = '100%';
+    svg.style.maxHeight = '70vh';
+    svg.style.maxWidth = '100vw';
     svg.style.overflow = 'visible';
+    svg.setAttribute('viewBox', '0 0 1000 1000');
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
 
     const cx = 500, cy = 500, r = 350;
     
@@ -109,7 +173,7 @@ function drawOrrerySVG(chart) {
         
         html += `
             <line class="zodiac-div" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--text-secondary)" stroke-width="1" opacity="0" />
-            <text class="zodiac-label" x="${tx}" y="${ty}" fill="var(--gold)" font-family="Cinzel" font-size="16" text-anchor="middle" dominant-baseline="middle" opacity="0">${rashiNames[i]}</text>
+            <text class="zodiac-label" x="${tx}" y="${ty}" fill="var(--gold)" font-family="Cinzel" font-size="18" text-anchor="middle" dominant-baseline="middle" opacity="0">${rashiNames[i]}</text>
         `;
     }
 
@@ -129,8 +193,8 @@ function drawOrrerySVG(chart) {
         let px = cx + pr * Math.cos(angle * Math.PI/180);
         let py = cy + pr * Math.sin(angle * Math.PI/180);
         let color = colors[p] || "var(--teal)";
-        
-        html += `<text class="planet-glyph" id="planet-${p}" x="${cx}" y="${cy}" fill="${color}" font-family="Arial" font-size="28" text-anchor="middle" dominant-baseline="middle" opacity="0" data-x="${px}" data-y="${py}">${glyphs[p]}</text>`;
+        // Changed font size to 36 for scalable readability when SVGs are auto-resized bounds
+        html += `<text class="planet-glyph" id="planet-${p}" x="${cx}" y="${cy}" fill="${color}" font-family="Arial" font-size="36" text-anchor="middle" dominant-baseline="middle" opacity="0" data-x="${px}" data-y="${py}">${glyphs[p]}</text>`;
     });
 
     svg.innerHTML = html;
