@@ -6,10 +6,8 @@ function astrologyInit() {
     if (typeof gsap !== 'undefined' && gsap.registerPlugin) {
         gsap.registerPlugin(MotionPathPlugin, TextPlugin);
     }
-
     flatpickr("#astro-dob", { dateFormat: "Y-m-d", theme: "dark" });
     flatpickr("#astro-tob", { enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: false, theme: "dark" });
-
     const cityInput = document.getElementById('astro-city');
     const autoList = document.getElementById('city-autocomplete-list');
     let debounceTimer;
@@ -55,9 +53,7 @@ function astrologyInit() {
                 alert("Please select a precise city from the dropdown suggestions.");
                 return;
             }
-            
             if (typeof window.AudioEngine !== 'undefined') window.AudioEngine.init();
-
             const btn = form.querySelector('.jyotish-btn');
             btn.innerHTML = "Computing Cosmos...<br><span style='font-size:10px;text-transform:none;'>(Waking deep-space engine on Render, may take 45s)</span>";
             btn.disabled = true;
@@ -67,18 +63,15 @@ function astrologyInit() {
                 const tob = document.getElementById('astro-tob').value;
                 const [year, month, day] = dob.split('-').map(Number);
                 const [hour, minute] = tob.split(':').map(Number);
-
                 const chartPayload = {
                     year, month, day, hour, minute,
                     lat: selectedCityData.lat, lon: selectedCityData.lon, timezone: selectedCityData.timezone
                 };
-
                 const chartRes = await fetch(`${API_BASE}/api/chart/compute`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(chartPayload)
                 });
-
                 if (!chartRes.ok) throw new Error("Chart computation failed.");
                 const chartData = await chartRes.json();
                 
@@ -119,18 +112,32 @@ function startOrreryReveal(chart) {
     runRevealAnimation(chart);
 }
 
+const signColors = [
+    'rgba(255, 69, 0, 0.15)',    // 0 Aries (Fire spark)
+    'rgba(144, 238, 144, 0.15)', // 1 Taurus (Green soil)
+    'rgba(240, 248, 255, 0.15)', // 2 Gemini (Sky white)
+    'rgba(135, 206, 250, 0.15)', // 3 Cancer (Pond cyan)
+    'rgba(218, 165, 32, 0.20)',  // 4 Leo (Gold roar)
+    'rgba(34, 139, 34, 0.15)',   // 5 Virgo (Forest green)
+    'rgba(176, 196, 222, 0.15)', // 6 Libra (Silvery air)
+    'rgba(0, 0, 139, 0.20)',     // 7 Scorpio (Lake indigo)
+    'rgba(178, 34, 34, 0.20)',   // 8 Sag (Crimson fire)
+    'rgba(101, 67, 33, 0.15)',   // 9 Capricorn (Brown rock)
+    'rgba(138, 43, 226, 0.15)',  // 10 Aquarius (Electric violet)
+    'rgba(0, 105, 148, 0.25)'    // 11 Pisces (Deep navy ocean)
+];
+
 function setupTooltips(chart) {
     const tooltip = document.getElementById('planet-tooltip');
     const elements = ['Fire', 'Earth', 'Air', 'Water'];
     const rashiNames = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
     const houseMeanings = ["", "Self, Appearance, Vitality", "Wealth, Family, Finances", "Courage, Siblings", "Mother, Home, Emotions", "Children, Intellect, Creativity", "Enemies, Debts, Health", "Partnership, Marriage", "Transformation, Mysticism", "Dharma, Fortune", "Career, Status", "Gains, Ambition", "Loss, Subconscious, Liberation"];
 
-    // Houses Hover
     document.querySelectorAll('.house-hitbox').forEach(box => {
         box.addEventListener('mouseenter', (e) => {
             let h = parseInt(box.dataset.house);
             let r = parseInt(box.dataset.rashi);
-            if(window.AudioEngine) window.AudioEngine.playElement(elements[r % 4]);
+            if(window.AudioEngine) window.AudioEngine.playElement(r); // Procedural sign audio
             
             tooltip.innerHTML = `
                 <div class="tt-title" style="color:var(--text-secondary)">House ${h}</div>
@@ -148,7 +155,6 @@ function setupTooltips(chart) {
         box.addEventListener('mouseleave', () => tooltip.style.opacity = 0);
     });
 
-    // Planets Hover
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
     planets.forEach(p => {
         let img = document.getElementById(`planet-img-${p}`);
@@ -156,7 +162,8 @@ function setupTooltips(chart) {
         let data = chart.planets[p];
         let h = (data.rashi_num - chart.lagna.rashi_num + 12) % 12 + 1;
         img.addEventListener('mouseenter', (e) => {
-            if(window.AudioEngine) window.AudioEngine.playMix(p, elements[data.rashi_num % 4]);
+            e.stopPropagation();
+            if(window.AudioEngine) window.AudioEngine.playMix(p, data.rashi_num); // Procedural mix!
 
             tooltip.innerHTML = `
                 <div class="tt-title">${p} <span style="font-size:0.9rem">${data.rashi}</span></div>
@@ -200,28 +207,23 @@ function drawOrrerySVG(chart) {
         <circle id="wheel-ring" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="2200" stroke-dashoffset="2200" />
     `;
 
-    const elementColors = ['rgba(255, 69, 0, 0.15)', 'rgba(34, 139, 34, 0.15)', 'rgba(135, 206, 235, 0.15)', 'rgba(0, 0, 255, 0.15)'];
     const rashiNames = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
     
-    // Circular Map Hitboxes & Structure
     for(let i=0; i<12; i++) {
         let angle1 = (i * 30) - 90;
         let angle2 = ((i+1) * 30) - 90;
         let rad1 = angle1 * Math.PI / 180;
         let rad2 = angle2 * Math.PI / 180;
-        
         let rx1 = cx + r * Math.cos(rad1);
         let ry1 = cy + r * Math.sin(rad1);
         let rx2 = cx + r * Math.cos(rad2);
         let ry2 = cy + r * Math.sin(rad2);
         let path = `M ${cx} ${cy} L ${rx1} ${ry1} A ${r} ${r} 0 0 1 ${rx2} ${ry2} Z`;
-        
         let tx = cx + (r+40) * Math.cos(rad1 + (15 * Math.PI/180));
         let ty = cy + (r+40) * Math.sin(rad1 + (15 * Math.PI/180));
-        
         let house = (i - chart.lagna.rashi_num + 12) % 12 + 1;
         html += `
-            <path class="rashi-slice house-hitbox" data-type="cosmos" data-rashi="${i}" data-house="${house}" d="${path}" fill="${elementColors[i%4]}" opacity="0" pointer-events="all" />
+            <path class="rashi-slice house-hitbox" data-type="cosmos" data-rashi="${i}" data-house="${house}" d="${path}" fill="${signColors[i]}" opacity="0" pointer-events="all" />
             <line class="zodiac-div" x1="${cx + (r-15)*Math.cos(rad1)}" y1="${cy + (r-15)*Math.sin(rad1)}" x2="${cx + (r+15)*Math.cos(rad1)}" y2="${cy + (r+15)*Math.sin(rad1)}" stroke="var(--text-secondary)" stroke-width="1" opacity="0" pointer-events="none" />
             <text class="zodiac-label" x="${tx}" y="${ty}" fill="var(--gold)" font-family="Cinzel" font-size="18" text-anchor="middle" dominant-baseline="middle" opacity="0" pointer-events="none">${rashiNames[i]}</text>
         `;
@@ -239,7 +241,6 @@ function drawOrrerySVG(chart) {
     let ly = cy + r * Math.sin(lagnaAngle * Math.PI/180);
     html += `<circle id="lagna-marker" cx="${lx}" cy="${ly}" r="8" fill="var(--teal)" opacity="0" filter="url(#glow)" pointer-events="none"/>`;
 
-    // South Indian Grid structure & Hitboxes
     const gridSize = 480;
     const boxW = gridSize / 4; 
     const bx = cx - gridSize/2;
@@ -252,11 +253,10 @@ function drawOrrerySVG(chart) {
         html += `
             <rect class="si-box" x="${bx + col*boxW}" y="${by + row*boxW}" width="${boxW}" height="${boxW}" pointer-events="none" />
             <text class="si-label" x="${bx + col*boxW + 5}" y="${by + row*boxW + 18}" pointer-events="none">${siLabels[i]}</text>
-            <rect class="house-hitbox si-fill" data-type="si" data-rashi="${i}" data-house="${house}" x="${bx + col*boxW}" y="${by + row*boxW}" width="${boxW}" height="${boxW}" fill="${elementColors[i%4]}" opacity="0" pointer-events="all" style="display:none;" />
+            <rect class="house-hitbox si-fill" data-type="si" data-rashi="${i}" data-house="${house}" x="${bx + col*boxW}" y="${by + row*boxW}" width="${boxW}" height="${boxW}" fill="${signColors[i]}" opacity="0" pointer-events="all" style="display:none;" />
         `;
     }
 
-    // North Indian Grid structure & Hitboxes
     html += `<rect class="ni-line" x="${bx}" y="${by}" width="${gridSize}" height="${gridSize}" pointer-events="none" />
              <line class="ni-line" x1="${bx}" y1="${by}" x2="${bx+gridSize}" y2="${by+gridSize}" pointer-events="none" />
              <line class="ni-line" x1="${bx+gridSize}" y1="${by}" x2="${bx}" y2="${by+gridSize}" pointer-events="none" />
@@ -264,25 +264,16 @@ function drawOrrerySVG(chart) {
     const niCenters = [[240, 120], [120, 40], [40, 120], [120, 240], [40, 360], [120, 440], [240, 360], [360, 440], [440, 360], [360, 240], [440, 120], [360, 40]];
     const hw = gridSize/2, qw = gridSize/4, tqw = gridSize*0.75, w = gridSize;
     const niPolygons = [
-        `${hw},0 ${tqw},${qw} ${hw},${hw} ${qw},${qw}`,
-        `0,0 ${hw},0 ${qw},${qw}`,
-        `0,0 ${qw},${qw} 0,${hw}`,
-        `0,${hw} ${qw},${qw} ${hw},${hw} ${qw},${tqw}`,
-        `0,${hw} 0,${w} ${qw},${tqw}`,
-        `0,${w} ${hw},${w} ${qw},${tqw}`,
-        `${hw},${hw} ${qw},${tqw} ${hw},${w} ${tqw},${tqw}`,
-        `${hw},${w} ${w},${w} ${tqw},${tqw}`,
-        `${w},${w} ${w},${hw} ${tqw},${tqw}`,
-        `${hw},${hw} ${tqw},${tqw} ${w},${hw} ${tqw},${qw}`,
-        `${w},${hw} ${w},0 ${tqw},${qw}`,
-        `${w},0 ${hw},0 ${tqw},${qw}`
+        `${hw},0 ${tqw},${qw} ${hw},${hw} ${qw},${qw}`, `0,0 ${hw},0 ${qw},${qw}`, `0,0 ${qw},${qw} 0,${hw}`, `0,${hw} ${qw},${qw} ${hw},${hw} ${qw},${tqw}`,
+        `0,${hw} 0,${w} ${qw},${tqw}`, `0,${w} ${hw},${w} ${qw},${tqw}`, `${hw},${hw} ${qw},${tqw} ${hw},${w} ${tqw},${tqw}`, `${hw},${w} ${w},${w} ${tqw},${tqw}`,
+        `${w},${w} ${w},${hw} ${tqw},${tqw}`, `${hw},${hw} ${tqw},${tqw} ${w},${hw} ${tqw},${qw}`, `${w},${hw} ${w},0 ${tqw},${qw}`, `${w},0 ${hw},0 ${tqw},${qw}`
     ];
     for(let h=1; h<=12; h++) {
         let [xx, yy] = niCenters[h-1];
         let rashiForHouse = (chart.lagna.rashi_num + h - 1) % 12;
         html += `<text class="ni-label" x="${bx+xx}" y="${by+yy-30}" font-size="14" fill="var(--text-secondary)" text-anchor="middle" opacity="0" pointer-events="none">${rashiForHouse+1}</text>`;
         let pts = niPolygons[h-1].split(' ').map(pair => { let [px,py] = pair.split(','); return `${bx+parseFloat(px)},${by+parseFloat(py)}`; }).join(' ');
-        html += `<polygon class="house-hitbox ni-fill" data-type="ni" data-rashi="${rashiForHouse}" data-house="${h}" points="${pts}" fill="${elementColors[rashiForHouse%4]}" opacity="0" pointer-events="all" style="display:none;" />`;
+        html += `<polygon class="house-hitbox ni-fill" data-type="ni" data-rashi="${rashiForHouse}" data-house="${h}" points="${pts}" fill="${signColors[rashiForHouse]}" opacity="0" pointer-events="all" style="display:none;" />`;
     }
 
     let lagnaRashi = chart.lagna.rashi_num;
@@ -354,7 +345,6 @@ function runRevealAnimation(chart) {
     tl.to("#radar-group", { rotation: 360, svgOrigin: "500 500", duration: 18, ease: "none" }, 10.0);
 
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
-    const elements = ['Fire', 'Earth', 'Air', 'Water'];
     let sortedPlanets = [...planets].sort((a,b) => chart.planets[a].longitude - chart.planets[b].longitude);
     
     sortedPlanets.forEach((p) => {
@@ -368,7 +358,7 @@ function runRevealAnimation(chart) {
         tl.to(`#planet-g-${p}`, { x: px, y: py, duration: 1.5, ease: "elastic.out(1, 0.3)" }, timeHit - 0.5);
         
         tl.call(() => {
-            if (typeof window.AudioEngine !== 'undefined') window.AudioEngine.playMix(p, elements[chart.planets[p].rashi_num % 4]);
+            if (typeof window.AudioEngine !== 'undefined') window.AudioEngine.playMix(p, chart.planets[p].rashi_num);
         }, null, timeHit);
     });
 
