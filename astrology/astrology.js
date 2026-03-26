@@ -20,7 +20,6 @@ function astrologyInit() {
         autoList.innerHTML = '';
         selectedCityData = null;
         if (!val || val.length < 3) return;
-
         debounceTimer = setTimeout(async () => {
             try {
                 const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(val)}&count=5&format=json`);
@@ -56,6 +55,8 @@ function astrologyInit() {
                 alert("Please select a precise city from the dropdown suggestions.");
                 return;
             }
+            
+            if (typeof AudioEngine !== 'undefined') AudioEngine.init();
 
             const btn = form.querySelector('.jyotish-btn');
             btn.innerHTML = "Computing Cosmos...<br><span style='font-size:10px;text-transform:none;'>(Waking deep-space engine on Render, may take 45s)</span>";
@@ -120,8 +121,6 @@ function startOrreryReveal(chart) {
 
 function setupTooltips(chart) {
     const tooltip = document.getElementById('planet-tooltip');
-    
-    // Setup mapping for planets
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
     planets.forEach(p => {
         let img = document.getElementById(`planet-img-${p}`);
@@ -135,18 +134,14 @@ function setupTooltips(chart) {
                 <div>Speed: ${data.speed.toFixed(2)}°/day ${data.is_retrograde ? '<span style="color:#FF6B6B">(Ret)</span>' : ''}</div>
             `;
             tooltip.style.opacity = 1;
-            let tx = e.pageX + 15;
-            let ty = e.pageY + 15;
-            tooltip.style.left = tx + 'px';
-            tooltip.style.top = ty + 'px';
+            tooltip.style.left = (e.pageX + 15) + 'px';
+            tooltip.style.top = (e.pageY + 15) + 'px';
         });
         img.addEventListener('mousemove', (e) => {
             tooltip.style.left = (e.pageX + 15) + 'px';
             tooltip.style.top = (e.pageY + 15) + 'px';
         });
-        img.addEventListener('mouseleave', () => {
-            tooltip.style.opacity = 0;
-        });
+        img.addEventListener('mouseleave', () => tooltip.style.opacity = 0);
         img.style.cursor = 'pointer';
     });
 }
@@ -165,26 +160,46 @@ function drawOrrerySVG(chart) {
     let html = `
         <defs>
             <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="radar-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="var(--teal)" stop-opacity="0.4" />
+                <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+            </linearGradient>
         </defs>
         <circle id="center-pulse" cx="${cx}" cy="${cy}" r="4" fill="var(--gold)" opacity="0" />
         <circle id="wheel-ring" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="2200" stroke-dashoffset="2200" />
     `;
 
+    const elementColors = ['rgba(255, 69, 0, 0.15)', 'rgba(34, 139, 34, 0.15)', 'rgba(135, 206, 235, 0.15)', 'rgba(0, 0, 255, 0.15)'];
     const rashiNames = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
+    
     for(let i=0; i<12; i++) {
-        let angle = (i * 30) - 90;
-        let rad = angle * Math.PI / 180;
-        let x1 = cx + (r-15) * Math.cos(rad);
-        let y1 = cy + (r-15) * Math.sin(rad);
-        let x2 = cx + (r+15) * Math.cos(rad);
-        let y2 = cy + (r+15) * Math.sin(rad);
-        let tx = cx + (r+40) * Math.cos(rad + (15 * Math.PI/180));
-        let ty = cy + (r+40) * Math.sin(rad + (15 * Math.PI/180));
+        let angle1 = (i * 30) - 90;
+        let angle2 = ((i+1) * 30) - 90;
+        let rad1 = angle1 * Math.PI / 180;
+        let rad2 = angle2 * Math.PI / 180;
+        
+        let rx1 = cx + r * Math.cos(rad1);
+        let ry1 = cy + r * Math.sin(rad1);
+        let rx2 = cx + r * Math.cos(rad2);
+        let ry2 = cy + r * Math.sin(rad2);
+        let path = `M ${cx} ${cy} L ${rx1} ${ry1} A ${r} ${r} 0 0 1 ${rx2} ${ry2} Z`;
+        
+        let tx = cx + (r+40) * Math.cos(rad1 + (15 * Math.PI/180));
+        let ty = cy + (r+40) * Math.sin(rad1 + (15 * Math.PI/180));
+        
         html += `
-            <line class="zodiac-div" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--text-secondary)" stroke-width="1" opacity="0" />
+            <path class="rashi-slice" id="r-slice-${i}" d="${path}" fill="${elementColors[i%4]}" opacity="0" />
+            <line class="zodiac-div" x1="${cx + (r-15)*Math.cos(rad1)}" y1="${cy + (r-15)*Math.sin(rad1)}" x2="${cx + (r+15)*Math.cos(rad1)}" y2="${cy + (r+15)*Math.sin(rad1)}" stroke="var(--text-secondary)" stroke-width="1" opacity="0" />
             <text class="zodiac-label" x="${tx}" y="${ty}" fill="var(--gold)" font-family="Cinzel" font-size="18" text-anchor="middle" dominant-baseline="middle" opacity="0">${rashiNames[i]}</text>
         `;
     }
+
+    html += `
+        <g id="radar-group" style="transform-origin: 500px 500px; opacity:0;">
+            <line x1="500" y1="500" x2="500" y2="150" stroke="var(--teal)" stroke-width="2" filter="url(#glow)"/>
+            <polygon points="500,500 500,150 550,150" fill="url(#radar-grad)" />
+        </g>
+    `;
 
     let lagnaAngle = (chart.lagna.longitude) - 90;
     let lx = cx + r * Math.cos(lagnaAngle * Math.PI/180);
@@ -201,25 +216,18 @@ function drawOrrerySVG(chart) {
     const siLabels = ["Ar", "Ta", "Ge", "Ca", "Le", "Vi", "Li", "Sc", "Sa", "Cp", "Aq", "Pi"];
     for (let i=0; i<12; i++) {
         let [col, row] = siCoords[i];
-        let rcX = bx + col * boxW;
-        let rcY = by + row * boxW;
         html += `
-            <rect class="si-box" x="${rcX}" y="${rcY}" width="${boxW}" height="${boxW}" />
-            <text class="si-label" x="${rcX + 5}" y="${rcY + 18}">${siLabels[i]}</text>
+            <rect class="si-box" x="${bx + col*boxW}" y="${by + row*boxW}" width="${boxW}" height="${boxW}" />
+            <text class="si-label" x="${bx + col*boxW + 5}" y="${by + row*boxW + 18}">${siLabels[i]}</text>
         `;
     }
 
     // North Indian Grid
-    html += `<rect class="ni-line" x="${bx}" y="${by}" width="${gridSize}" height="${gridSize}" />`;
-    html += `<line class="ni-line" x1="${bx}" y1="${by}" x2="${bx+gridSize}" y2="${by+gridSize}" />`;
-    html += `<line class="ni-line" x1="${bx+gridSize}" y1="${by}" x2="${bx}" y2="${by+gridSize}" />`;
-    html += `<polygon class="ni-line" points="${bx+gridSize/2},${by} ${bx+gridSize},${by+gridSize/2} ${bx+gridSize/2},${by+gridSize} ${bx},${by+gridSize/2}" />`;
-    
-    const niCoords = [
-        [240, 120], [120, 40], [40, 120], [120, 240], 
-        [40, 360], [120, 440], [240, 360], [360, 440], 
-        [440, 360], [360, 240], [440, 120], [360, 40]
-    ];
+    html += `<rect class="ni-line" x="${bx}" y="${by}" width="${gridSize}" height="${gridSize}" />
+             <line class="ni-line" x1="${bx}" y1="${by}" x2="${bx+gridSize}" y2="${by+gridSize}" />
+             <line class="ni-line" x1="${bx+gridSize}" y1="${by}" x2="${bx}" y2="${by+gridSize}" />
+             <polygon class="ni-line" points="${bx+gridSize/2},${by} ${bx+gridSize},${by+gridSize/2} ${bx+gridSize/2},${by+gridSize} ${bx},${by+gridSize/2}" />`;
+    const niCoords = [[240, 120], [120, 40], [40, 120], [120, 240], [40, 360], [120, 440], [240, 360], [360, 440], [440, 360], [360, 240], [440, 120], [360, 40]];
     for(let h=1; h<=12; h++) {
         let [xx, yy] = niCoords[h-1];
         let rashiForHouse = (chart.lagna.rashi_num + h - 1) % 12;
@@ -227,57 +235,41 @@ function drawOrrerySVG(chart) {
     }
 
     let lagnaRashi = chart.lagna.rashi_num;
-    let [lCol, lRow] = siCoords[lagnaRashi];
-    html += `<text id="si-lagna-text" class="si-label" x="${bx + lCol*boxW + boxW/2}" y="${by + lRow*boxW + boxW/2}" font-size="20" fill="var(--teal)" text-anchor="middle" dominant-baseline="middle" opacity="0">ASC</text>`;
-    
-    let [nx, ny] = niCoords[0];
-    html += `<text id="ni-lagna-text" class="ni-label" x="${bx+nx}" y="${by+ny}" font-size="20" fill="var(--teal)" text-anchor="middle" dominant-baseline="middle" opacity="0">ASC</text>`;
+    html += `<text id="si-lagna-text" class="si-label" x="${bx + siCoords[lagnaRashi][0]*boxW + boxW/2}" y="${by + siCoords[lagnaRashi][1]*boxW + boxW/2}" font-size="20" fill="var(--teal)" text-anchor="middle" dominant-baseline="middle" opacity="0">ASC</text>`;
+    html += `<text id="ni-lagna-text" class="ni-label" x="${bx+niCoords[0][0]}" y="${by+niCoords[0][1]}" font-size="20" fill="var(--teal)" text-anchor="middle" dominant-baseline="middle" opacity="0">ASC</text>`;
 
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
-    
-    // Setup position bounds
     let rashiCounts = {};
-    planets.forEach(p => {
-        let rashi = (p==="Rahu" || p==="Ketu") ? chart.planets[p].rashi_num : chart.planets[p].rashi_num;
-        rashiCounts[rashi] = (rashiCounts[rashi] || 0) + 1;
-    });
+    planets.forEach(p => { rashiCounts[chart.planets[p].rashi_num] = (rashiCounts[chart.planets[p].rashi_num] || 0) + 1; });
     
     let currentRashiPos = {};
     planets.forEach(p => {
         let long = chart.planets[p].longitude;
         let angle = long - 90;
-        let pr = r - 50;
-        let px = cx + pr * Math.cos(angle * Math.PI/180);
-        let py = cy + pr * Math.sin(angle * Math.PI/180);
+        let px = cx + (r-50) * Math.cos(angle * Math.PI/180);
+        let py = cy + (r-50) * Math.sin(angle * Math.PI/180);
         
         let rashi = chart.planets[p].rashi_num;
-        let [col, row] = siCoords[rashi];
-        let targetX_si = bx + col * boxW + boxW/2;
-        let targetY_si = by + row * boxW + boxW/2;
+        let targetX_si = bx + siCoords[rashi][0] * boxW + boxW/2;
+        let targetY_si = by + siCoords[rashi][1] * boxW + boxW/2;
         
         let house = (rashi - chart.lagna.rashi_num + 12) % 12;
-        let [cx_ni, cy_ni] = niCoords[house];
-        let targetX_ni = bx + cx_ni;
-        let targetY_ni = by + cy_ni;
+        let targetX_ni = bx + niCoords[house][0];
+        let targetY_ni = by + niCoords[house][1];
         
         let total = rashiCounts[rashi];
         let pIdx = currentRashiPos[rashi] || 0;
         currentRashiPos[rashi] = pIdx + 1;
         
-        let ox_si = 0, oy_si = 0;
-        let ox_ni = 0, oy_ni = 0;
+        let ox_si = 0, oy_si = 0, ox_ni = 0, oy_ni = 0;
         if (total > 1 && total <= 4) {
             let corners = [[-1,-1], [1,-1], [-1,1], [1,1]];
-            ox_si = corners[pIdx % 4][0] * 22;
-            oy_si = corners[pIdx % 4][1] * 22;
-            ox_ni = corners[pIdx % 4][0] * 22;
-            oy_ni = corners[pIdx % 4][1] * 22;
+            ox_si = ox_ni = corners[pIdx % 4][0] * 22;
+            oy_si = oy_ni = corners[pIdx % 4][1] * 22;
         } else if (total > 4) {
             let pA = (pIdx / total) * 360;
-            ox_si = 28 * Math.cos(pA * Math.PI/180);
-            oy_si = 28 * Math.sin(pA * Math.PI/180);
-            ox_ni = 28 * Math.cos(pA * Math.PI/180);
-            oy_ni = 28 * Math.sin(pA * Math.PI/180);
+            ox_si = ox_ni = 28 * Math.cos(pA * Math.PI/180);
+            oy_si = oy_ni = 28 * Math.sin(pA * Math.PI/180);
         }
 
         let ext = (p==="Saturn"||p==="Rahu"||p==="Ketu") ? "png" : "jpg";
@@ -293,52 +285,53 @@ function drawOrrerySVG(chart) {
 function runRevealAnimation(chart) {
     const tl = gsap.timeline();
     
-    tl.to("#center-pulse", { opacity: 1, scale: 1.5, duration: 1, yoyo: true, repeat: -1 }, 0);
-    tl.to("#om-symbol", { opacity: 0.15, duration: 2 }, 0.8);
-    tl.to("#orrery-title", { opacity: 1, duration: 1 }, 1.5);
-    tl.to("#wheel-ring", { strokeDashoffset: 0, duration: 2, ease: "power2.inOut" }, 2.5);
-    tl.to(".zodiac-div", { opacity: 1, duration: 0.5, stagger: 0.1 }, 2.5);
-    tl.to(".zodiac-label", { opacity: 1, duration: 0.5, stagger: 0.1 }, 2.5);
+    // 1. Panchanga Typing First
+    tl.to("#panchanga-panel", { display: "block", opacity: 1, duration: 1 }, 0);
+    let fullText = `<b>PANCHANGA VITALS</b><br><br><span style="color:var(--teal)">Lagna:</span> ${chart.lagna.rashi} (${chart.lagna.degree.toFixed(2)}°)<br><span style="color:var(--teal)">Moon Rashi:</span> ${chart.planets.Moon.rashi}<br><span style="color:var(--teal)">Moon Nakshatra:</span> ${chart.planets.Moon.nakshatra} (Pada ${chart.planets.Moon.pada})<br><br><span style="color:var(--teal)">Mahadasha at Birth:</span><br>${chart.dasha.lord} (${chart.dasha.years_remaining_at_birth.toFixed(1)}y)<br><br><i style="color:var(--text-secondary);font-size:0.8rem;">Explore the Cosmos</i>`;
+    tl.to("#panchanga-panel", { duration: 3, text: { value: fullText }, ease: "none" }, 1.0);
+
+    // 2. Base Orrery
+    tl.to("#center-pulse", { opacity: 1, scale: 1.5, duration: 1, yoyo: true, repeat: -1 }, 4.0);
+    tl.to("#om-symbol", { opacity: 0.15, duration: 2 }, 4.5);
+    tl.to("#wheel-ring", { strokeDashoffset: 0, duration: 2, ease: "power2.inOut" }, 5.5);
+    tl.to(".zodiac-div", { opacity: 1, duration: 0.5, stagger: 0.1 }, 6.5);
+    tl.to(".zodiac-label", { opacity: 1, duration: 0.5, stagger: 0.1 }, 6.5);
     
-    tl.to("#lagna-marker", { opacity: 1, duration: 0.2, scale: 1.5, yoyo: true, repeat: 1 }, 4.5);
-    tl.set("#lagna-marker", { opacity: 1 }, 4.7);
-    tl.call(() => {
-        document.getElementById("orrery-title").innerHTML = `<span style="color:var(--gold);">Lagna: ${chart.lagna.rashi}</span> <span style="color:var(--teal); font-family:'JetBrains Mono';">${chart.lagna.degree.toFixed(2)}°</span>`;
-    }, null, 4.5);
-    
+    // 3. Ascendant and Background Element Slices Fade In
+    tl.to("#lagna-marker", { opacity: 1, duration: 0.2, scale: 1.5, yoyo: true, repeat: 1 }, 7.5);
+    tl.to(".rashi-slice", { opacity: 1, duration: 2, stagger: 0.1 }, 8.0);
+
+    // 4. Radar Sweep for planets (Deep Work - 15 second sweep from Top (0 degree))
+    tl.to("#radar-group", { opacity: 1, duration: 1 }, 9.0);
+    tl.to("#radar-group", { rotation: 360, transformOrigin: "500px 500px", duration: 18, ease: "none" }, 10.0);
+
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
-    planets.forEach((p, i) => {
-        let startTime = 5.5 + (i * 0.3);
+    const elements = ['Fire', 'Earth', 'Air', 'Water'];
+    
+    // Sort planets by ascending longitude to trigger sequentially
+    let sortedPlanets = [...planets].sort((a,b) => chart.planets[a].longitude - chart.planets[b].longitude);
+    
+    sortedPlanets.forEach((p) => {
+        let long = chart.planets[p].longitude;
+        // Timeline hit is based on longitude ratio over 18 seconds
+        let timeHit = 10.0 + (long / 360) * 18.0;
         let el = document.querySelector(`#planet-g-${p}`);
         let px = parseFloat(el.dataset.px);
         let py = parseFloat(el.dataset.py);
         
-        tl.to(`#planet-img-${p}`, { opacity: p === "Ketu" ? 0.8 : 1, duration: 0.6 }, startTime);
-        tl.to(`#planet-g-${p}`, {
-            x: px,
-            y: py,
-            duration: 1.0, 
-            ease: "back.out(1.2)"
-        }, startTime);
+        tl.to(`#planet-img-${p}`, { opacity: p === "Ketu" ? 0.8 : 1, duration: 1.5 }, timeHit - 0.5);
+        tl.to(`#planet-g-${p}`, { x: px, y: py, duration: 1.5, ease: "elastic.out(1, 0.3)" }, timeHit - 0.5);
+        
+        tl.call(() => {
+            if (typeof AudioEngine !== 'undefined') {
+                AudioEngine.playMix(p, elements[chart.planets[p].rashi_num % 4]);
+            }
+        }, null, timeHit);
     });
 
-    tl.to("#orrery-title", { opacity: 0, duration: 0.5 }, 14.0);
-    tl.call(() => {
-        document.getElementById("orrery-title").innerHTML = `<div style="font-family:'Cinzel'; font-size:28px; color:var(--gold);">${chart.planets.Moon.nakshatra}</div><div style="font-family:'Crimson Pro'; font-size:18px;">Pada ${chart.planets.Moon.pada}</div>`;
-    }, null, 14.5);
-    tl.to("#orrery-title", { opacity: 1, duration: 1 }, 14.5);
-    
-    // Final morph buttons & Panchanga Typweriter
-    tl.to("#orrery-title", { opacity: 0, duration: 0.5 }, 17.5);
-    tl.to("#chart-controls", { display: "flex", opacity: 1, duration: 1 }, 18.0);
-    tl.to("#panchanga-panel", { display: "block", opacity: 1, duration: 0.2 }, 18.0);
-    
-    let fullText = `<b>PANCHANGA VITALS</b><br><br><span style="color:var(--teal)">Lagna:</span> ${chart.lagna.rashi} (${chart.lagna.degree.toFixed(2)}°)<br><span style="color:var(--teal)">Moon Rashi:</span> ${chart.planets.Moon.rashi}<br><span style="color:var(--teal)">Moon Nakshatra:</span> ${chart.planets.Moon.nakshatra} (Pada ${chart.planets.Moon.pada})<br><br><span style="color:var(--teal)">Mahadasha at Birth:</span><br>${chart.dasha.lord} (${chart.dasha.total_period_years}y)<br><br><i style="color:var(--text-secondary);font-size:0.8rem;">Select Matrix Format Below</i>`;
-    tl.to("#panchanga-panel", { 
-        duration: 3, 
-        text: { value: fullText }, 
-        ease: "none"
-    }, 18.2);
+    // 5. Wrap up 
+    tl.to("#radar-group", { opacity: 0, duration: 1 }, 28.0);
+    tl.to("#chart-controls", { display: "flex", opacity: 1, duration: 1 }, 29.0);
 
     setupMorphButtons(chart);
 }
@@ -346,7 +339,6 @@ function runRevealAnimation(chart) {
 function setupMorphButtons(chart) {
     const btnS = document.getElementById('btn-south');
     const btnN = document.getElementById('btn-north');
-    
     btnS.addEventListener('click', () => morphToGrid(chart, 'south'));
     btnN.addEventListener('click', () => morphToGrid(chart, 'north'));
 }
@@ -354,7 +346,7 @@ function setupMorphButtons(chart) {
 function morphToGrid(chart, type) {
     const tl = gsap.timeline();
     tl.to("#chart-controls", { opacity: 0, duration: 0.5, onComplete: () => document.getElementById("chart-controls").style.display='none' }, 0);
-    tl.to(['#wheel-ring', '.zodiac-div', '.zodiac-label', '#lagna-marker'], { opacity: 0, duration: 1.0, ease: "power2.inOut" }, 0);
+    tl.to(['#wheel-ring', '.zodiac-div', '.zodiac-label', '#lagna-marker', '.rashi-slice'], { opacity: 0, duration: 1.0, ease: "power2.inOut" }, 0);
     
     if (type === 'south') {
         tl.to('.si-box', { opacity: 1, duration: 1.0, stagger: 0.05, ease: "power2.out" }, 0.5);
