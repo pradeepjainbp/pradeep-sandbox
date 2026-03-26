@@ -56,7 +56,7 @@ function astrologyInit() {
                 return;
             }
             
-            if (typeof AudioEngine !== 'undefined') AudioEngine.init();
+            if (typeof window.AudioEngine !== 'undefined') window.AudioEngine.init();
 
             const btn = form.querySelector('.jyotish-btn');
             btn.innerHTML = "Computing Cosmos...<br><span style='font-size:10px;text-transform:none;'>(Waking deep-space engine on Render, may take 45s)</span>";
@@ -130,7 +130,7 @@ function setupTooltips(chart) {
         box.addEventListener('mouseenter', (e) => {
             let h = parseInt(box.dataset.house);
             let r = parseInt(box.dataset.rashi);
-            if(window.AudioEngine) AudioEngine.playElement(elements[r % 4]);
+            if(window.AudioEngine) window.AudioEngine.playElement(elements[r % 4]);
             
             tooltip.innerHTML = `
                 <div class="tt-title" style="color:var(--text-secondary)">House ${h}</div>
@@ -156,7 +156,7 @@ function setupTooltips(chart) {
         let data = chart.planets[p];
         let h = (data.rashi_num - chart.lagna.rashi_num + 12) % 12 + 1;
         img.addEventListener('mouseenter', (e) => {
-            if(window.AudioEngine) AudioEngine.playMix(p, elements[data.rashi_num % 4]);
+            if(window.AudioEngine) window.AudioEngine.playMix(p, elements[data.rashi_num % 4]);
 
             tooltip.innerHTML = `
                 <div class="tt-title">${p} <span style="font-size:0.9rem">${data.rashi}</span></div>
@@ -252,7 +252,7 @@ function drawOrrerySVG(chart) {
         html += `
             <rect class="si-box" x="${bx + col*boxW}" y="${by + row*boxW}" width="${boxW}" height="${boxW}" pointer-events="none" />
             <text class="si-label" x="${bx + col*boxW + 5}" y="${by + row*boxW + 18}" pointer-events="none">${siLabels[i]}</text>
-            <rect class="house-hitbox" data-type="si" data-rashi="${i}" data-house="${house}" x="${bx + col*boxW}" y="${by + row*boxW}" width="${boxW}" height="${boxW}" fill="transparent" pointer-events="all" style="display:none;" />
+            <rect class="house-hitbox si-fill" data-type="si" data-rashi="${i}" data-house="${house}" x="${bx + col*boxW}" y="${by + row*boxW}" width="${boxW}" height="${boxW}" fill="${elementColors[i%4]}" opacity="0" pointer-events="all" style="display:none;" />
         `;
     }
 
@@ -282,7 +282,7 @@ function drawOrrerySVG(chart) {
         let rashiForHouse = (chart.lagna.rashi_num + h - 1) % 12;
         html += `<text class="ni-label" x="${bx+xx}" y="${by+yy-30}" font-size="14" fill="var(--text-secondary)" text-anchor="middle" opacity="0" pointer-events="none">${rashiForHouse+1}</text>`;
         let pts = niPolygons[h-1].split(' ').map(pair => { let [px,py] = pair.split(','); return `${bx+parseFloat(px)},${by+parseFloat(py)}`; }).join(' ');
-        html += `<polygon class="house-hitbox" data-type="ni" data-rashi="${rashiForHouse}" data-house="${h}" points="${pts}" fill="transparent" pointer-events="all" style="display:none;" />`;
+        html += `<polygon class="house-hitbox ni-fill" data-type="ni" data-rashi="${rashiForHouse}" data-house="${h}" points="${pts}" fill="${elementColors[rashiForHouse%4]}" opacity="0" pointer-events="all" style="display:none;" />`;
     }
 
     let lagnaRashi = chart.lagna.rashi_num;
@@ -337,7 +337,7 @@ function runRevealAnimation(chart) {
     const tl = gsap.timeline();
     
     tl.to("#panchanga-panel", { display: "block", opacity: 1, duration: 1 }, 0);
-    let fullText = `<b>PANCHANGA VITALS</b><br><br><span style="color:var(--teal)">Lagna:</span> ${chart.lagna.rashi} (${chart.lagna.degree.toFixed(2)}°)<br><span style="color:var(--teal)">Moon Rashi:</span> ${chart.planets.Moon.rashi}<br><span style="color:var(--teal)">Moon Nakshatra:</span> ${chart.planets.Moon.nakshatra} (Pada ${chart.planets.Moon.pada})<br><br><span style="color:var(--teal)">Mahadasha at Birth:</span><br>${chart.dasha.lord} (${chart.dasha.years_remaining_at_birth.toFixed(1)}y)<br><br><i style="color:var(--text-secondary);font-size:0.8rem;">Hover the layout</i>`;
+    let fullText = `<b>PANCHANGA VITALS</b><br><br><span style="color:var(--teal)">Lagna:</span> ${chart.lagna.rashi} (${chart.lagna.degree.toFixed(2)}°)<br><span style="color:var(--teal)">Moon Rashi:</span> ${chart.planets.Moon.rashi}<br><span style="color:var(--teal)">Moon Nakshatra:</span> ${chart.planets.Moon.nakshatra} (Pada ${chart.planets.Moon.pada})<br><br><span style="color:var(--teal)">Mahadasha at Birth:</span><br>${chart.dasha.lord} (${chart.dasha.years_remaining_at_birth.toFixed(1)}y)<br><br><i style="color:var(--text-secondary);font-size:0.8rem;">Explore the Cosmos</i>`;
     tl.to("#panchanga-panel", { duration: 3, text: { value: fullText }, ease: "none" }, 1.0);
 
     tl.to("#center-pulse", { opacity: 1, scale: 1.5, duration: 1, yoyo: true, repeat: -1 }, 4.0);
@@ -347,13 +347,11 @@ function runRevealAnimation(chart) {
     tl.to(".zodiac-label", { opacity: 1, duration: 0.5, stagger: 0.1 }, 6.5);
     tl.to("#lagna-marker", { opacity: 1, duration: 0.2, scale: 1.5, yoyo: true, repeat: 1 }, 7.5);
     
-    // Background Slices Fade in (Hitboxes are active)
     tl.to(".rashi-slice", { opacity: 1, duration: 2, stagger: 0.1 }, 8.0);
     tl.call(() => { document.querySelectorAll('.house-hitbox[data-type="cosmos"]').forEach(h => h.style.display = 'block'); }, null, 8.5);
 
-    // 24 second Radar sweep perfectly anchored using svgOrigin
     tl.to("#radar-group", { opacity: 1, duration: 1 }, 9.0);
-    tl.to("#radar-group", { rotation: 360, svgOrigin: "500 500", duration: 24, ease: "none" }, 10.0);
+    tl.to("#radar-group", { rotation: 360, svgOrigin: "500 500", duration: 18, ease: "none" }, 10.0);
 
     const planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
     const elements = ['Fire', 'Earth', 'Air', 'Water'];
@@ -361,7 +359,7 @@ function runRevealAnimation(chart) {
     
     sortedPlanets.forEach((p) => {
         let long = chart.planets[p].longitude;
-        let timeHit = 10.0 + (long / 360) * 24.0;
+        let timeHit = 10.0 + (long / 360) * 18.0;
         let el = document.querySelector(`#planet-g-${p}`);
         let px = parseFloat(el.dataset.px);
         let py = parseFloat(el.dataset.py);
@@ -370,12 +368,12 @@ function runRevealAnimation(chart) {
         tl.to(`#planet-g-${p}`, { x: px, y: py, duration: 1.5, ease: "elastic.out(1, 0.3)" }, timeHit - 0.5);
         
         tl.call(() => {
-            if (typeof AudioEngine !== 'undefined') AudioEngine.playMix(p, elements[chart.planets[p].rashi_num % 4]);
+            if (typeof window.AudioEngine !== 'undefined') window.AudioEngine.playMix(p, elements[chart.planets[p].rashi_num % 4]);
         }, null, timeHit);
     });
 
-    tl.to("#radar-group", { opacity: 0, duration: 1 }, 34.0);
-    tl.to("#chart-controls", { display: "flex", opacity: 1, duration: 1 }, 35.0);
+    tl.to("#radar-group", { opacity: 0, duration: 1 }, 32.0);
+    tl.to("#chart-controls", { display: "flex", opacity: 1, duration: 1 }, 33.0);
 
     setupMorphButtons(chart);
 }
@@ -391,10 +389,9 @@ function setupMorphButtons(chart) {
 
 function morphToGrid(chart, type) {
     const tl = gsap.timeline();
-    // Fade out everything gracefully
     tl.to(['#wheel-ring', '.zodiac-div', '.zodiac-label', '#lagna-marker', '.rashi-slice'], { opacity: 0, duration: 1.0, ease: "power2.inOut" }, 0);
-    tl.to(['.si-box', '.si-label', '#si-lagna-text'], { opacity: 0, duration: 1.0 }, 0);
-    tl.to(['.ni-line', '.ni-label', '#ni-lagna-text'], { opacity: 0, duration: 1.0 }, 0);
+    tl.to(['.si-box', '.si-label', '#si-lagna-text', '.si-fill'], { opacity: 0, duration: 1.0 }, 0);
+    tl.to(['.ni-line', '.ni-label', '#ni-lagna-text', '.ni-fill'], { opacity: 0, duration: 1.0 }, 0);
     
     document.querySelectorAll('.house-hitbox').forEach(h => h.style.display = 'none');
     
@@ -405,11 +402,13 @@ function morphToGrid(chart, type) {
         document.querySelectorAll('.house-hitbox[data-type="cosmos"]').forEach(h => h.style.display = 'block');
     } else if (type === 'south') {
         tl.to('.si-box', { opacity: 1, duration: 1.0, stagger: 0.05, ease: "power2.out" }, 0.5);
+        tl.to('.si-fill', { opacity: 1, duration: 1.5 }, 0.5);
         tl.to('.si-label', { opacity: 1, duration: 1.5 }, 1.0);
         tl.to('#si-lagna-text', { opacity: 1, duration: 1.0, scale: 1.2, yoyo: true, repeat: 1 }, 1.5);
         document.querySelectorAll('.house-hitbox[data-type="si"]').forEach(h => h.style.display = 'block');
     } else {
         tl.to('.ni-line', { opacity: 1, duration: 1.0, stagger: 0.1, ease: "power2.out" }, 0.5);
+        tl.to('.ni-fill', { opacity: 1, duration: 1.5 }, 0.5);
         tl.to('.ni-label', { opacity: 1, duration: 1.5 }, 1.0);
         tl.to('#ni-lagna-text', { opacity: 1, duration: 1.0, scale: 1.2, yoyo: true, repeat: 1 }, 1.5);
         document.querySelectorAll('.house-hitbox[data-type="ni"]').forEach(h => h.style.display = 'block');

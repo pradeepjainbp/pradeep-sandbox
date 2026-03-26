@@ -1,4 +1,4 @@
-const AudioEngine = (function() {
+window.AudioEngine = (function() {
     let ctx = null;
     let masterGain = null;
 
@@ -6,7 +6,7 @@ const AudioEngine = (function() {
         if (!ctx) {
             ctx = new (window.AudioContext || window.webkitAudioContext)();
             masterGain = ctx.createGain();
-            masterGain.gain.value = 0.5;
+            masterGain.gain.value = 0.4;
             masterGain.connect(ctx.destination);
         }
         if (ctx.state === 'suspended') ctx.resume();
@@ -21,8 +21,8 @@ const AudioEngine = (function() {
 
         let now = ctx.currentTime;
         gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.2, now + 1);
-        gain.gain.linearRampToValueAtTime(0, now + 5);
+        gain.gain.linearRampToValueAtTime(0.15, now + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.5);
 
         if (element === 'Fire') {
             osc.type = 'sawtooth';
@@ -38,7 +38,7 @@ const AudioEngine = (function() {
             osc.frequency.setValueAtTime(65, now);
         }
         osc.start(now);
-        osc.stop(now + 5);
+        osc.stop(now + 1.5);
     }
 
     function playPlanet(planet) {
@@ -50,8 +50,8 @@ const AudioEngine = (function() {
 
         let now = ctx.currentTime;
         gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.5, now + 0.2);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 4);
+        gain.gain.linearRampToValueAtTime(0.4, now + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 2.0);
 
         const freqs = {
             'Sun': 261.63, 
@@ -68,15 +68,17 @@ const AudioEngine = (function() {
         osc.frequency.setValueAtTime(freqs[planet] || 440, now);
         
         osc.start(now);
-        osc.stop(now + 4);
+        osc.stop(now + 2.0);
     }
 
     return {
         init,
+        playElement,
+        playPlanet,
         playMix: function(planet, element) {
             init();
             playElement(element);
-            setTimeout(() => playPlanet(planet), 600);
+            setTimeout(() => playPlanet(planet), 200);
         }
     };
 })();
