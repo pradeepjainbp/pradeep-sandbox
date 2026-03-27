@@ -376,7 +376,7 @@ function backToMap(){
 //  APPEND B — TAB PANELS + INDICATOR CARDS
 // ══════════════════════════════════════════
 
-function switchTab(name){
+function switchIndicatorTab(name){
   activeTab=name;
   document.querySelectorAll('.itab').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('hidden',p.id!=='tab-'+name));
