@@ -2,11 +2,14 @@
 const _tabCache = {};
 const _tabAssetsLoaded = new Set();
 
-async function switchTab(name) {
+async function switchTab(name, preserveHash = false) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   const btn = document.querySelector('[data-tab="' + name + '"]');
   if (btn) btn.classList.add('active');
-  history.replaceState(null, '', '#' + name);
+  
+  if (!preserveHash) {
+    history.replaceState(null, '', '#' + name);
+  }
 
   const content = document.getElementById('content');
 
@@ -66,6 +69,15 @@ async function switchTab(name) {
 
 // Start on hash or home
 document.addEventListener('DOMContentLoaded', function() {
-  const tab = location.hash.replace('#', '') || 'home';
-  switchTab(tab);
+  let hash = location.hash.replace('#', '');
+  let tab = hash || 'home';
+  let preserveHash = false;
+  
+  // Handle Supabase OAuth redirects
+  if (hash.includes('access_token=') || hash.includes('error=')) {
+    tab = 'loans';
+    preserveHash = true;
+  }
+  
+  switchTab(tab, preserveHash);
 });
