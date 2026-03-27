@@ -742,15 +742,15 @@ function loadScript(src, callback) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const PLANET_META = {
-    Sun:     { glyph: '☉', color: '#C9A84C', speech: { pitch: 0.85, rate: 0.90 } },
-    Moon:    { glyph: '☽', color: '#8888BB', speech: { pitch: 1.05, rate: 0.88 } },
-    Mars:    { glyph: '♂', color: '#FF6B6B', speech: { pitch: 0.80, rate: 1.05 } },
-    Mercury: { glyph: '☿', color: '#4ECDC4', speech: { pitch: 1.30, rate: 1.15 } },
-    Jupiter: { glyph: '♃', color: '#6BCB77', speech: { pitch: 0.90, rate: 0.82 } },
-    Venus:   { glyph: '♀', color: '#F472B6', speech: { pitch: 1.15, rate: 0.92 } },
-    Saturn:  { glyph: '♄', color: '#94A3B8', speech: { pitch: 0.60, rate: 0.75 } },
-    Rahu:    { glyph: '☊', color: '#7B2FBE', speech: { pitch: 0.70, rate: 0.95 } },
-    Ketu:    { glyph: '☋', color: '#2F4858', speech: { pitch: 1.10, rate: 0.65 } },
+    Sun:     { glyph: '☉', color: '#C9A84C', gender: 'male',    speech: { pitch: 0.75, rate: 0.88 } },
+    Moon:    { glyph: '☽', color: '#8888BB', gender: 'female',  speech: { pitch: 1.25, rate: 0.90 } },
+    Mars:    { glyph: '♂', color: '#FF6B6B', gender: 'male',    speech: { pitch: 0.82, rate: 1.08 } },
+    Mercury: { glyph: '☿', color: '#4ECDC4', gender: 'neutral', speech: { pitch: 1.10, rate: 1.15 } },
+    Jupiter: { glyph: '♃', color: '#6BCB77', gender: 'male',    speech: { pitch: 0.68, rate: 0.80 } },
+    Venus:   { glyph: '♀', color: '#F472B6', gender: 'female',  speech: { pitch: 1.35, rate: 0.93 } },
+    Saturn:  { glyph: '♄', color: '#94A3B8', gender: 'neutral', speech: { pitch: 0.58, rate: 0.72 } },
+    Rahu:    { glyph: '☊', color: '#7B2FBE', gender: 'male',    speech: { pitch: 0.88, rate: 0.93 } },
+    Ketu:    { glyph: '☋', color: '#2F4858', gender: 'neutral', speech: { pitch: 1.00, rate: 0.63 } },
 };
 
 const DOMAIN_NAMES = {
@@ -941,17 +941,45 @@ function buildSpeechCard(planetName, text, loading) {
     </div>`;
 }
 
-// Web Speech API
+// Web Speech API — gendered voice selection per planet
+const _MALE_VOICE_HINTS   = ['david', 'mark', 'james', 'fred', 'alex', 'george', 'paul', 'daniel', 'ryan', 'guy', 'rishi', 'liam', 'eric'];
+const _FEMALE_VOICE_HINTS = ['zira', 'susan', 'linda', 'jenny', 'natasha', 'samantha', 'victoria', 'kate', 'emily', 'tessa', 'libby', 'hazel', 'aria', 'sonia', 'ava'];
+
+function _pickVoice(gender) {
+    const voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
+    if (gender === 'male') {
+        return voices.find(v => _MALE_VOICE_HINTS.some(h => v.name.toLowerCase().includes(h)))
+            || voices.find(v => v.name.toLowerCase().includes('male'))
+            || voices[0];
+    }
+    if (gender === 'female') {
+        return voices.find(v => _FEMALE_VOICE_HINTS.some(h => v.name.toLowerCase().includes(h)))
+            || voices.find(v => v.name.toLowerCase().includes('female'))
+            || voices[0];
+    }
+    return voices[0]; // neutral — any English voice
+}
+
 function speakAloud(text, planetName) {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(text);
-    const profile = PLANET_META[planetName]?.speech || { pitch: 1, rate: 1 };
+    const meta = PLANET_META[planetName] || {};
+    const profile = meta.speech || { pitch: 1, rate: 1 };
     utter.pitch = profile.pitch;
-    utter.rate = profile.rate;
-    // Try to pick a good voice
+    utter.rate  = profile.rate;
+
+    const trySpeak = () => {
+        const voice = _pickVoice(meta.gender || 'neutral');
+        if (voice) utter.voice = voice;
+        window.speechSynthesis.speak(utter);
+    };
+
+    // Voices may not be loaded yet on first call
     const voices = window.speechSynthesis.getVoices();
-    const preferred = voices.find(v => v.lang.startsWith('en') && !v.name.includes('Google'));
-    if (preferred) utter.voice = preferred;
-    window.speechSynthesis.speak(utter);
+    if (voices.length > 0) {
+        trySpeak();
+    } else {
+        window.speechSynthesis.onvoiceschanged = () => { trySpeak(); };
+    }
 }
