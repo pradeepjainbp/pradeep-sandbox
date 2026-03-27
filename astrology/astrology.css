@@ -862,9 +862,7 @@
     z-index: 2;
 }
 
-.dasha-green { background: rgba(16, 185, 129, 0.75); }
-.dasha-amber { background: rgba(245, 158, 11, 0.70); }
-.dasha-red   { background: rgba(239,  68,  68, 0.70); }
+/* Segment colours now set inline via _scoreToColor() */
 
 /* Today marker */
 .dasha-today-line {
@@ -897,28 +895,34 @@
     padding-left: 108px;
     flex-wrap: wrap;
 }
-.dl-item {
+.dl-spectrum-wrap {
+    flex: 1;
+    min-width: 160px;
+    max-width: 340px;
+}
+.dl-spectrum-bar {
+    height: 7px;
+    border-radius: 4px;
+    background: linear-gradient(to right,
+        rgba(210,35,35,0.82),
+        rgba(235,85,30,0.82),
+        rgba(230,155,20,0.82),
+        rgba(120,195,45,0.82),
+        rgba(16,175,115,0.82));
+    margin-bottom: 4px;
+}
+.dl-spectrum-labels {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.72rem;
+    justify-content: space-between;
+    font-size: 0.64rem;
     font-family: 'Sora', sans-serif;
-    color: var(--text-secondary);
+    color: rgba(255,255,255,0.35);
 }
-.dl-item::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 8px;
-    border-radius: 2px;
-}
-.dl-green::before { background: rgba(16, 185, 129, 0.75); }
-.dl-amber::before { background: rgba(245, 158, 11, 0.70); }
-.dl-red::before   { background: rgba(239,  68,  68, 0.70); }
 .dl-today {
     font-size: 0.72rem;
     font-family: 'Sora', sans-serif;
     color: rgba(255,255,255,0.5);
+    white-space: nowrap;
 }
 
 /* Floating tooltip */

@@ -1112,7 +1112,30 @@ function _scorePlanetForDomain(planet, domainId, chartData) {
     return Math.max(0, Math.min(100, score));
 }
 
-function _periodColor(score) {
+// Continuous spectrum: deep red → orange → amber → lime → teal
+function _scoreToColor(score) {
+    const stops = [
+        [0,   [210, 35,  35 ]],   // deep red
+        [30,  [235, 85,  30 ]],   // orange-red
+        [50,  [230, 155, 20 ]],   // amber
+        [70,  [120, 195, 45 ]],   // lime-green
+        [100, [16,  175, 115]],   // teal green
+    ];
+    let lo = stops[0], hi = stops[stops.length - 1];
+    for (let i = 0; i < stops.length - 1; i++) {
+        if (score >= stops[i][0] && score <= stops[i + 1][0]) {
+            lo = stops[i]; hi = stops[i + 1]; break;
+        }
+    }
+    const t = (hi[0] === lo[0]) ? 0 : (score - lo[0]) / (hi[0] - lo[0]);
+    const r = Math.round(lo[1][0] + t * (hi[1][0] - lo[1][0]));
+    const g = Math.round(lo[1][1] + t * (hi[1][1] - lo[1][1]));
+    const b = Math.round(lo[1][2] + t * (hi[1][2] - lo[1][2]));
+    return `rgba(${r},${g},${b},0.82)`;
+}
+
+// Still used to categorise key periods (good/bad)
+function _periodLabel(score) {
     if (score >= 65) return 'green';
     if (score >= 40) return 'amber';
     return 'red';
@@ -1173,13 +1196,13 @@ function buildDashaTimeline(chartData) {
                 const width = ((aEnd - aStart) / tSpan * 100).toFixed(3);
                 const antarScore = _scorePlanetForDomain(antar.lord, domainId, chartData);
                 const combined  = _antardashaCombinedScore(mahaScore, antarScore);
-                const color = _periodColor(combined);
+                const segColor  = _scoreToColor(combined);
 
                 const startYr = new Date(antar.start).getFullYear();
                 const endYr   = new Date(antar.end).getFullYear();
                 const tooltip = `${maha.lord} Mahadasha / ${antar.lord} Antardasha\n${startYr}–${endYr} (${antar.years}y)\nScore: ${Math.round(combined)}`;
 
-                segments.push(`<div class="dasha-seg dasha-${color}" style="left:${left}%;width:${width}%"
+                segments.push(`<div class="dasha-seg" style="left:${left}%;width:${width}%;background:${segColor}"
                     data-tip="${tooltip.replace(/\n/g, '|')}"></div>`);
             });
         });
@@ -1213,10 +1236,13 @@ function buildDashaTimeline(chartData) {
         </div>
         ${rows}
         <div class="dasha-legend">
-            <span class="dl-item dl-green">Favourable</span>
-            <span class="dl-item dl-amber">Mixed</span>
-            <span class="dl-item dl-red">Challenging</span>
-            <span class="dl-today">▲ Today</span>
+            <div class="dl-spectrum-wrap">
+                <div class="dl-spectrum-bar"></div>
+                <div class="dl-spectrum-labels">
+                    <span>Challenging</span><span>Mixed</span><span>Favourable</span>
+                </div>
+            </div>
+            <span class="dl-today">▼ Today</span>
         </div>`;
 
     // Custom tooltip on hover
@@ -1424,11 +1450,12 @@ function _renderCustomAspect(aspect, chartData) {
             const width  = ((aEnd - aStart) / tSpan * 100).toFixed(3);
             const antarScore = _scoreCustomForPlanet(antar.lord, aspect, chartData);
             const combined   = _antardashaCombinedScore(mahaScore, antarScore);
-            const color      = _periodColor(combined);
+            const segColor   = _scoreToColor(combined);
+            const label      = _periodLabel(combined);
             const sy = new Date(antar.start).getFullYear();
             const ey = new Date(antar.end).getFullYear();
             const tip = `${maha.lord} / ${antar.lord}|${sy}–${ey} (${antar.years}y)|Score: ${Math.round(combined)}`;
-            allSegments.push({ left, width, color, combined, tip,
+            allSegments.push({ left, width, segColor, label, combined, tip,
                 lord: maha.lord, antarLord: antar.lord,
                 start: aStart, end: aEnd, years: antar.years, sy, ey });
         });
@@ -1449,14 +1476,14 @@ function _renderCustomAspect(aspect, chartData) {
 
     // Segment HTML
     const segsHTML = allSegments.map(s =>
-        `<div class="dasha-seg dasha-${s.color}" style="left:${s.left}%;width:${s.width}%"
+        `<div class="dasha-seg" style="left:${s.left}%;width:${s.width}%;background:${s.segColor}"
             data-tip="${s.tip}"></div>`).join('');
 
-    // Key periods: top 3 green (future), top 3 red (future)
+    // Key periods: top 3 favourable (future), top 3 challenging (future)
     const futureSegs = allSegments.filter(s => s.end > today);
-    const topGreen = futureSegs.filter(s => s.color === 'green')
+    const topGreen = futureSegs.filter(s => s.label === 'green')
         .sort((a, b) => b.combined - a.combined).slice(0, 3);
-    const topRed   = futureSegs.filter(s => s.color === 'red')
+    const topRed   = futureSegs.filter(s => s.label === 'red')
         .sort((a, b) => a.combined - b.combined).slice(0, 3);
 
     const keyPeriodsHTML = (topGreen.length || topRed.length) ? `
@@ -1500,9 +1527,12 @@ function _renderCustomAspect(aspect, chartData) {
         </div>
         ${keyPeriodsHTML}
         <div class="dasha-legend" style="padding-left:0;margin-top:12px;">
-            <span class="dl-item dl-green">Favourable</span>
-            <span class="dl-item dl-amber">Mixed</span>
-            <span class="dl-item dl-red">Challenging</span>
+            <div class="dl-spectrum-wrap">
+                <div class="dl-spectrum-bar"></div>
+                <div class="dl-spectrum-labels">
+                    <span>Challenging</span><span>Mixed</span><span>Favourable</span>
+                </div>
+            </div>
         </div>
     </div>`;
 
