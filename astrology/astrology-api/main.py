@@ -4,7 +4,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from typing import Optional
 from astro.chart import calculate_chart
-from astro.dasha import calculate_dasha_at_birth
+from astro.dasha import calculate_dasha_at_birth, calculate_full_dasha_timeline
 from astro.divisional import calculate_divisionals
 from astro.domains import score_all_domains
 from astro.council import planet_speak, planet_debate
@@ -38,6 +38,9 @@ def compute_chart(req: ChartRequest):
 
     moon_lon = chart['planets']['Moon']['longitude']
     chart['dasha'] = calculate_dasha_at_birth(moon_lon)
+    chart['dasha_timeline'] = calculate_full_dasha_timeline(
+        moon_lon, req.year, req.month, req.day
+    )
 
     # Score all 12 domains + compute full Ashtakavarga tables
     domain_results = score_all_domains(chart, chart['dasha'])

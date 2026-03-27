@@ -765,3 +765,182 @@
     gap: 8px;
     justify-content: center;
 }
+
+/* ═══════════════════════════════════════
+   DASHA LIFE TIMELINE
+═══════════════════════════════════════ */
+.dasha-timeline-section {
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.dasha-ruler,
+.dasha-domain-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 5px;
+}
+
+.dasha-row-label {
+    width: 96px;
+    min-width: 96px;
+    font-size: 0.72rem;
+    font-family: 'Sora', sans-serif;
+    color: var(--text-secondary);
+    text-align: right;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    padding-right: 4px;
+}
+
+.dasha-bar-wrap {
+    flex: 1;
+    position: relative;
+}
+
+/* Mahadasha planet name ruler */
+.dasha-maha-ruler {
+    position: relative;
+    height: 18px;
+    margin-bottom: 2px;
+}
+.dasha-maha-label {
+    position: absolute;
+    top: 0;
+    height: 18px;
+    font-size: 0.63rem;
+    font-family: 'Cinzel', serif;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.5px;
+}
+
+/* Year tick ruler */
+.dasha-year-ruler {
+    position: relative;
+    height: 14px;
+    margin-bottom: 4px;
+}
+.dasha-year-label {
+    position: absolute;
+    font-size: 0.60rem;
+    font-family: 'Sora', sans-serif;
+    color: rgba(255,255,255,0.25);
+    transform: translateX(-50%);
+}
+
+/* The actual timeline bar */
+.dasha-bar {
+    position: relative;
+    height: 18px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 3px;
+    overflow: visible;
+}
+
+/* Antardasha segments */
+.dasha-seg {
+    position: absolute;
+    top: 1px;
+    height: calc(100% - 2px);
+    border-right: 1px solid rgba(0,0,0,0.25);
+    border-radius: 1px;
+    cursor: default;
+    transition: filter 0.15s, transform 0.15s;
+}
+.dasha-seg:hover {
+    filter: brightness(1.35);
+    transform: scaleY(1.25);
+    z-index: 2;
+}
+
+.dasha-green { background: rgba(16, 185, 129, 0.75); }
+.dasha-amber { background: rgba(245, 158, 11, 0.70); }
+.dasha-red   { background: rgba(239,  68,  68, 0.70); }
+
+/* Today marker */
+.dasha-today-line {
+    position: absolute;
+    top: -4px;
+    width: 2px;
+    height: calc(100% + 8px);
+    background: #ffffff;
+    opacity: 0.9;
+    z-index: 5;
+    pointer-events: none;
+}
+.dasha-today-line::after {
+    content: '▼';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 7px;
+    color: #ffffff;
+    opacity: 0.7;
+}
+
+/* Legend */
+.dasha-legend {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 16px;
+    padding-left: 108px;
+    flex-wrap: wrap;
+}
+.dl-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-family: 'Sora', sans-serif;
+    color: var(--text-secondary);
+}
+.dl-item::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 8px;
+    border-radius: 2px;
+}
+.dl-green::before { background: rgba(16, 185, 129, 0.75); }
+.dl-amber::before { background: rgba(245, 158, 11, 0.70); }
+.dl-red::before   { background: rgba(239,  68,  68, 0.70); }
+.dl-today {
+    font-size: 0.72rem;
+    font-family: 'Sora', sans-serif;
+    color: rgba(255,255,255,0.5);
+}
+
+/* Floating tooltip */
+.dasha-tooltip {
+    position: fixed;
+    background: #0D1424;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    font-family: 'Sora', sans-serif;
+    color: #e0e0e0;
+    line-height: 1.6;
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+    max-width: 220px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.dasha-tooltip strong {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 2px;
+}

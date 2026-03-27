@@ -447,6 +447,9 @@ function showDomainDashboard(chartData) {
             buildAshtakavargaGrid(chartData.bav, chartData.sav);
         });
     }
+
+    // Build Dasha timeline (after a short delay so DOM is ready)
+    setTimeout(() => buildDashaTimeline(chartData), 100);
 }
 
 function buildDashboardHTML(chartData) {
@@ -505,6 +508,12 @@ function buildDashboardHTML(chartData) {
                 <button class="drilldown-close" onclick="closeDrilldown()">✕</button>
                 <div id="drilldown-content"></div>
             </div>
+        </div>
+
+        <div class="dasha-timeline-section" id="dasha-timeline-section">
+            <h3 class="avarga-title">Dasha Life Timeline</h3>
+            <p class="avarga-sub">Each bar shows how the planetary periods (Mahadasha → Antardasha) affect that area of your life. Hover a segment for details. The vertical line is today.</p>
+            <div id="dasha-timeline-inner"></div>
         </div>
     </div>`;
 }
@@ -1019,4 +1028,189 @@ function speakAloud(text, planetName) {
     } else {
         window.speechSynthesis.onvoiceschanged = () => { trySpeak(); };
     }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DASHA LIFE TIMELINE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Domain lords (mirrors domains.py) — used in scoring
+const _DOMAIN_LORDS = {
+    dharma:         ['Sun'],
+    wealth:         ['Jupiter', 'Venus', 'Mercury'],
+    siblings:       ['Mars', 'Mercury'],
+    home:           ['Moon', 'Venus'],
+    children:       ['Jupiter'],
+    health:         ['Mars', 'Saturn', 'Sun'],
+    marriage:       ['Venus', 'Jupiter'],
+    transformation: ['Saturn', 'Ketu'],
+    fortune:        ['Jupiter', 'Sun'],
+    career:         ['Sun', 'Saturn', 'Mercury'],
+    gains:          ['Jupiter', 'Saturn'],
+    liberation:     ['Saturn', 'Ketu'],
+};
+
+const _NATURAL_BENEFICS = new Set(['Jupiter', 'Venus', 'Moon', 'Mercury']);
+const _NATURAL_MALEFICS = new Set(['Sun', 'Mars', 'Saturn', 'Rahu', 'Ketu']);
+
+const _DIGNITY_BONUS = {
+    exalted: 20, own: 15, friend: 8, neutral: 0, enemy: -12, debilitated: -20
+};
+
+function _scorePlanetForDomain(planet, domainId, chartData) {
+    let score = 50;
+
+    // 1. Functional lordship
+    const lords = _DOMAIN_LORDS[domainId] || [];
+    const domain = (chartData.domains || []).find(d => d.domain_id === domainId);
+    if (domain && planet === domain.house_lord) score += 25;
+    else if (lords.includes(planet)) score += 12;
+
+    // 2. Dignity
+    const pData = (chartData.planets || {})[planet] || {};
+    score += (_DIGNITY_BONUS[pData.dignity] || 0);
+
+    // 3. BAV score (0-8 centered on 4 → -12 to +12)
+    if (domain && domain.bav_breakdown && planet in domain.bav_breakdown) {
+        score += (domain.bav_breakdown[planet] - 4) * 3;
+    }
+
+    // 4. Natural character boost (small)
+    if (_NATURAL_BENEFICS.has(planet)) score += 5;
+    else if (_NATURAL_MALEFICS.has(planet)) score -= 3;
+
+    return Math.max(0, Math.min(100, score));
+}
+
+function _periodColor(score) {
+    if (score >= 65) return 'green';
+    if (score >= 40) return 'amber';
+    return 'red';
+}
+
+function _antardashaCombinedScore(mahaScore, antarScore) {
+    return mahaScore * 0.4 + antarScore * 0.6;
+}
+
+function buildDashaTimeline(chartData) {
+    const container = document.getElementById('dasha-timeline-inner');
+    if (!container) return;
+
+    const timeline = chartData.dasha_timeline;
+    const domains  = chartData.domains || [];
+    if (!timeline || !timeline.length || !domains.length) {
+        container.innerHTML = '<p style="color:var(--text-secondary);font-size:0.85rem;">Timeline data unavailable.</p>';
+        return;
+    }
+
+    // Overall time span: start of first Mahadasha → end of last
+    const tStart = new Date(timeline[0].start).getTime();
+    const tEnd   = new Date(timeline[timeline.length - 1].end).getTime();
+    const tSpan  = tEnd - tStart;
+    const today  = Date.now();
+    const todayPct = Math.max(0, Math.min(100, ((today - tStart) / tSpan) * 100));
+
+    // Domain row labels (short versions)
+    const SHORT_NAMES = {
+        dharma: 'Dharma', wealth: 'Wealth', siblings: 'Siblings',
+        home: 'Home', children: 'Children', health: 'Health',
+        marriage: 'Marriage', transformation: 'Transformation',
+        fortune: 'Fortune', career: 'Career', gains: 'Gains',
+        liberation: 'Liberation',
+    };
+
+    // Build year labels (Mahadasha boundaries)
+    const yearLabels = timeline.map(m => {
+        const pct = ((new Date(m.start).getTime() - tStart) / tSpan) * 100;
+        const yr  = new Date(m.start).getFullYear();
+        return `<div class="dasha-year-label" style="left:${pct.toFixed(2)}%">${yr}</div>`;
+    }).join('');
+
+    // Build one row per domain
+    const rows = domains.map(domain => {
+        const domainId = domain.domain_id;
+
+        // Antardasha-level segments for this domain
+        const segments = [];
+        timeline.forEach(maha => {
+            const mahaScore = _scorePlanetForDomain(maha.lord, domainId, chartData);
+            maha.antardashas.forEach(antar => {
+                const aStart = new Date(antar.start).getTime();
+                const aEnd   = new Date(antar.end).getTime();
+                if (aEnd < tStart || aStart > tEnd) return;
+
+                const left  = ((aStart - tStart) / tSpan * 100).toFixed(3);
+                const width = ((aEnd - aStart) / tSpan * 100).toFixed(3);
+                const antarScore = _scorePlanetForDomain(antar.lord, domainId, chartData);
+                const combined  = _antardashaCombinedScore(mahaScore, antarScore);
+                const color = _periodColor(combined);
+
+                const startYr = new Date(antar.start).getFullYear();
+                const endYr   = new Date(antar.end).getFullYear();
+                const tooltip = `${maha.lord} Mahadasha / ${antar.lord} Antardasha\n${startYr}–${endYr} (${antar.years}y)\nScore: ${Math.round(combined)}`;
+
+                segments.push(`<div class="dasha-seg dasha-${color}" style="left:${left}%;width:${width}%"
+                    title="${tooltip}" data-tip="${tooltip.replace(/\n/g, '|')}"></div>`);
+            });
+        });
+
+        return `
+        <div class="dasha-domain-row">
+            <div class="dasha-row-label">${SHORT_NAMES[domainId] || domainId}</div>
+            <div class="dasha-bar-wrap">
+                <div class="dasha-bar">
+                    ${segments.join('')}
+                    <div class="dasha-today-line" style="left:${todayPct.toFixed(2)}%"></div>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+
+    // Mahadasha name overlays on a ruler above the bars
+    const mahaLabels = timeline.map(m => {
+        const pct   = ((new Date(m.start).getTime() - tStart) / tSpan * 100).toFixed(2);
+        const width = (m.years / 120 * 100).toFixed(2);
+        return `<div class="dasha-maha-label" style="left:${pct}%;width:${width}%">${m.lord}</div>`;
+    }).join('');
+
+    container.innerHTML = `
+        <div class="dasha-ruler">
+            <div class="dasha-row-label" style="visibility:hidden">_</div>
+            <div class="dasha-bar-wrap">
+                <div class="dasha-maha-ruler">${mahaLabels}</div>
+                <div class="dasha-year-ruler">${yearLabels}</div>
+            </div>
+        </div>
+        ${rows}
+        <div class="dasha-legend">
+            <span class="dl-item dl-green">Favourable</span>
+            <span class="dl-item dl-amber">Mixed</span>
+            <span class="dl-item dl-red">Challenging</span>
+            <span class="dl-today">▲ Today</span>
+        </div>`;
+
+    // Custom tooltip on hover
+    _initDashaTooltip(container);
+}
+
+function _initDashaTooltip(container) {
+    let tip = document.getElementById('dasha-tip');
+    if (!tip) {
+        tip = document.createElement('div');
+        tip.id = 'dasha-tip';
+        tip.className = 'dasha-tooltip';
+        document.body.appendChild(tip);
+    }
+    container.querySelectorAll('.dasha-seg').forEach(seg => {
+        seg.addEventListener('mouseenter', () => {
+            const lines = seg.dataset.tip.split('|');
+            tip.innerHTML = lines.map((l, i) => i === 0 ? `<strong>${l}</strong>` : l).join('<br>');
+            tip.style.display = 'block';
+        });
+        seg.addEventListener('mousemove', e => {
+            tip.style.left = (e.pageX + 14) + 'px';
+            tip.style.top  = (e.pageY - 10) + 'px';
+        });
+        seg.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+    });
 }
