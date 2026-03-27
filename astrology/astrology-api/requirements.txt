@@ -6,5 +6,5 @@ geopy
 timezonefinder
 sqlalchemy
 pytest
-anthropic
+google-generativeai
 python-dotenv

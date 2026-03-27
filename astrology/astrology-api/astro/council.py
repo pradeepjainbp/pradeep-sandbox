@@ -1,10 +1,10 @@
 # astro/council.py
-# Planetary Council — 9 planet personas via Claude API
+# Planetary Council — 9 planet personas via Gemini API
 # All voice/tone definitions are from the JYOTISH v2 Master Prompt (Section 6.2)
 # Rahu and Ketu handled separately — no Bhinna scores, different prompt structure.
 
 import os
-import anthropic
+import google.generativeai as genai
 from typing import Generator
 
 # ── Planet voice profiles ────────────────────────────────────────────────────
@@ -203,21 +203,24 @@ def planet_speak(planet_name: str, chart: dict, domain: str,
 
     system_prompt = _build_system_prompt(planet_name, planet_data, domain, bav_score, chart)
 
-    api_key = os.environ.get('ANTHROPIC_API_KEY')
+    api_key = os.environ.get('GEMINI_API_KEY')
     if not api_key:
-        yield f"[Council unavailable: ANTHROPIC_API_KEY not set on server]"
+        yield "[Council unavailable: GEMINI_API_KEY not set on server]"
         return
 
     try:
-        client = anthropic.Anthropic(api_key=api_key)
-        with client.messages.stream(
-            model='claude-opus-4-5',
-            max_tokens=300,
-            system=system_prompt,
-            messages=[{'role': 'user', 'content': user_question or f'Speak to me about my {domain}.'}],
-        ) as stream:
-            for text in stream.text_stream:
-                yield text
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel(
+            model_name='gemini-1.5-flash',
+            system_instruction=system_prompt,
+        )
+        response = model.generate_content(
+            user_question or f'Speak to me about my {domain}.',
+            stream=True,
+        )
+        for chunk in response:
+            if chunk.text:
+                yield chunk.text
     except Exception as e:
         yield f"[Council error: {str(e)}]"
 
@@ -229,7 +232,12 @@ def planet_debate(planet_a: str, planet_b: str, chart: dict, domain: str,
     Returns (response_a, response_b) — both complete strings (not streamed, for simplicity).
     The planet with the higher BAV score speaks first.
     """
-    client = anthropic.Anthropic(api_key=os.environ.get('ANTHROPIC_API_KEY'))
+    api_key = os.environ.get('GEMINI_API_KEY')
+    if not api_key:
+        err = "[Council unavailable: GEMINI_API_KEY not set on server]"
+        return err, err
+
+    genai.configure(api_key=api_key)
     results = {}
 
     for planet_name in [planet_a, planet_b]:
@@ -242,13 +250,17 @@ def planet_debate(planet_a: str, planet_b: str, chart: dict, domain: str,
 
         system_prompt = _build_system_prompt(planet_name, planet_data, domain, bav_score, chart)
 
-        msg = client.messages.create(
-            model='claude-sonnet-4-6',
-            max_tokens=300,
-            system=system_prompt,
-            messages=[{'role': 'user', 'content': user_question or f'Speak to me about my {domain}.'}],
-        )
-        results[planet_name] = msg.content[0].text
+        try:
+            model = genai.GenerativeModel(
+                model_name='gemini-1.5-flash',
+                system_instruction=system_prompt,
+            )
+            response = model.generate_content(
+                user_question or f'Speak to me about my {domain}.'
+            )
+            results[planet_name] = response.text
+        except Exception as e:
+            results[planet_name] = f"[Council error: {str(e)}]"
 
     return results[planet_a], results[planet_b]
 
