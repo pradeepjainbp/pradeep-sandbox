@@ -515,6 +515,36 @@ function buildDashboardHTML(chartData) {
             <p class="avarga-sub">Each bar shows how the planetary periods (Mahadasha → Antardasha) affect that area of your life. Hover a segment for details. The vertical line is today.</p>
             <div id="dasha-timeline-inner"></div>
         </div>
+
+        <div class="custom-aspect-section">
+            <h3 class="avarga-title">Your Question — Any Aspect of Life</h3>
+            <p class="avarga-sub">Type any area of life you care about, or pick a preset. The Dasha timeline will be computed specifically for it.</p>
+            <div class="ca-chips" id="ca-chips">
+                <button class="ca-chip" onclick="selectCustomAspect('father')">Father</button>
+                <button class="ca-chip" onclick="selectCustomAspect('mother')">Mother</button>
+                <button class="ca-chip" onclick="selectCustomAspect('love')">Love Life</button>
+                <button class="ca-chip" onclick="selectCustomAspect('spouse')">Spouse / Marriage</button>
+                <button class="ca-chip" onclick="selectCustomAspect('children')">Children</button>
+                <button class="ca-chip" onclick="selectCustomAspect('career')">Career</button>
+                <button class="ca-chip" onclick="selectCustomAspect('business')">Business</button>
+                <button class="ca-chip" onclick="selectCustomAspect('job')">Job / Employment</button>
+                <button class="ca-chip" onclick="selectCustomAspect('wealth')">Money & Wealth</button>
+                <button class="ca-chip" onclick="selectCustomAspect('education')">Education</button>
+                <button class="ca-chip" onclick="selectCustomAspect('higher_education')">Higher Studies</button>
+                <button class="ca-chip" onclick="selectCustomAspect('property')">Property</button>
+                <button class="ca-chip" onclick="selectCustomAspect('self_health')">My Health</button>
+                <button class="ca-chip" onclick="selectCustomAspect('mental')">Mental Wellbeing</button>
+                <button class="ca-chip" onclick="selectCustomAspect('siblings')">Siblings</button>
+                <button class="ca-chip" onclick="selectCustomAspect('travel')">Foreign Travel</button>
+                <button class="ca-chip" onclick="selectCustomAspect('spirituality')">Spirituality</button>
+                <button class="ca-chip" onclick="selectCustomAspect('legal')">Legal Matters</button>
+            </div>
+            <div class="ca-input-row">
+                <input type="text" id="ca-input" class="ca-input" placeholder="Type anything — e.g. startup, father's health, love life, abroad…" />
+                <button class="ca-go-btn" onclick="computeCustomAspect()">→</button>
+            </div>
+            <div id="ca-result"></div>
+        </div>
     </div>`;
 }
 
@@ -1213,4 +1243,272 @@ function _initDashaTooltip(container) {
         });
         seg.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
     });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CUSTOM LIFE ASPECT TIMELINE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Each aspect: houses that govern it + karaka planets (primary first)
+// Houses determine SAV/BAV weighting; karakas get dignity bonus
+const _CUSTOM_ASPECTS = [
+    { id: 'father',           label: 'Father',               icon: '👨',  houses: [9, 10],    karakas: ['Sun', 'Saturn'],          reason: '9th house (father), Sun as pitrukaraka' },
+    { id: 'mother',           label: 'Mother',               icon: '👩',  houses: [4],        karakas: ['Moon', 'Venus'],           reason: '4th house (mother), Moon as matrukaraka' },
+    { id: 'siblings',         label: 'Siblings',             icon: '👫',  houses: [3],        karakas: ['Mars', 'Mercury'],         reason: '3rd house (siblings & courage)' },
+    { id: 'children',         label: 'Children',             icon: '👶',  houses: [5],        karakas: ['Jupiter', 'Moon'],         reason: '5th house (children), Jupiter as putrakaraka' },
+    { id: 'spouse',           label: 'Spouse / Marriage',    icon: '💍',  houses: [7, 2],     karakas: ['Venus', 'Jupiter'],        reason: '7th house (partner), Venus as kalatrakaraka' },
+    { id: 'love',             label: 'Love Life',            icon: '❤️', houses: [5, 7],     karakas: ['Venus', 'Moon'],           reason: '5th house (romance), 7th house (commitment)' },
+    { id: 'job',              label: 'Job / Employment',     icon: '🏢',  houses: [6, 10],    karakas: ['Saturn', 'Sun', 'Mercury'], reason: '10th house (career), 6th house (service & work)' },
+    { id: 'career',           label: 'Career & Status',      icon: '📈',  houses: [10, 1],    karakas: ['Sun', 'Saturn', 'Mercury'], reason: '10th house (karma), Sun as authority karaka' },
+    { id: 'business',         label: 'Business',             icon: '💼',  houses: [7, 10, 2], karakas: ['Mercury', 'Jupiter'],      reason: '7th house (partnerships), 10th house (enterprise)' },
+    { id: 'wealth',           label: 'Money & Wealth',       icon: '💰',  houses: [2, 11],    karakas: ['Jupiter', 'Venus', 'Mercury'], reason: '2nd house (accumulation), 11th house (gains)' },
+    { id: 'property',         label: 'Property / Home',      icon: '🏠',  houses: [4, 2],     karakas: ['Mars', 'Moon'],            reason: '4th house (immovable assets), Mars as bhumikaraka' },
+    { id: 'self_health',      label: 'My Health',            icon: '💪',  houses: [1, 6],     karakas: ['Sun', 'Mars', 'Saturn'],   reason: '1st house (body), 6th house (illness & healing)' },
+    { id: 'mental',           label: 'Mental Wellbeing',     icon: '🧠',  houses: [1, 4, 5],  karakas: ['Moon', 'Mercury', 'Jupiter'], reason: '5th house (intellect), Moon as manaskaraka' },
+    { id: 'education',        label: 'Education',            icon: '📚',  houses: [4, 5],     karakas: ['Mercury', 'Jupiter'],      reason: '4th house (schooling), 5th house (intellect)' },
+    { id: 'higher_education', label: 'Higher Studies',       icon: '🎓',  houses: [9, 5],     karakas: ['Jupiter', 'Mercury'],      reason: '9th house (higher learning & teachers)' },
+    { id: 'travel',           label: 'Foreign Travel / Abroad', icon: '✈️', houses: [12, 9, 3], karakas: ['Rahu', 'Jupiter'],      reason: '12th house (foreign lands), 9th house (long journeys)' },
+    { id: 'spirituality',     label: 'Spirituality',         icon: '🕉️', houses: [12, 9, 8], karakas: ['Ketu', 'Jupiter', 'Saturn'], reason: '12th house (moksha), Ketu as spiritual significator' },
+    { id: 'legal',            label: 'Legal / Court Matters', icon: '⚖️', houses: [6, 7],    karakas: ['Saturn', 'Mars'],          reason: '6th house (disputes & enemies)' },
+    { id: 'vehicle',          label: 'Vehicle / Accidents',  icon: '🚗',  houses: [4],        karakas: ['Venus', 'Mars'],           reason: '4th house (vehicles), Mars as accident karaka' },
+    { id: 'inheritance',      label: 'Inheritance / Legacy', icon: '📜',  houses: [8, 2],     karakas: ['Saturn', 'Jupiter'],       reason: '8th house (inherited wealth & legacy)' },
+];
+
+// Keyword → aspect id map for fuzzy matching
+const _ASPECT_KEYWORDS = {
+    father: 'father', dad: 'father', papa: 'father', pitru: 'father',
+    mother: 'mother', mom: 'mother', mama: 'mother', maa: 'mother',
+    sibling: 'siblings', brother: 'siblings', sister: 'siblings', bhai: 'siblings', didi: 'siblings',
+    child: 'children', children: 'children', son: 'children', daughter: 'children',
+        pregnancy: 'children', baby: 'children', kid: 'children',
+    spouse: 'spouse', wife: 'spouse', husband: 'spouse', marriage: 'spouse',
+        wedding: 'spouse', married: 'spouse', partner: 'spouse',
+    love: 'love', romance: 'love', dating: 'love', girlfriend: 'love',
+        boyfriend: 'love', romantic: 'love',
+    job: 'job', employment: 'job', salary: 'job', office: 'job',
+        promotion: 'job', service: 'job', employee: 'job',
+    career: 'career', profession: 'career', status: 'career',
+        fame: 'career', reputation: 'career',
+    business: 'business', entrepreneur: 'business', startup: 'business',
+        company: 'business', trade: 'business', client: 'business', venture: 'business',
+    money: 'wealth', wealth: 'wealth', finance: 'wealth', saving: 'wealth',
+        invest: 'wealth', income: 'wealth', rich: 'wealth', financial: 'wealth',
+    property: 'property', house: 'property', land: 'property', flat: 'property',
+        apartment: 'property', estate: 'property',
+    health: 'self_health', illness: 'self_health', disease: 'self_health',
+        medical: 'self_health', hospital: 'self_health', body: 'self_health',
+    mental: 'mental', anxiety: 'mental', stress: 'mental', depression: 'mental',
+        peace: 'mental', mind: 'mental',
+    education: 'education', study: 'education', exam: 'education',
+        school: 'education', college: 'education', degree: 'education', learning: 'education',
+    masters: 'higher_education', phd: 'higher_education', university: 'higher_education',
+        research: 'higher_education', postgrad: 'higher_education',
+    travel: 'travel', abroad: 'travel', foreign: 'travel', immigrat: 'travel',
+        visa: 'travel', overseas: 'travel', migration: 'travel',
+    spiritual: 'spirituality', meditation: 'spirituality', yoga: 'spirituality',
+        moksha: 'spirituality', religion: 'spirituality', divine: 'spirituality',
+    legal: 'legal', court: 'legal', lawsuit: 'legal', dispute: 'legal',
+        enemy: 'legal', litigation: 'legal',
+    car: 'vehicle', vehicle: 'vehicle', accident: 'vehicle', transport: 'vehicle',
+    inheritance: 'inheritance', legacy: 'inheritance', inherited: 'inheritance',
+};
+
+const _RASHI_LORDS_CA = ['Mars','Venus','Mercury','Moon','Sun','Mercury',
+                         'Venus','Mars','Jupiter','Saturn','Saturn','Jupiter'];
+
+function _findAspect(query) {
+    const q = query.toLowerCase().trim();
+    // Direct id match
+    const direct = _CUSTOM_ASPECTS.find(a => a.id === q);
+    if (direct) return direct;
+    // Keyword match — check if any keyword is contained in the query
+    for (const [kw, id] of Object.entries(_ASPECT_KEYWORDS)) {
+        if (q.includes(kw)) return _CUSTOM_ASPECTS.find(a => a.id === id);
+    }
+    // No match — return null
+    return null;
+}
+
+function _scoreCustomForPlanet(planet, aspect, chartData) {
+    let score = 50;
+    const planets  = chartData.planets || {};
+    const lagna    = (chartData.lagna || {}).rashi_num || 0;
+    const bav      = chartData.bav || {};
+    const sav      = chartData.sav || [];
+
+    // 1. Karaka weight: primary +22, secondary +12
+    const ki = aspect.karakas.indexOf(planet);
+    if (ki === 0) score += 22;
+    else if (ki > 0) score += 12;
+
+    // 2. Dignity
+    const pData = planets[planet] || {};
+    score += (_DIGNITY_BONUS[pData.dignity] || 0);
+
+    // 3. House lord bonus — if planet rules any primary house
+    aspect.houses.forEach(h => {
+        const ri = (lagna + h - 1) % 12;
+        if (_RASHI_LORDS_CA[ri] === planet) score += 15;
+    });
+
+    // 4. BAV of planet across the primary houses (average)
+    if (bav[planet]) {
+        let bavSum = 0;
+        aspect.houses.forEach(h => {
+            const ri = (lagna + h - 1) % 12;
+            bavSum += (bav[planet][ri] - 4) * 3;
+        });
+        score += bavSum / aspect.houses.length;
+    }
+
+    // 5. SAV strength of primary houses
+    if (sav.length) {
+        let savSum = 0;
+        aspect.houses.forEach(h => {
+            const ri = (lagna + h - 1) % 12;
+            savSum += (sav[ri] / 56 - 0.5) * 14;
+        });
+        score += savSum / aspect.houses.length;
+    }
+
+    return Math.max(0, Math.min(100, score));
+}
+
+function selectCustomAspect(id) {
+    const aspect = _CUSTOM_ASPECTS.find(a => a.id === id);
+    if (!aspect || !_chartDataGlobal) return;
+    // Mark active chip
+    document.querySelectorAll('.ca-chip').forEach(c => c.classList.remove('active'));
+    const chip = [...document.querySelectorAll('.ca-chip')]
+        .find(c => c.getAttribute('onclick') === `selectCustomAspect('${id}')`);
+    if (chip) chip.classList.add('active');
+    document.getElementById('ca-input').value = '';
+    _renderCustomAspect(aspect, _chartDataGlobal);
+}
+
+function computeCustomAspect() {
+    const query = document.getElementById('ca-input').value.trim();
+    if (!query || !_chartDataGlobal) return;
+    document.querySelectorAll('.ca-chip').forEach(c => c.classList.remove('active'));
+    const aspect = _findAspect(query);
+    if (!aspect) {
+        document.getElementById('ca-result').innerHTML =
+            `<p class="ca-no-match">No match found for "<em>${query}</em>". Try one of the presets above, or rephrase (e.g. "father", "career", "abroad").</p>`;
+        return;
+    }
+    _renderCustomAspect(aspect, _chartDataGlobal);
+}
+
+function _renderCustomAspect(aspect, chartData) {
+    const container = document.getElementById('ca-result');
+    const timeline  = chartData.dasha_timeline;
+    if (!timeline || !timeline.length) {
+        container.innerHTML = '<p class="ca-no-match">Timeline data unavailable.</p>';
+        return;
+    }
+
+    const tStart    = new Date(timeline[0].start).getTime();
+    const tEnd      = new Date(timeline[timeline.length - 1].end).getTime();
+    const tSpan     = tEnd - tStart;
+    const today     = Date.now();
+    const todayPct  = Math.max(0, Math.min(100, ((today - tStart) / tSpan) * 100));
+
+    // Build antardasha segments
+    const allSegments = [];
+    timeline.forEach(maha => {
+        const mahaScore = _scoreCustomForPlanet(maha.lord, aspect, chartData);
+        maha.antardashas.forEach(antar => {
+            const aStart = new Date(antar.start).getTime();
+            const aEnd   = new Date(antar.end).getTime();
+            const left   = ((aStart - tStart) / tSpan * 100).toFixed(3);
+            const width  = ((aEnd - aStart) / tSpan * 100).toFixed(3);
+            const antarScore = _scoreCustomForPlanet(antar.lord, aspect, chartData);
+            const combined   = _antardashaCombinedScore(mahaScore, antarScore);
+            const color      = _periodColor(combined);
+            const sy = new Date(antar.start).getFullYear();
+            const ey = new Date(antar.end).getFullYear();
+            const tip = `${maha.lord} / ${antar.lord}|${sy}–${ey} (${antar.years}y)|Score: ${Math.round(combined)}`;
+            allSegments.push({ left, width, color, combined, tip,
+                lord: maha.lord, antarLord: antar.lord,
+                start: aStart, end: aEnd, years: antar.years, sy, ey });
+        });
+    });
+
+    // Mahadasha ruler
+    const mahaLabels = timeline.map(m => {
+        const pct   = ((new Date(m.start).getTime() - tStart) / tSpan * 100).toFixed(2);
+        const width = (m.years / 120 * 100).toFixed(2);
+        return `<div class="dasha-maha-label" style="left:${pct}%;width:${width}%">${m.lord}</div>`;
+    }).join('');
+
+    // Year labels
+    const yearLabels = timeline.map(m => {
+        const pct = ((new Date(m.start).getTime() - tStart) / tSpan * 100).toFixed(2);
+        return `<div class="dasha-year-label" style="left:${pct}%">${new Date(m.start).getFullYear()}</div>`;
+    }).join('');
+
+    // Segment HTML
+    const segsHTML = allSegments.map(s =>
+        `<div class="dasha-seg dasha-${s.color}" style="left:${s.left}%;width:${s.width}%"
+            data-tip="${s.tip}"></div>`).join('');
+
+    // Key periods: top 3 green (future), top 3 red (future)
+    const futureSegs = allSegments.filter(s => s.end > today);
+    const topGreen = futureSegs.filter(s => s.color === 'green')
+        .sort((a, b) => b.combined - a.combined).slice(0, 3);
+    const topRed   = futureSegs.filter(s => s.color === 'red')
+        .sort((a, b) => a.combined - b.combined).slice(0, 3);
+
+    const keyPeriodsHTML = (topGreen.length || topRed.length) ? `
+    <div class="ca-key-periods">
+        ${topGreen.length ? `
+        <div class="ca-kp-col">
+            <div class="ca-kp-title ca-kp-green">● Favourable ahead</div>
+            ${topGreen.map(s => `<div class="ca-kp-row">
+                <span class="ca-kp-lords">${s.lord} / ${s.antarLord}</span>
+                <span class="ca-kp-yr">${s.sy}–${s.ey}</span>
+            </div>`).join('')}
+        </div>` : ''}
+        ${topRed.length ? `
+        <div class="ca-kp-col">
+            <div class="ca-kp-title ca-kp-red">● Challenging ahead</div>
+            ${topRed.map(s => `<div class="ca-kp-row">
+                <span class="ca-kp-lords">${s.lord} / ${s.antarLord}</span>
+                <span class="ca-kp-yr">${s.sy}–${s.ey}</span>
+            </div>`).join('')}
+        </div>` : ''}
+    </div>` : '';
+
+    container.innerHTML = `
+    <div class="ca-timeline-card">
+        <div class="ca-card-header">
+            <span class="ca-icon">${aspect.icon}</span>
+            <div>
+                <div class="ca-card-label">${aspect.label}</div>
+                <div class="ca-card-reason">${aspect.reason} · Karakas: ${aspect.karakas.join(', ')}</div>
+            </div>
+        </div>
+        <div class="ca-bar-block">
+            <div class="dasha-bar-wrap">
+                <div class="dasha-maha-ruler">${mahaLabels}</div>
+                <div class="dasha-year-ruler">${yearLabels}</div>
+                <div class="dasha-bar ca-bar">
+                    ${segsHTML}
+                    <div class="dasha-today-line" style="left:${todayPct.toFixed(2)}%"></div>
+                </div>
+            </div>
+        </div>
+        ${keyPeriodsHTML}
+        <div class="dasha-legend" style="padding-left:0;margin-top:12px;">
+            <span class="dl-item dl-green">Favourable</span>
+            <span class="dl-item dl-amber">Mixed</span>
+            <span class="dl-item dl-red">Challenging</span>
+        </div>
+    </div>`;
+
+    // Attach tooltips
+    _initDashaTooltip(container);
+
+    // Animate in
+    gsap.from('.ca-timeline-card', { y: 24, opacity: 0, duration: 0.5, ease: 'power2.out' });
 }

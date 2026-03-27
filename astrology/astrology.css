@@ -944,3 +944,164 @@
     display: block;
     margin-bottom: 2px;
 }
+
+/* ═══════════════════════════════════════
+   CUSTOM LIFE ASPECT SECTION
+═══════════════════════════════════════ */
+.custom-aspect-section {
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+/* Preset chips */
+.ca-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0 18px;
+}
+.ca-chip {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.6);
+    font-family: 'Sora', sans-serif;
+    font-size: 0.75rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.ca-chip:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    background: rgba(0,200,150,0.07);
+}
+.ca-chip.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(212,175,55,0.1);
+}
+
+/* Text input row */
+.ca-input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+.ca-input {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.85rem;
+    padding: 10px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.ca-input:focus {
+    border-color: var(--teal);
+}
+.ca-go-btn {
+    background: var(--teal);
+    border: none;
+    color: #000;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.ca-go-btn:hover { background: #00e6ad; }
+
+/* No match message */
+.ca-no-match {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.83rem;
+    font-style: italic;
+    padding: 12px 0;
+}
+
+/* Result card */
+.ca-timeline-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px;
+    padding: 24px 28px;
+}
+.ca-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+.ca-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+.ca-card-label {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    color: var(--gold);
+    margin-bottom: 4px;
+}
+.ca-card-reason {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    font-family: 'Sora', sans-serif;
+}
+
+/* The timeline bar itself — slightly taller than domain rows */
+.ca-bar {
+    height: 26px !important;
+}
+
+.ca-bar-block {
+    margin-bottom: 16px;
+}
+
+/* Key periods grid */
+.ca-key-periods {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin: 20px 0 4px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+.ca-kp-col {
+    flex: 1;
+    min-width: 180px;
+}
+.ca-kp-title {
+    font-size: 0.72rem;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.ca-kp-green { color: #10B981; }
+.ca-kp-red   { color: #EF4444; }
+.ca-kp-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-family: 'Sora', sans-serif;
+    color: rgba(255,255,255,0.6);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.ca-kp-lords {
+    font-family: 'Cinzel', serif;
+    font-size: 0.74rem;
+}
+.ca-kp-yr {
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+}
