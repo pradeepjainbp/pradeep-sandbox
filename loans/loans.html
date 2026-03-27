@@ -88,27 +88,46 @@
 
 <!-- ── APP (authenticated) ── -->
 <div id="lt-app" class="lt-app" style="display:none">
-  <div class="lt-app-header">
-    <div class="lt-app-user">
-      <div class="lt-avatar" id="lt-avatar-initial">?</div>
-      <span id="lt-user-name" style="font-weight:500;font-size:14px">Loading…</span>
-    </div>
-    <div class="lt-app-actions">
-      <button class="lt-btn lt-btn-primary" onclick="ltOpenCreateLoan()">+ New Loan</button>
-      <button class="lt-btn" onclick="ltSignOut()">Sign Out</button>
+  <div class="lt-app-title-bar">
+    <div class="lt-app-title-text">Dashboard</div>
+    <div class="lt-app-user-block">
+      <div class="lt-app-greeting">Hello, <span id="lt-user-name">User</span>!<br><span class="lt-app-greeting-sub">Here's your loan overview</span></div>
+      <button class="lt-btn-text" onclick="ltSignOut()">Sign Out</button>
     </div>
   </div>
-  <div class="lt-summary">
-    <div class="lt-summary-card lent">
-      <div class="lt-summary-label">Total Lent Out</div>
-      <div class="lt-summary-val" id="lt-total-lent">—</div>
+
+  <div class="lt-disclaimer-banner">
+    LoanTracker helps track mutual understanding between people. It is not legal proof or financial advice.
+  </div>
+
+  <div class="lt-summary-section">
+    <div class="lt-summary-row-2">
+      <div class="lt-dash-card border-top-lent">
+        <div class="lt-dash-card-header"><span class="dot lent">●</span> I Lent</div>
+        <div class="lt-dash-card-val" id="lt-total-lent">—</div>
+        <div class="lt-dash-card-sub" id="lt-count-lent">0 loans</div>
+      </div>
+      <div class="lt-dash-card border-top-borrowed">
+        <div class="lt-dash-card-header"><span class="dot borrowed">●</span> I Borrowed</div>
+        <div class="lt-dash-card-val" id="lt-total-borrowed">—</div>
+        <div class="lt-dash-card-sub" id="lt-count-borrowed">0 loans</div>
+      </div>
     </div>
-    <div class="lt-summary-card borrowed">
-      <div class="lt-summary-label">Total Borrowed</div>
-      <div class="lt-summary-val" id="lt-total-borrowed">—</div>
+    <div class="lt-dash-card border-top-observer">
+      <div class="lt-dash-card-header"><span class="dot observer">●</span> Observing</div>
+      <div class="lt-dash-card-val" id="lt-total-observer">—</div>
+      <div class="lt-dash-card-sub" id="lt-count-observer">0 loans</div>
     </div>
   </div>
-  <div class="lt-loan-grid" id="lt-loan-list"><div class="lt-loading">Loading loans…</div></div>
+
+  <div class="lt-recent-header">
+    <div class="lt-recent-title">Recent Loans</div>
+    <a href="javascript:void(0)" class="lt-recent-see-all">See all</a>
+  </div>
+  
+  <div class="lt-loan-list" id="lt-loan-list"><div class="lt-loading">Loading loans…</div></div>
+  
+  <button class="lt-fab" onclick="ltOpenCreateLoan()">+ New Loan</button>
 </div>
 
 <!-- ── LOAN DETAIL MODAL ── -->

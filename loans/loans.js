@@ -79,42 +79,44 @@ function ltRender() {
 function ltRenderApp() {
   const name = ltProfile?.display_name || ltSession?.user?.email?.split('@')[0] || 'User';
   document.getElementById('lt-user-name').textContent = name;
-  document.getElementById('lt-avatar-initial').textContent = name.charAt(0).toUpperCase();
 
-  let totalLent = 0, totalBorrowed = 0;
+  let totalLent = 0, totalBorrowed = 0, totalObserver = 0;
+  let countLent = 0, countBorrowed = 0, countObserver = 0;
+  
   ltLoans.forEach(l => {
     const b = ltBalance(l, ltTxns[l.id] || []);
-    if (l.relationship === 'lender') totalLent += b.totalOutstanding;
-    else if (l.relationship === 'borrower') totalBorrowed += b.totalOutstanding;
+    if (l.relationship === 'lender') { totalLent += b.totalOutstanding; countLent++; }
+    else if (l.relationship === 'borrower') { totalBorrowed += b.totalOutstanding; countBorrowed++; }
+    else if (l.relationship === 'observer') { totalObserver += b.totalOutstanding; countObserver++; }
   });
+  
   document.getElementById('lt-total-lent').textContent = ltFmt(totalLent, 'INR');
+  document.getElementById('lt-count-lent').textContent = countLent === 1 ? '1 loan' : countLent + ' loans';
+  
   document.getElementById('lt-total-borrowed').textContent = ltFmt(totalBorrowed, 'INR');
+  document.getElementById('lt-count-borrowed').textContent = countBorrowed === 1 ? '1 loan' : countBorrowed + ' loans';
+  
+  document.getElementById('lt-total-observer').textContent = ltFmt(totalObserver, 'INR');
+  document.getElementById('lt-count-observer').textContent = countObserver === 1 ? '1 loan' : countObserver + ' loans';
 
   const list = document.getElementById('lt-loan-list');
   if (ltLoans.length === 0) {
     list.innerHTML = '<div class="lt-empty"><div class="lt-empty-icon">🤝</div><p>No loans yet. Create your first one!</p></div>';
     return;
   }
+  
   list.innerHTML = ltLoans.map(l => {
     const b = ltBalance(l, ltTxns[l.id] || []);
-    const rc = l.relationship === 'lender' ? '#10B981' : l.relationship === 'borrower' ? '#EF4444' : '#3B82F6';
-    const rl = l.relationship === 'lender' ? 'I Lent' : l.relationship === 'borrower' ? 'I Borrowed' : 'Observer';
-    const pct = b.principalInitial > 0 ? Math.min(100, Math.round((b.totalRepaidPrincipal / b.principalInitial) * 100)) : 0;
+    const tc = l.relationship === 'lender' ? 'var(--lt-lent)' : l.relationship === 'borrower' ? 'var(--lt-borrowed)' : 'var(--lt-observer)';
+    const rl = l.relationship === 'lender' ? 'I LENT' : l.relationship === 'borrower' ? 'I BORROWED' : 'OBSERVER';
     const cur = l.currency || 'INR';
-    const intStr = l.interest_type !== 'none' && l.interest_rate ? `${(parseFloat(l.interest_rate)*100).toFixed(1)}% ${l.interest_type}` : 'No interest';
-    const statusIcon = l.status === 'active' ? '🟢' : l.status === 'settled' ? '✅' : '⚫';
-    return `<div class="lt-loan-card" onclick="ltOpenLoan('${l.id}')">
-      <div class="lt-loan-card-top" style="background:${rc}"></div>
-      <div class="lt-loan-card-body">
-        <div class="lt-loan-card-row">
-          <span class="lt-loan-name">${ltEsc(l.notes || 'Loan')}</span>
-          <span class="lt-role-badge" style="background:${rc}20;color:${rc};border-color:${rc}">${rl}</span>
-        </div>
-        <div class="lt-loan-amount">${ltFmt(b.totalOutstanding, cur)}</div>
-        <div class="lt-loan-sub">${statusIcon} ${l.status} · outstanding</div>
-        <div class="lt-progress-bar"><div class="lt-progress-fill" style="width:${pct}%;background:${rc}"></div></div>
-        <div class="lt-loan-meta">${pct}% repaid · ${intStr}</div>
+    
+    return `<div class="lt-list-item" onclick="ltOpenLoan('${l.id}')">
+      <div class="lt-list-item-left">
+        <span class="lt-role-badge" style="background:${tc}15;color:${tc}">${rl}</span>
+        <div class="lt-list-item-name">${ltEsc(l.notes || 'Loan')}</div>
       </div>
+      <div class="lt-list-item-amount">${ltFmt(b.totalOutstanding, cur)}</div>
     </div>`;
   }).join('');
 }
