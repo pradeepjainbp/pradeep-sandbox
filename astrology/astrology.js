@@ -1180,7 +1180,7 @@ function buildDashaTimeline(chartData) {
                 const tooltip = `${maha.lord} Mahadasha / ${antar.lord} Antardasha\n${startYr}–${endYr} (${antar.years}y)\nScore: ${Math.round(combined)}`;
 
                 segments.push(`<div class="dasha-seg dasha-${color}" style="left:${left}%;width:${width}%"
-                    title="${tooltip}" data-tip="${tooltip.replace(/\n/g, '|')}"></div>`);
+                    data-tip="${tooltip.replace(/\n/g, '|')}"></div>`);
             });
         });
 
@@ -1238,8 +1238,8 @@ function _initDashaTooltip(container) {
             tip.style.display = 'block';
         });
         seg.addEventListener('mousemove', e => {
-            tip.style.left = (e.pageX + 14) + 'px';
-            tip.style.top  = (e.pageY - 10) + 'px';
+            tip.style.left = (e.clientX + 14) + 'px';
+            tip.style.top  = (e.clientY - 10) + 'px';
         });
         seg.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
     });
