@@ -203,6 +203,19 @@
     margin-top: 0;
 }
 
+.jyotish-back-btn {
+    border-color: rgba(255,255,255,0.3) !important;
+    color: rgba(255,255,255,0.5) !important;
+    font-size: 0.85rem !important;
+    padding: 0.5rem 1rem !important;
+    width: auto !important;
+}
+.jyotish-back-btn:hover {
+    border-color: rgba(255,255,255,0.7) !important;
+    background: rgba(255,255,255,0.08) !important;
+    color: #fff !important;
+}
+
 .planet-tooltip {
     position: absolute;
     background: rgba(13,13,26,0.95);

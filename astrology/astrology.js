@@ -480,8 +480,13 @@ function buildDashboardHTML(chartData) {
     return `
     <div class="dashboard-inner">
         <div class="dashboard-header">
-            <h2 class="dash-title">Life Domain Intelligence</h2>
-            <p class="dash-sub">Every score is derived from the Ashtakavarga — the collective planetary vote on each area of life.</p>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <h2 class="dash-title">Life Domain Intelligence</h2>
+                    <p class="dash-sub">Every score is derived from the Ashtakavarga — the collective planetary vote on each area of life.</p>
+                </div>
+                <button class="jyotish-btn jyotish-back-btn" onclick="resetJyotish()" style="margin-top:0; flex-shrink:0;">← New Chart</button>
+            </div>
         </div>
 
         <div class="domains-grid">${cardsHTML}</div>
@@ -735,6 +740,38 @@ function loadScript(src, callback) {
     s.src = src;
     s.onload = callback;
     document.head.appendChild(s);
+}
+
+function resetJyotish() {
+    // Stop any active speech
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    _councilSpeaking = false;
+    _chartDataGlobal = null;
+    _activePlanet = null;
+    _activeDomain = null;
+
+    // Hide all layers
+    ['orrery-layer', 'dashboard-layer', 'council-layer'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    });
+
+    // Clear dashboard so it rebuilds fresh next time
+    const dash = document.getElementById('dashboard-layer');
+    if (dash) dash.innerHTML = '';
+
+    // Show intake form
+    const intake = document.getElementById('jyotish-intake');
+    if (intake) intake.style.display = 'block';
+
+    // Reset form fields
+    const form = document.getElementById('astrology-birth-form');
+    if (form) form.reset();
+    const btn = form ? form.querySelector('button[type="submit"]') : null;
+    if (btn) { btn.innerHTML = 'Compute Chart'; btn.disabled = false; }
+
+    // Scroll to top of content
+    window.scrollTo(0, 0);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

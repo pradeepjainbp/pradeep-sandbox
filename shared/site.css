@@ -81,6 +81,9 @@ nav {
   gap: 4px;
   overflow-x: auto;
   scrollbar-width: none;
+  position: sticky;
+  top: 72px;
+  z-index: 99;
 }
 nav::-webkit-scrollbar { display: none; }
 
