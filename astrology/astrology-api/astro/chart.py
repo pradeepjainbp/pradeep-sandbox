@@ -17,8 +17,41 @@ PLANETS = {
     'Ketu': None # Computed as Rahu + 180
 }
 
-RASHI_NAMES = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", 
+RASHI_NAMES = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
                "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
+
+# ── Dignity tables ─────────────────────────────────────────────────────────────
+# Exaltation rashi (0-indexed)
+_EXALTATION = {'Sun': 0, 'Moon': 1, 'Mars': 9, 'Mercury': 5, 'Jupiter': 3, 'Venus': 11, 'Saturn': 6}
+# Debilitation rashi
+_DEBILITATION = {'Sun': 6, 'Moon': 7, 'Mars': 3, 'Mercury': 11, 'Jupiter': 9, 'Venus': 5, 'Saturn': 0}
+# Own signs (swakshetra)
+_OWN = {'Sun': [4], 'Moon': [3], 'Mars': [0, 7], 'Mercury': [2, 5], 'Jupiter': [8, 11], 'Venus': [1, 6], 'Saturn': [9, 10]}
+# Rashi lords (for friendship determination)
+_RASHI_LORDS = ['Mars','Venus','Mercury','Moon','Sun','Mercury','Venus','Mars','Jupiter','Saturn','Saturn','Jupiter']
+# Natural permanent friendships
+_FRIENDS  = {'Sun': {'Moon','Mars','Jupiter'}, 'Moon': {'Sun','Mercury'}, 'Mars': {'Sun','Moon','Jupiter'},
+             'Mercury': {'Sun','Venus'}, 'Jupiter': {'Sun','Moon','Mars'}, 'Venus': {'Mercury','Saturn'}, 'Saturn': {'Mercury','Venus'}}
+_ENEMIES  = {'Sun': {'Venus','Saturn'}, 'Moon': set(), 'Mars': {'Mercury'}, 'Mercury': {'Moon'},
+             'Jupiter': {'Mercury','Venus'}, 'Venus': {'Sun','Moon'}, 'Saturn': {'Sun','Moon','Mars'}}
+
+def _compute_dignity(planet_name: str, rashi_num: int) -> str:
+    if planet_name in ('Rahu', 'Ketu'):
+        return 'neutral'
+    if rashi_num == _EXALTATION.get(planet_name):
+        return 'exalted'
+    if rashi_num in _OWN.get(planet_name, []):
+        return 'own'
+    if rashi_num == _DEBILITATION.get(planet_name):
+        return 'debilitated'
+    lord = _RASHI_LORDS[rashi_num]
+    if lord == planet_name:
+        return 'own'
+    if lord in _FRIENDS.get(planet_name, set()):
+        return 'friend'
+    if lord in _ENEMIES.get(planet_name, set()):
+        return 'enemy'
+    return 'neutral'
 
 RASHI_SANSKRIT = ["Mesha", "Vrishabha", "Mithuna", "Karka", "Simha", "Kanya",
                   "Tula", "Vrishchika", "Dhanu", "Makara", "Kumbha", "Meena"]
@@ -100,7 +133,8 @@ def calculate_chart(year: int, month: int, day: int, hour: int, minute: int, lat
                 'degree': deg_in_rashi,
                 'nakshatra': NAKSHATRAS[nakshatra_num],
                 'nakshatra_num': nakshatra_num,
-                'pada': pada
+                'pada': pada,
+                'dignity': 'neutral',
             }
             continue
 
@@ -122,7 +156,8 @@ def calculate_chart(year: int, month: int, day: int, hour: int, minute: int, lat
             'degree': deg_in_rashi,
             'nakshatra': NAKSHATRAS[nakshatra_num],
             'nakshatra_num': nakshatra_num,
-            'pada': pada
+            'pada': pada,
+            'dignity': _compute_dignity(name, rashi_num),
         }
         
     sun_lon = chart_data['planets']['Sun']['longitude']
@@ -138,6 +173,6 @@ def calculate_chart(year: int, month: int, day: int, hour: int, minute: int, lat
 
     for name in PLANETS.keys():
         p_rashi = chart_data['planets'][name]['rashi_num']
-        chart_data['planets'][name]['house_d1'] = (p_rashi - asc_rashi_num) % 12 + 1
+        chart_data['planets'][name]['house'] = (p_rashi - asc_rashi_num) % 12 + 1
         
     return chart_data
