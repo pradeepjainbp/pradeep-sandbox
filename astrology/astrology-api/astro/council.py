@@ -211,7 +211,7 @@ def planet_speak(planet_name: str, chart: dict, domain: str,
     try:
         genai.configure(api_key=api_key)
         model = genai.GenerativeModel(
-            model_name='gemini-2.0-flash',
+            model_name='gemini-2.5-flash',
             system_instruction=system_prompt,
         )
         response = model.generate_content(
@@ -252,7 +252,7 @@ def planet_debate(planet_a: str, planet_b: str, chart: dict, domain: str,
 
         try:
             model = genai.GenerativeModel(
-                model_name='gemini-2.0-flash',
+                model_name='gemini-2.5-flash',
                 system_instruction=system_prompt,
             )
             response = model.generate_content(
