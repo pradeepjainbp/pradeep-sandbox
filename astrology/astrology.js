@@ -430,7 +430,7 @@ function showDomainDashboard(chartData) {
     requestAnimationFrame(() => gsap.from('.domain-card', {
         y: 60, opacity: 0, duration: 0.6,
         stagger: 0.08, ease: 'power2.out', delay: 0.3
-    });
+    }));
 
     // Animate score bars after cards appear
     setTimeout(() => animateScoreBars(chartData.domains), 800);

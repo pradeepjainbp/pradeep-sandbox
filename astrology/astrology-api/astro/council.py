@@ -203,16 +203,23 @@ def planet_speak(planet_name: str, chart: dict, domain: str,
 
     system_prompt = _build_system_prompt(planet_name, planet_data, domain, bav_score, chart)
 
-    client = anthropic.Anthropic(api_key=os.environ.get('ANTHROPIC_API_KEY'))
+    api_key = os.environ.get('ANTHROPIC_API_KEY')
+    if not api_key:
+        yield f"[Council unavailable: ANTHROPIC_API_KEY not set on server]"
+        return
 
-    with client.messages.stream(
-        model='claude-opus-4-5',
-        max_tokens=300,
-        system=system_prompt,
-        messages=[{'role': 'user', 'content': user_question or f'Speak to me about my {domain}.'}],
-    ) as stream:
-        for text in stream.text_stream:
-            yield text
+    try:
+        client = anthropic.Anthropic(api_key=api_key)
+        with client.messages.stream(
+            model='claude-opus-4-5',
+            max_tokens=300,
+            system=system_prompt,
+            messages=[{'role': 'user', 'content': user_question or f'Speak to me about my {domain}.'}],
+        ) as stream:
+            for text in stream.text_stream:
+                yield text
+    except Exception as e:
+        yield f"[Council error: {str(e)}]"
 
 
 def planet_debate(planet_a: str, planet_b: str, chart: dict, domain: str,
