@@ -199,7 +199,9 @@ def planet_speak(planet_name: str, chart: dict, domain: str,
     if bav and planet_name in CLASSICAL_PLANETS:
         domain_house = _get_domain_house(domain, chart)
         if domain_house and planet_name in bav:
-            bav_score = bav[planet_name][domain_house - 1]
+            lagna_rashi = chart.get('lagna', {}).get('rashi_num', 0)
+            rashi_idx = (lagna_rashi + domain_house - 1) % 12
+            bav_score = bav[planet_name][rashi_idx]
 
     system_prompt = _build_system_prompt(planet_name, planet_data, domain, bav_score, chart)
 

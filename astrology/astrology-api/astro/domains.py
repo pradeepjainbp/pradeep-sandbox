@@ -249,9 +249,11 @@ def score_domain(domain, chart, bav, sav, dasha):
     planets = chart['planets']
     divisionals = chart.get('divisionals', {})
     h = domain['primary_house']
+    # Convert house number to rashi index (BAV is stored by rashi, not house)
+    rashi_idx = (lagna_rashi_num + h - 1) % 12
 
     # 1. Sarvashtakavarga (40%) — normalise 0-56 → 0-100
-    sav_raw = sav[h - 1]
+    sav_raw = sav[rashi_idx]
     sav_score = (sav_raw / 56) * 100
 
     # 2. Dignity of house lord (20%) — scale 0-10 dignity to 0-100
@@ -284,7 +286,7 @@ def score_domain(domain, chart, bav, sav, dasha):
     # Planet drivers — top 2 by BAV score for this house
     planet_drivers = []
     for p in ['Jupiter', 'Venus', 'Moon', 'Mercury', 'Sun', 'Mars', 'Saturn']:
-        p_bav_score = bav[p][h - 1]
+        p_bav_score = bav[p][rashi_idx]
         p_dignity = planets[p].get('dignity', 'neutral') if p in planets else 'neutral'
         planet_drivers.append({
             'planet': p,
@@ -304,7 +306,7 @@ def score_domain(domain, chart, bav, sav, dasha):
         'house_lord': house_lord,
         'house_lord_dignity': planets.get(house_lord, {}).get('dignity', 'neutral'),
         'top_drivers': planet_drivers[:2],
-        'bav_breakdown': {p: bav[p][h - 1] for p in ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn']},
+        'bav_breakdown': {p: bav[p][rashi_idx] for p in ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn']},
         'score_breakdown': {
             'sav': round(sav_score * 0.40, 1),
             'dignity': round(dignity_score * 0.20, 1),
