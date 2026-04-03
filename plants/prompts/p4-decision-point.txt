@@ -1,0 +1,46 @@
+A decision point has occurred during {{PLANT_NAME}} growth:
+
+Event type: {{EVENT_TYPE}}
+Event detail: {{EVENT_DETAIL}}
+Current stage: {{CURRENT_STAGE}}
+Current scores: {{CURRENT_SCORES}}
+Location: {{LOCATION_PROFILE}}
+
+Provide 2-3 response options the grower can take, with clear trade-offs between effectiveness, cost, and ecosystem impact.
+
+Respond with this exact JSON structure:
+{
+  "event": {
+    "type": "string",
+    "severity": "string — 'low' | 'medium' | 'high' | 'critical'",
+    "title": "string — e.g., 'Aphid Infestation Detected'",
+    "description": "string — 50 words max describing what's happening",
+    "visual_indicator": {
+      "leaf_spots": "boolean",
+      "wilting": "boolean",
+      "yellowing": "boolean",
+      "pest_visible": "boolean",
+      "color_override": "string — CSS hex color or null"
+    }
+  },
+  "options": [
+    {
+      "id": "string",
+      "label": "string — e.g., 'Use Neem Oil Spray'",
+      "approach": "string — 'organic' | 'chemical' | 'cultural' | 'ignore'",
+      "effects": {
+        "soil_health": "integer delta",
+        "plant_vitality": "integer delta",
+        "water_balance": "integer delta",
+        "ecosystem": "integer delta"
+      },
+      "why": "string — 40 words max",
+      "trade_off": "string — 25 words max on what you sacrifice",
+      "time_to_effect_days": "integer"
+    }
+  ],
+  "do_nothing_consequence": {
+    "description": "string — 30 words max on what happens if ignored",
+    "vitality_loss_per_day": "integer — score points lost daily"
+  }
+}

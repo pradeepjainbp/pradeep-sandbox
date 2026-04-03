@@ -1,5 +1,110 @@
-<div class="coming-soon">
-  <div class="coming-soon-icon">🌱</div>
-  <h2>Plant Growth Simulator</h2>
-  <p>Simulate soil conditions, NPK nutrients, and watch plants grow or deplete. Coming next!</p>
+<div class="plants-launch">
+  <div class="plants-launch-icon">🌱</div>
+  <h2 class="plants-launch-title">Plant Growth Simulator</h2>
+  <p class="plants-launch-desc">
+    Pick any of 344 plants, tell GrowBot where you are, and simulate growing it
+    — from soil prep through harvest — with real climate data and AI-guided decisions.
+  </p>
+  <div class="plants-launch-stats">
+    <div class="stat">
+      <span class="stat-num">344</span>
+      <span class="stat-label">Plants</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Growth stages</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Health scores</span>
+    </div>
+  </div>
+  <a href="plants/" class="plants-launch-btn" target="_blank" rel="noopener">
+    Launch Simulator →
+  </a>
+  <p class="plants-launch-note">Opens in a new tab · Powered by Gemini AI · Free to use</p>
 </div>
+
+<style>
+.plants-launch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  max-width: 520px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.plants-launch-icon { font-size: 4rem; line-height: 1; }
+
+.plants-launch-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c1810;
+}
+
+.plants-launch-desc {
+  font-size: 0.95rem;
+  color: #6b5242;
+  line-height: 1.6;
+}
+
+.plants-launch-stats {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  padding: 20px;
+  background: #f0e8db;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d8a4e;
+  font-family: 'Sora', sans-serif;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #9c8577;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.plants-launch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #2d8a4e;
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.plants-launch-btn:hover {
+  background: #236b3d;
+  transform: translateY(-2px);
+}
+
+.plants-launch-note {
+  font-size: 0.78rem;
+  color: #9c8577;
+}
+</style>

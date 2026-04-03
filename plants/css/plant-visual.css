@@ -1,0 +1,224 @@
+/* ═══════════════════════════════════════════════════════
+   plant-visual.css
+   CSS-based plant illustration system
+   All visual properties driven by CSS custom properties
+   updated by ui-plant-visual.js
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Container ──────────────────────────────────────── */
+.plant-container {
+  /* Custom properties — JS updates these */
+  --stem-height:   10%;
+  --stem-width:    4px;
+  --stem-color:    #4a7c59;
+  --leaf-color:    #4caf50;
+  --leaf-size:     1;
+  --leaf-droop:    0deg;
+  --leaf-visible:  1;
+  --leaf-opacity:  1;
+  --flower-visible: 0;
+  --flower-color:  #ffeb3b;
+  --flower-opacity: 0;
+  --fruit-visible: 0;
+  --fruit-color:   #f44336;
+  --fruit-size:    0;
+  --soil-color:    #5c4033;
+  --soil-moisture: 0.5;
+  --spot-opacity:  0;   /* brown spots from stress */
+
+  position: relative;
+  width: 100%;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+/* ─── Plant wrapper ──────────────────────────────────── */
+.plant {
+  position: relative;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+/* ─── Stem ───────────────────────────────────────────── */
+.stem {
+  width:            var(--stem-width);
+  height:           var(--stem-height);
+  background:       var(--stem-color);
+  border-radius:    var(--stem-width);
+  transition:       height 0.8s cubic-bezier(0.4,0,0.2,1),
+                    width 0.8s ease,
+                    background 0.6s ease;
+  position:         relative;
+  z-index:          2;
+  min-height:       4px;
+}
+
+/* Stress stripes on stem */
+.stem::after {
+  content:          '';
+  position:         absolute;
+  inset:            0;
+  background:       repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 8px,
+    rgba(0,0,0,0.08) 8px,
+    rgba(0,0,0,0.08) 9px
+  );
+  opacity:          var(--spot-opacity);
+  border-radius:    inherit;
+  transition:       opacity 0.5s ease;
+}
+
+/* ─── Leaves ─────────────────────────────────────────── */
+.leaf {
+  position:   absolute;
+  width:      calc(28px * var(--leaf-size));
+  height:     calc(14px * var(--leaf-size));
+  background: var(--leaf-color);
+  border-radius: 50% 50% 50% 0;
+  opacity:    var(--leaf-opacity);
+  transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Brown stress spots */
+.leaf::after {
+  content:  '';
+  position: absolute;
+  inset:    20% 20% 20% 20%;
+  border-radius: 50%;
+  background: rgba(121,85,72,0.55);
+  opacity:  var(--spot-opacity);
+  transition: opacity 0.5s ease;
+}
+
+/* Left leaves */
+.leaf-left-1 { left:-28px; bottom: calc(var(--stem-height) * 0.25); transform: rotate(calc(-30deg - var(--leaf-droop))) scaleX(var(--leaf-visible)); transform-origin: right center; }
+.leaf-left-2 { left:-28px; bottom: calc(var(--stem-height) * 0.5);  transform: rotate(calc(-45deg - var(--leaf-droop))) scaleX(var(--leaf-visible)); transform-origin: right center; }
+.leaf-left-3 { left:-28px; bottom: calc(var(--stem-height) * 0.75); transform: rotate(calc(-60deg - var(--leaf-droop))) scaleX(var(--leaf-visible)); transform-origin: right center; }
+
+/* Right leaves */
+.leaf-right-1 { right:-28px; bottom: calc(var(--stem-height) * 0.3);  border-radius: 50% 0 50% 50%; transform: rotate(calc(30deg + var(--leaf-droop))) scaleX(var(--leaf-visible)); transform-origin: left center; }
+.leaf-right-2 { right:-28px; bottom: calc(var(--stem-height) * 0.55); border-radius: 50% 0 50% 50%; transform: rotate(calc(45deg + var(--leaf-droop))) scaleX(var(--leaf-visible)); transform-origin: left center; }
+.leaf-right-3 { right:-28px; bottom: calc(var(--stem-height) * 0.8);  border-radius: 50% 0 50% 50%; transform: rotate(calc(60deg + var(--leaf-droop))) scaleX(var(--leaf-visible)); transform-origin: left center; }
+
+/* ─── Flower ─────────────────────────────────────────── */
+.flower {
+  position: absolute;
+  top: calc(100% - var(--stem-height) - 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width:    20px;
+  height:   20px;
+  border-radius: 50%;
+  background: var(--flower-color);
+  opacity: var(--flower-opacity);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--flower-color) 40%, transparent);
+  transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
+  z-index: 3;
+}
+
+/* ─── Fruit ──────────────────────────────────────────── */
+.fruit {
+  position: absolute;
+  width:    calc(16px * var(--fruit-size));
+  height:   calc(16px * var(--fruit-size));
+  border-radius: 50%;
+  background: var(--fruit-color);
+  opacity: calc(var(--fruit-visible) * 1);
+  transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
+  z-index: 3;
+}
+
+.fruit-1 { top: calc(100% - var(--stem-height) * 0.7); left: -10px; }
+.fruit-2 { top: calc(100% - var(--stem-height) * 0.5); right: -10px; }
+
+/* ─── Soil ───────────────────────────────────────────── */
+.soil {
+  width:     100%;
+  flex-shrink: 0;
+  position:  relative;
+  z-index:   1;
+}
+
+.soil-surface {
+  height:       8px;
+  background:   color-mix(in srgb, var(--soil-color) 80%, #2d4a1e calc(var(--soil-moisture) * 100%));
+  border-radius: 4px 4px 0 0;
+  transition:   background 0.5s ease;
+}
+
+.soil-body {
+  height:     40px;
+  background: color-mix(in srgb, var(--soil-color) 90%, #1a1008 10%);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  position:   relative;
+  overflow:   hidden;
+  transition: background 0.5s ease;
+}
+
+/* Soil texture lines */
+.soil-body::before {
+  content:  '';
+  position: absolute;
+  inset:    0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 18px,
+    rgba(0,0,0,0.08) 18px,
+    rgba(0,0,0,0.08) 20px
+  );
+}
+
+/* ─── Vitality-based sway animation ─────────────────── */
+.plant-container.vitality-high .plant {
+  animation: sway 4s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg);   }
+  25%       { transform: rotate(1.5deg); }
+  75%       { transform: rotate(-1.5deg); }
+}
+
+/* ─── Wilting override for critical state ────────────── */
+.plant-container.vitality-critical .stem {
+  transform: rotate(8deg);
+  transform-origin: bottom center;
+}
+
+/* ─── Stage: seed bump ───────────────────────────────── */
+.plant-container.stage-planting .soil-surface::after {
+  content:  '';
+  position: absolute;
+  width:    12px;
+  height:   6px;
+  background: color-mix(in srgb, var(--soil-color) 60%, #000);
+  border-radius: 50%;
+  top:  -3px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ─── Seedling label ─────────────────────────────────── */
+.plant-stage-label {
+  position:  absolute;
+  top:       8px;
+  left:      0; right: 0;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color:     var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

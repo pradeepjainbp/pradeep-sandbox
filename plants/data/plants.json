@@ -1,0 +1,6109 @@
+[
+  {
+    "id": "spinach",
+    "common_en": "Spinach",
+    "common_hi": "Palak",
+    "common_kn": "Basale Soppu",
+    "common_ta": "Keerai",
+    "common_te": "Palakura",
+    "common_mr": "Palak",
+    "scientific": "Spinacia oleracea",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "cool-season",
+      "fast-growing",
+      "nutritious",
+      "beginner"
+    ]
+  },
+  {
+    "id": "amaranth-greens",
+    "common_en": "Amaranth Greens",
+    "common_hi": "Chaulai",
+    "common_kn": "Dantina Soppu",
+    "common_ta": "Mulai Keerai",
+    "common_te": "Thotakura",
+    "common_mr": "Shavrani Bhaji",
+    "scientific": "Amaranthus tricolor",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "tropical",
+      "fast-growing",
+      "nutritious",
+      "heat-tolerant"
+    ]
+  },
+  {
+    "id": "fenugreek-greens",
+    "common_en": "Fenugreek Greens",
+    "common_hi": "Methi",
+    "common_kn": "Menthya Soppu",
+    "common_ta": "Vendhaya Keerai",
+    "common_te": "Menthi Kura",
+    "common_mr": "Methi",
+    "scientific": "Trigonella foenum-graecum",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "cool-season",
+      "fast-growing",
+      "medicinal",
+      "spice"
+    ]
+  },
+  {
+    "id": "mustard-greens",
+    "common_en": "Mustard Greens",
+    "common_hi": "Sarson ka Saag",
+    "common_kn": "Sasive Soppu",
+    "common_ta": "Kadugu Keerai",
+    "common_te": "Aavalu",
+    "common_mr": "Mohari Bhaji",
+    "scientific": "Brassica juncea",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "cool-season",
+      "fast-growing",
+      "pungent"
+    ]
+  },
+  {
+    "id": "coriander",
+    "common_en": "Coriander / Cilantro",
+    "common_hi": "Dhaniya",
+    "common_kn": "Kottambari Soppu",
+    "common_ta": "Kothamalli",
+    "common_te": "Kothimeera",
+    "common_mr": "Kothimbir",
+    "scientific": "Coriandrum sativum",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "cool-season",
+      "fast-growing",
+      "herb",
+      "essential"
+    ]
+  },
+  {
+    "id": "curry-leaf",
+    "common_en": "Curry Leaf",
+    "common_hi": "Kadi Patta",
+    "common_kn": "Karibevu",
+    "common_ta": "Karuveppilai",
+    "common_te": "Karivepaku",
+    "common_mr": "Kadhi Patta",
+    "scientific": "Murraya koenigii",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "tropical",
+      "perennial",
+      "aromatic",
+      "essential"
+    ]
+  },
+  {
+    "id": "drumstick-leaves",
+    "common_en": "Moringa / Drumstick Leaves",
+    "common_hi": "Sahjan Patti",
+    "common_kn": "Nugge Soppu",
+    "common_ta": "Murungai Keerai",
+    "common_te": "Munaga Aaku",
+    "common_mr": "Shevga Paan",
+    "scientific": "Moringa oleifera",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "tropical",
+      "perennial",
+      "superfood",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "lettuce",
+    "common_en": "Lettuce",
+    "common_hi": "Salad Patta",
+    "common_kn": "Lettuce",
+    "common_ta": "Lettuce",
+    "common_te": "Lettuce",
+    "common_mr": "Salad Patta",
+    "scientific": "Lactuca sativa",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "cool-season",
+      "fast-growing",
+      "salad",
+      "beginner"
+    ]
+  },
+  {
+    "id": "poi-malabar-spinach",
+    "common_en": "Malabar Spinach",
+    "common_hi": "Poi",
+    "common_kn": "Basale Soppu",
+    "common_ta": "Kodip Pasalai",
+    "common_te": "Bachhali",
+    "common_mr": "Mayalu",
+    "scientific": "Basella alba",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "tropical",
+      "vine",
+      "heat-tolerant",
+      "monsoon"
+    ]
+  },
+  {
+    "id": "swiss-chard",
+    "common_en": "Swiss Chard",
+    "common_hi": "Swiss Chard",
+    "common_kn": "Swiss Chard",
+    "common_ta": "Swiss Chard",
+    "common_te": "Swiss Chard",
+    "common_mr": "Swiss Chard",
+    "scientific": "Beta vulgaris subsp. vulgaris",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "cool-season",
+      "nutritious",
+      "ornamental"
+    ]
+  },
+  {
+    "id": "tomato",
+    "common_en": "Tomato",
+    "common_hi": "Tamatar",
+    "common_kn": "Tomato",
+    "common_ta": "Thakkali",
+    "common_te": "Tomato",
+    "common_mr": "Tamatar",
+    "scientific": "Solanum lycopersicum",
+    "category": "Vegetable",
+    "subcategory": "Fruiting Vegetable",
+    "tags": [
+      "warm-season",
+      "popular",
+      "beginner",
+      "container"
+    ]
+  },
+  {
+    "id": "brinjal",
+    "common_en": "Brinjal / Eggplant",
+    "common_hi": "Baingan",
+    "common_kn": "Badanekayi",
+    "common_ta": "Kathirikai",
+    "common_te": "Vankaya",
+    "common_mr": "Vangi",
+    "scientific": "Solanum melongena",
+    "category": "Vegetable",
+    "subcategory": "Fruiting Vegetable",
+    "tags": [
+      "warm-season",
+      "popular",
+      "versatile"
+    ]
+  },
+  {
+    "id": "chilli-green",
+    "common_en": "Green Chilli",
+    "common_hi": "Hari Mirch",
+    "common_kn": "Hasiru Menasinakayi",
+    "common_ta": "Pachai Milagai",
+    "common_te": "Pachhi Mirapa",
+    "common_mr": "Hirvi Mirchi",
+    "scientific": "Capsicum annuum",
+    "category": "Vegetable",
+    "subcategory": "Fruiting Vegetable",
+    "tags": [
+      "warm-season",
+      "essential",
+      "container",
+      "spicy"
+    ]
+  },
+  {
+    "id": "capsicum",
+    "common_en": "Bell Pepper / Capsicum",
+    "common_hi": "Shimla Mirch",
+    "common_kn": "Donne Menasinakayi",
+    "common_ta": "Kudai Milagai",
+    "common_te": "Capsicum",
+    "common_mr": "Dhobli Mirchi",
+    "scientific": "Capsicum annuum var. grossum",
+    "category": "Vegetable",
+    "subcategory": "Fruiting Vegetable",
+    "tags": [
+      "warm-season",
+      "colorful",
+      "container"
+    ]
+  },
+  {
+    "id": "okra",
+    "common_en": "Okra / Lady Finger",
+    "common_hi": "Bhindi",
+    "common_kn": "Bende Kayi",
+    "common_ta": "Vendakkai",
+    "common_te": "Bendakaya",
+    "common_mr": "Bhendi",
+    "scientific": "Abelmoschus esculentus",
+    "category": "Vegetable",
+    "subcategory": "Fruiting Vegetable",
+    "tags": [
+      "warm-season",
+      "popular",
+      "fast-growing",
+      "monsoon"
+    ]
+  },
+  {
+    "id": "bottle-gourd",
+    "common_en": "Bottle Gourd",
+    "common_hi": "Lauki",
+    "common_kn": "Sorekayi",
+    "common_ta": "Suraikai",
+    "common_te": "Sorakaya",
+    "common_mr": "Dudhi Bhopla",
+    "scientific": "Lagenaria siceraria",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "vine",
+      "prolific",
+      "trellis"
+    ]
+  },
+  {
+    "id": "bitter-gourd",
+    "common_en": "Bitter Gourd",
+    "common_hi": "Karela",
+    "common_kn": "Hagalakayi",
+    "common_ta": "Pavakkai",
+    "common_te": "Kakarakaya",
+    "common_mr": "Karle",
+    "scientific": "Momordica charantia",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "vine",
+      "medicinal",
+      "monsoon"
+    ]
+  },
+  {
+    "id": "ridge-gourd",
+    "common_en": "Ridge Gourd",
+    "common_hi": "Turai",
+    "common_kn": "Heerekayi",
+    "common_ta": "Peerkangai",
+    "common_te": "Beerakaya",
+    "common_mr": "Dodka",
+    "scientific": "Luffa acutangula",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "vine",
+      "prolific",
+      "trellis"
+    ]
+  },
+  {
+    "id": "snake-gourd",
+    "common_en": "Snake Gourd",
+    "common_hi": "Chichinda",
+    "common_kn": "Padavalakayi",
+    "common_ta": "Pudalangai",
+    "common_te": "Potlakaya",
+    "common_mr": "Padval",
+    "scientific": "Trichosanthes cucumerina",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "vine",
+      "unusual",
+      "trellis"
+    ]
+  },
+  {
+    "id": "ash-gourd",
+    "common_en": "Ash Gourd / Winter Melon",
+    "common_hi": "Petha",
+    "common_kn": "Boodugumbala",
+    "common_ta": "Neer Poosanikai",
+    "common_te": "Boodida Gummadikaya",
+    "common_mr": "Kohla",
+    "scientific": "Benincasa hispida",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "vine",
+      "medicinal",
+      "large"
+    ]
+  },
+  {
+    "id": "ivy-gourd",
+    "common_en": "Ivy Gourd",
+    "common_hi": "Kundru",
+    "common_kn": "Tonde Kayi",
+    "common_ta": "Kovakkai",
+    "common_te": "Dondakaya",
+    "common_mr": "Tondli",
+    "scientific": "Coccinia grandis",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "tropical",
+      "perennial",
+      "vine",
+      "prolific"
+    ]
+  },
+  {
+    "id": "pointed-gourd",
+    "common_en": "Pointed Gourd",
+    "common_hi": "Parwal",
+    "common_kn": "Parwal",
+    "common_ta": "Kambupudalai",
+    "common_te": "Parwal",
+    "common_mr": "Parwal",
+    "scientific": "Trichosanthes dioica",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "vine",
+      "perennial"
+    ]
+  },
+  {
+    "id": "cucumber",
+    "common_en": "Cucumber",
+    "common_hi": "Kheera",
+    "common_kn": "Soutekayi",
+    "common_ta": "Vellarikai",
+    "common_te": "Dosakaya",
+    "common_mr": "Kakdi",
+    "scientific": "Cucumis sativus",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "fast-growing",
+      "beginner",
+      "salad"
+    ]
+  },
+  {
+    "id": "pumpkin",
+    "common_en": "Pumpkin",
+    "common_hi": "Kaddu",
+    "common_kn": "Kumbalakayi",
+    "common_ta": "Parangi Kai",
+    "common_te": "Gummadikaya",
+    "common_mr": "Bhopla",
+    "scientific": "Cucurbita moschata",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "vine",
+      "large",
+      "storage"
+    ]
+  },
+  {
+    "id": "watermelon",
+    "common_en": "Watermelon",
+    "common_hi": "Tarbooz",
+    "common_kn": "Kallangoosa",
+    "common_ta": "Thanneer Palam",
+    "common_te": "Puchakaya",
+    "common_mr": "Kalingad",
+    "scientific": "Citrullus lanatus",
+    "category": "Vegetable",
+    "subcategory": "Melon",
+    "tags": [
+      "warm-season",
+      "vine",
+      "summer",
+      "large"
+    ]
+  },
+  {
+    "id": "muskmelon",
+    "common_en": "Muskmelon",
+    "common_hi": "Kharbooja",
+    "common_kn": "Kharbooja",
+    "common_ta": "Mulam Pazham",
+    "common_te": "Kharbooja",
+    "common_mr": "Kharbooj",
+    "scientific": "Cucumis melo",
+    "category": "Vegetable",
+    "subcategory": "Melon",
+    "tags": [
+      "warm-season",
+      "vine",
+      "summer",
+      "sweet"
+    ]
+  },
+  {
+    "id": "potato",
+    "common_en": "Potato",
+    "common_hi": "Aloo",
+    "common_kn": "Aalugadde",
+    "common_ta": "Urulai Kizhangu",
+    "common_te": "Bangaladumpa",
+    "common_mr": "Batata",
+    "scientific": "Solanum tuberosum",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "cool-season",
+      "staple",
+      "storage",
+      "popular"
+    ]
+  },
+  {
+    "id": "onion",
+    "common_en": "Onion",
+    "common_hi": "Pyaz",
+    "common_kn": "Eerulli",
+    "common_ta": "Vengayam",
+    "common_te": "Ullipaya",
+    "common_mr": "Kanda",
+    "scientific": "Allium cepa",
+    "category": "Vegetable",
+    "subcategory": "Bulb Vegetable",
+    "tags": [
+      "cool-season",
+      "essential",
+      "storage",
+      "staple"
+    ]
+  },
+  {
+    "id": "garlic",
+    "common_en": "Garlic",
+    "common_hi": "Lahsun",
+    "common_kn": "Bellulli",
+    "common_ta": "Poondu",
+    "common_te": "Vellulli",
+    "common_mr": "Lasun",
+    "scientific": "Allium sativum",
+    "category": "Vegetable",
+    "subcategory": "Bulb Vegetable",
+    "tags": [
+      "cool-season",
+      "essential",
+      "medicinal",
+      "storage"
+    ]
+  },
+  {
+    "id": "ginger",
+    "common_en": "Ginger",
+    "common_hi": "Adrak",
+    "common_kn": "Shunti",
+    "common_ta": "Inji",
+    "common_te": "Allam",
+    "common_mr": "Aale",
+    "scientific": "Zingiber officinale",
+    "category": "Vegetable",
+    "subcategory": "Rhizome",
+    "tags": [
+      "tropical",
+      "shade-tolerant",
+      "medicinal",
+      "spice"
+    ]
+  },
+  {
+    "id": "turmeric",
+    "common_en": "Turmeric",
+    "common_hi": "Haldi",
+    "common_kn": "Arishina",
+    "common_ta": "Manjal",
+    "common_te": "Pasupu",
+    "common_mr": "Halad",
+    "scientific": "Curcuma longa",
+    "category": "Vegetable",
+    "subcategory": "Rhizome",
+    "tags": [
+      "tropical",
+      "shade-tolerant",
+      "medicinal",
+      "spice"
+    ]
+  },
+  {
+    "id": "radish",
+    "common_en": "Radish",
+    "common_hi": "Mooli",
+    "common_kn": "Mulangi",
+    "common_ta": "Mullangi",
+    "common_te": "Mullangi",
+    "common_mr": "Mula",
+    "scientific": "Raphanus sativus",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "cool-season",
+      "fast-growing",
+      "beginner"
+    ]
+  },
+  {
+    "id": "carrot",
+    "common_en": "Carrot",
+    "common_hi": "Gajar",
+    "common_kn": "Gajjari",
+    "common_ta": "Carrot",
+    "common_te": "Carrot",
+    "common_mr": "Gajar",
+    "scientific": "Daucus carota",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "cool-season",
+      "nutritious",
+      "popular"
+    ]
+  },
+  {
+    "id": "beetroot",
+    "common_en": "Beetroot",
+    "common_hi": "Chukandar",
+    "common_kn": "Beetroot",
+    "common_ta": "Beetroot",
+    "common_te": "Beetroot",
+    "common_mr": "Beet",
+    "scientific": "Beta vulgaris",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "cool-season",
+      "nutritious",
+      "colorful"
+    ]
+  },
+  {
+    "id": "sweet-potato",
+    "common_en": "Sweet Potato",
+    "common_hi": "Shakarkandi",
+    "common_kn": "Genasina Gadde",
+    "common_ta": "Sakkara Valli Kizhangu",
+    "common_te": "Chillakada Dumpa",
+    "common_mr": "Ratalu",
+    "scientific": "Ipomoea batatas",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "warm-season",
+      "drought-tolerant",
+      "nutritious"
+    ]
+  },
+  {
+    "id": "tapioca",
+    "common_en": "Tapioca / Cassava",
+    "common_hi": "Sabudana Plant",
+    "common_kn": "Maragenasu",
+    "common_ta": "Maravalli Kizhangu",
+    "common_te": "Karra Pendalam",
+    "common_mr": "Tapioca",
+    "scientific": "Manihot esculenta",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "tropical",
+      "drought-tolerant",
+      "staple"
+    ]
+  },
+  {
+    "id": "elephant-foot-yam",
+    "common_en": "Elephant Foot Yam",
+    "common_hi": "Suran",
+    "common_kn": "Suvarna Gadde",
+    "common_ta": "Senai Kizhangu",
+    "common_te": "Kanda Gadda",
+    "common_mr": "Suran",
+    "scientific": "Amorphophallus paeoniifolius",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "tropical",
+      "shade-tolerant",
+      "large"
+    ]
+  },
+  {
+    "id": "colocasia",
+    "common_en": "Taro / Colocasia",
+    "common_hi": "Arbi",
+    "common_kn": "Kesuvina Gadde",
+    "common_ta": "Seppan Kizhangu",
+    "common_te": "Chamagadda",
+    "common_mr": "Alu",
+    "scientific": "Colocasia esculenta",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "tropical",
+      "monsoon",
+      "shade-tolerant"
+    ]
+  },
+  {
+    "id": "turnip",
+    "common_en": "Turnip",
+    "common_hi": "Shalgam",
+    "common_kn": "Turnip",
+    "common_ta": "Turnip",
+    "common_te": "Turnip",
+    "common_mr": "Salgam",
+    "scientific": "Brassica rapa",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "cool-season",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "cauliflower",
+    "common_en": "Cauliflower",
+    "common_hi": "Phool Gobhi",
+    "common_kn": "Hookosu",
+    "common_ta": "Cauliflower",
+    "common_te": "Cauliflower",
+    "common_mr": "Phulkobi",
+    "scientific": "Brassica oleracea var. botrytis",
+    "category": "Vegetable",
+    "subcategory": "Brassica",
+    "tags": [
+      "cool-season",
+      "popular",
+      "nutritious"
+    ]
+  },
+  {
+    "id": "cabbage",
+    "common_en": "Cabbage",
+    "common_hi": "Patta Gobhi",
+    "common_kn": "Ele Kosu",
+    "common_ta": "Muttaikose",
+    "common_te": "Cabbage",
+    "common_mr": "Kobi",
+    "scientific": "Brassica oleracea var. capitata",
+    "category": "Vegetable",
+    "subcategory": "Brassica",
+    "tags": [
+      "cool-season",
+      "popular",
+      "storage"
+    ]
+  },
+  {
+    "id": "broccoli",
+    "common_en": "Broccoli",
+    "common_hi": "Broccoli",
+    "common_kn": "Broccoli",
+    "common_ta": "Broccoli",
+    "common_te": "Broccoli",
+    "common_mr": "Broccoli",
+    "scientific": "Brassica oleracea var. italica",
+    "category": "Vegetable",
+    "subcategory": "Brassica",
+    "tags": [
+      "cool-season",
+      "nutritious",
+      "premium"
+    ]
+  },
+  {
+    "id": "knol-khol",
+    "common_en": "Kohlrabi",
+    "common_hi": "Ganth Gobhi",
+    "common_kn": "Navilu Kosu",
+    "common_ta": "Noolkol",
+    "common_te": "Noolkol",
+    "common_mr": "Navalkol",
+    "scientific": "Brassica oleracea var. gongylodes",
+    "category": "Vegetable",
+    "subcategory": "Brassica",
+    "tags": [
+      "cool-season",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "french-beans",
+    "common_en": "French Beans",
+    "common_hi": "Beans",
+    "common_kn": "Beans",
+    "common_ta": "Beans",
+    "common_te": "Beans",
+    "common_mr": "Pavta",
+    "scientific": "Phaseolus vulgaris",
+    "category": "Vegetable",
+    "subcategory": "Bean",
+    "tags": [
+      "warm-season",
+      "fast-growing",
+      "container",
+      "beginner"
+    ]
+  },
+  {
+    "id": "cluster-beans",
+    "common_en": "Cluster Beans / Guar",
+    "common_hi": "Gwar Phali",
+    "common_kn": "Gorikai",
+    "common_ta": "Kothavarangai",
+    "common_te": "Goruchikkudu",
+    "common_mr": "Gawar",
+    "scientific": "Cyamopsis tetragonoloba",
+    "category": "Vegetable",
+    "subcategory": "Bean",
+    "tags": [
+      "warm-season",
+      "drought-tolerant",
+      "heat-tolerant"
+    ]
+  },
+  {
+    "id": "broad-beans",
+    "common_en": "Broad Beans",
+    "common_hi": "Sem",
+    "common_kn": "Chapparada Avare",
+    "common_ta": "Avarai",
+    "common_te": "Chikkudu",
+    "common_mr": "Val",
+    "scientific": "Lablab purpureus",
+    "category": "Vegetable",
+    "subcategory": "Bean",
+    "tags": [
+      "warm-season",
+      "vine",
+      "prolific"
+    ]
+  },
+  {
+    "id": "cowpea-yard-long",
+    "common_en": "Yard Long Beans",
+    "common_hi": "Barbati",
+    "common_kn": "Alasande Kayi",
+    "common_ta": "Karamani",
+    "common_te": "Bobbarlu",
+    "common_mr": "Chawli",
+    "scientific": "Vigna unguiculata subsp. sesquipedalis",
+    "category": "Vegetable",
+    "subcategory": "Bean",
+    "tags": [
+      "warm-season",
+      "vine",
+      "heat-tolerant",
+      "monsoon"
+    ]
+  },
+  {
+    "id": "winged-bean",
+    "common_en": "Winged Bean",
+    "common_hi": "Chaura Phali",
+    "common_kn": "Winged Bean",
+    "common_ta": "Siragavaal",
+    "common_te": "Winged Bean",
+    "common_mr": "Winged Bean",
+    "scientific": "Psophocarpus tetragonolobus",
+    "category": "Vegetable",
+    "subcategory": "Bean",
+    "tags": [
+      "tropical",
+      "vine",
+      "nutritious",
+      "unusual"
+    ]
+  },
+  {
+    "id": "green-peas",
+    "common_en": "Green Peas",
+    "common_hi": "Matar",
+    "common_kn": "Batani",
+    "common_ta": "Pattani",
+    "common_te": "Batani",
+    "common_mr": "Vatana",
+    "scientific": "Pisum sativum",
+    "category": "Vegetable",
+    "subcategory": "Bean",
+    "tags": [
+      "cool-season",
+      "popular",
+      "sweet"
+    ]
+  },
+  {
+    "id": "sword-bean",
+    "common_en": "Sword Bean",
+    "common_hi": "Sem",
+    "common_kn": "Seembe Kayi",
+    "common_ta": "Thambattai",
+    "common_te": "Thamma Kaaya",
+    "common_mr": "Shembre",
+    "scientific": "Canavalia gladiata",
+    "category": "Vegetable",
+    "subcategory": "Bean",
+    "tags": [
+      "warm-season",
+      "vine",
+      "large"
+    ]
+  },
+  {
+    "id": "drumstick",
+    "common_en": "Drumstick",
+    "common_hi": "Sahjan",
+    "common_kn": "Nugge Kayi",
+    "common_ta": "Murungakkai",
+    "common_te": "Munagakaya",
+    "common_mr": "Shevga",
+    "scientific": "Moringa oleifera",
+    "category": "Vegetable",
+    "subcategory": "Pod Vegetable",
+    "tags": [
+      "tropical",
+      "perennial",
+      "superfood",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "green-banana",
+    "common_en": "Raw Banana (Cooking)",
+    "common_hi": "Kachha Kela",
+    "common_kn": "Balekayi",
+    "common_ta": "Vazhakkai",
+    "common_te": "Aratikaya",
+    "common_mr": "Kacha Kela",
+    "scientific": "Musa paradisiaca",
+    "category": "Vegetable",
+    "subcategory": "Fruiting Vegetable",
+    "tags": [
+      "tropical",
+      "perennial",
+      "staple"
+    ]
+  },
+  {
+    "id": "jackfruit-raw",
+    "common_en": "Raw Jackfruit",
+    "common_hi": "Kathal",
+    "common_kn": "Halasina Kayi",
+    "common_ta": "Palakkai",
+    "common_te": "Panasa",
+    "common_mr": "Fanas",
+    "scientific": "Artocarpus heterophyllus",
+    "category": "Vegetable",
+    "subcategory": "Fruiting Vegetable",
+    "tags": [
+      "tropical",
+      "tree",
+      "large",
+      "versatile"
+    ]
+  },
+  {
+    "id": "corn-sweet",
+    "common_en": "Sweet Corn",
+    "common_hi": "Bhutta",
+    "common_kn": "Mekkejola",
+    "common_ta": "Cholam",
+    "common_te": "Mokka Jonna",
+    "common_mr": "Makka",
+    "scientific": "Zea mays var. saccharata",
+    "category": "Vegetable",
+    "subcategory": "Grain Vegetable",
+    "tags": [
+      "warm-season",
+      "popular",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "spring-onion",
+    "common_en": "Spring Onion",
+    "common_hi": "Hara Pyaz",
+    "common_kn": "Hasi Eerulli",
+    "common_ta": "Vengaya Thaal",
+    "common_te": "Ulli Kayalu",
+    "common_mr": "Kanda Paat",
+    "scientific": "Allium fistulosum",
+    "category": "Vegetable",
+    "subcategory": "Bulb Vegetable",
+    "tags": [
+      "cool-season",
+      "fast-growing",
+      "container"
+    ]
+  },
+  {
+    "id": "lotus-stem",
+    "common_en": "Lotus Stem",
+    "common_hi": "Kamal Kakdi",
+    "common_kn": "Thaavare",
+    "common_ta": "Thamarai Thandu",
+    "common_te": "Tamara Gadda",
+    "common_mr": "Kamal Kakdi",
+    "scientific": "Nelumbo nucifera",
+    "category": "Vegetable",
+    "subcategory": "Aquatic Vegetable",
+    "tags": [
+      "aquatic",
+      "perennial",
+      "exotic"
+    ]
+  },
+  {
+    "id": "banana-stem",
+    "common_en": "Banana Stem",
+    "common_hi": "Kele ka Tana",
+    "common_kn": "Bale Dindi",
+    "common_ta": "Vazhai Thandu",
+    "common_te": "Arati Dandu",
+    "common_mr": "Kelache Khand",
+    "scientific": "Musa spp.",
+    "category": "Vegetable",
+    "subcategory": "Stem Vegetable",
+    "tags": [
+      "tropical",
+      "perennial",
+      "fiber"
+    ]
+  },
+  {
+    "id": "raw-papaya",
+    "common_en": "Raw Papaya",
+    "common_hi": "Kachha Papita",
+    "common_kn": "Paranga Kayi",
+    "common_ta": "Pappali Kai",
+    "common_te": "Boppai Kaaya",
+    "common_mr": "Kacha Papai",
+    "scientific": "Carica papaya",
+    "category": "Vegetable",
+    "subcategory": "Fruiting Vegetable",
+    "tags": [
+      "tropical",
+      "fast-growing",
+      "versatile"
+    ]
+  },
+  {
+    "id": "mango",
+    "common_en": "Mango",
+    "common_hi": "Aam",
+    "common_kn": "Maavina Hannu",
+    "common_ta": "Mangai",
+    "common_te": "Mamidi",
+    "common_mr": "Amba",
+    "scientific": "Mangifera indica",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "perennial",
+      "iconic"
+    ]
+  },
+  {
+    "id": "banana",
+    "common_en": "Banana",
+    "common_hi": "Kela",
+    "common_kn": "Bale Hannu",
+    "common_ta": "Vazhai Pazham",
+    "common_te": "Arati Pandu",
+    "common_mr": "Kela",
+    "scientific": "Musa spp.",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "perennial",
+      "staple",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "papaya",
+    "common_en": "Papaya",
+    "common_hi": "Papita",
+    "common_kn": "Parangi Hannu",
+    "common_ta": "Pappali",
+    "common_te": "Boppai",
+    "common_mr": "Papai",
+    "scientific": "Carica papaya",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "fast-growing",
+      "beginner",
+      "container"
+    ]
+  },
+  {
+    "id": "guava",
+    "common_en": "Guava",
+    "common_hi": "Amrud",
+    "common_kn": "Seebe Hannu",
+    "common_ta": "Koyyapazham",
+    "common_te": "Jama",
+    "common_mr": "Peru",
+    "scientific": "Psidium guajava",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "hardy",
+      "popular",
+      "beginner"
+    ]
+  },
+  {
+    "id": "coconut",
+    "common_en": "Coconut",
+    "common_hi": "Nariyal",
+    "common_kn": "Thengu",
+    "common_ta": "Thengai",
+    "common_te": "Kobbari",
+    "common_mr": "Naral",
+    "scientific": "Cocos nucifera",
+    "category": "Fruit",
+    "subcategory": "Tropical Palm",
+    "tags": [
+      "tropical",
+      "coastal",
+      "perennial",
+      "food"
+    ]
+  },
+  {
+    "id": "pomegranate",
+    "common_en": "Pomegranate",
+    "common_hi": "Anaar",
+    "common_kn": "Dalimbe",
+    "common_ta": "Mathulai",
+    "common_te": "Danimma",
+    "common_mr": "Dalimb",
+    "scientific": "Punica granatum",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "drought-tolerant",
+      "premium",
+      "hardy"
+    ]
+  },
+  {
+    "id": "sapota",
+    "common_en": "Sapota / Chikoo",
+    "common_hi": "Chiku",
+    "common_kn": "Sapota",
+    "common_ta": "Sapotta",
+    "common_te": "Sapota",
+    "common_mr": "Chiku",
+    "scientific": "Manilkara zapota",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "sweet",
+      "evergreen"
+    ]
+  },
+  {
+    "id": "custard-apple",
+    "common_en": "Custard Apple",
+    "common_hi": "Sitaphal",
+    "common_kn": "Seethaphal",
+    "common_ta": "Seetha Pazham",
+    "common_te": "Seethapandu",
+    "common_mr": "Sitaphal",
+    "scientific": "Annona squamosa",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "deciduous",
+      "sweet"
+    ]
+  },
+  {
+    "id": "jackfruit",
+    "common_en": "Jackfruit",
+    "common_hi": "Kathal",
+    "common_kn": "Halasina Hannu",
+    "common_ta": "Palaa Pazham",
+    "common_te": "Panasa Pandu",
+    "common_mr": "Fanas",
+    "scientific": "Artocarpus heterophyllus",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "large",
+      "versatile"
+    ]
+  },
+  {
+    "id": "lychee",
+    "common_en": "Lychee",
+    "common_hi": "Litchi",
+    "common_kn": "Litchi",
+    "common_ta": "Litchi",
+    "common_te": "Litchi",
+    "common_mr": "Litchi",
+    "scientific": "Litchi chinensis",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "tree",
+      "seasonal",
+      "premium"
+    ]
+  },
+  {
+    "id": "grape",
+    "common_en": "Grape",
+    "common_hi": "Angoor",
+    "common_kn": "Drakshi",
+    "common_ta": "Thirachai",
+    "common_te": "Draksha",
+    "common_mr": "Draksh",
+    "scientific": "Vitis vinifera",
+    "category": "Fruit",
+    "subcategory": "Temperate Fruit",
+    "tags": [
+      "subtropical",
+      "vine",
+      "trellis",
+      "premium"
+    ]
+  },
+  {
+    "id": "orange",
+    "common_en": "Orange",
+    "common_hi": "Santra",
+    "common_kn": "Kittale",
+    "common_ta": "Orange",
+    "common_te": "Kamala",
+    "common_mr": "Santra",
+    "scientific": "Citrus sinensis",
+    "category": "Fruit",
+    "subcategory": "Citrus",
+    "tags": [
+      "subtropical",
+      "tree",
+      "citrus",
+      "popular"
+    ]
+  },
+  {
+    "id": "sweet-lime",
+    "common_en": "Sweet Lime / Mosambi",
+    "common_hi": "Mosambi",
+    "common_kn": "Mosambi",
+    "common_ta": "Sathukudi",
+    "common_te": "Battayi",
+    "common_mr": "Mosambi",
+    "scientific": "Citrus limetta",
+    "category": "Fruit",
+    "subcategory": "Citrus",
+    "tags": [
+      "subtropical",
+      "tree",
+      "citrus",
+      "juice"
+    ]
+  },
+  {
+    "id": "lemon",
+    "common_en": "Lemon",
+    "common_hi": "Nimbu",
+    "common_kn": "Nimbe",
+    "common_ta": "Elumichai",
+    "common_te": "Nimma",
+    "common_mr": "Limbu",
+    "scientific": "Citrus limon",
+    "category": "Fruit",
+    "subcategory": "Citrus",
+    "tags": [
+      "subtropical",
+      "tree",
+      "citrus",
+      "essential",
+      "container"
+    ]
+  },
+  {
+    "id": "lime",
+    "common_en": "Lime (Kagzi)",
+    "common_hi": "Kagzi Nimbu",
+    "common_kn": "Kagzi Nimbe",
+    "common_ta": "Elumichai",
+    "common_te": "Nimma",
+    "common_mr": "Kagzi Limbu",
+    "scientific": "Citrus aurantiifolia",
+    "category": "Fruit",
+    "subcategory": "Citrus",
+    "tags": [
+      "tropical",
+      "tree",
+      "citrus",
+      "essential"
+    ]
+  },
+  {
+    "id": "amla",
+    "common_en": "Indian Gooseberry / Amla",
+    "common_hi": "Amla",
+    "common_kn": "Nellikai",
+    "common_ta": "Nellikkai",
+    "common_te": "Usirikaya",
+    "common_mr": "Awla",
+    "scientific": "Phyllanthus emblica",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "tree",
+      "medicinal",
+      "superfood"
+    ]
+  },
+  {
+    "id": "jamun",
+    "common_en": "Java Plum / Jamun",
+    "common_hi": "Jamun",
+    "common_kn": "Nerale Hannu",
+    "common_ta": "Naval Pazham",
+    "common_te": "Neredu",
+    "common_mr": "Jambhul",
+    "scientific": "Syzygium cumini",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "medicinal",
+      "monsoon"
+    ]
+  },
+  {
+    "id": "bael",
+    "common_en": "Wood Apple / Bael",
+    "common_hi": "Bael",
+    "common_kn": "Bela",
+    "common_ta": "Vilvam",
+    "common_te": "Maredu",
+    "common_mr": "Bael",
+    "scientific": "Aegle marmelos",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "tree",
+      "medicinal",
+      "sacred"
+    ]
+  },
+  {
+    "id": "star-fruit",
+    "common_en": "Star Fruit",
+    "common_hi": "Kamrakh",
+    "common_kn": "Kamrakh",
+    "common_ta": "Thambaratham Pazham",
+    "common_te": "Ambanamkaya",
+    "common_mr": "Kamrakh",
+    "scientific": "Averrhoa carambola",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "ornamental",
+      "exotic"
+    ]
+  },
+  {
+    "id": "fig",
+    "common_en": "Fig",
+    "common_hi": "Anjeer",
+    "common_kn": "Anjura",
+    "common_ta": "Athipazham",
+    "common_te": "Anjura",
+    "common_mr": "Anjeer",
+    "scientific": "Ficus carica",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "deciduous",
+      "container",
+      "premium"
+    ]
+  },
+  {
+    "id": "tamarind",
+    "common_en": "Tamarind",
+    "common_hi": "Imli",
+    "common_kn": "Hunase",
+    "common_ta": "Puli",
+    "common_te": "Chintapandu",
+    "common_mr": "Chinch",
+    "scientific": "Tamarindus indica",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "essential",
+      "shade"
+    ]
+  },
+  {
+    "id": "kokum",
+    "common_en": "Kokum",
+    "common_hi": "Kokum",
+    "common_kn": "Murgal",
+    "common_ta": "Kokum",
+    "common_te": "Kokum",
+    "common_mr": "Amsul",
+    "scientific": "Garcinia indica",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "western-ghats",
+      "rare"
+    ]
+  },
+  {
+    "id": "dragon-fruit",
+    "common_en": "Dragon Fruit",
+    "common_hi": "Dragon Fruit",
+    "common_kn": "Dragon Fruit",
+    "common_ta": "Dragon Fruit",
+    "common_te": "Dragon Fruit",
+    "common_mr": "Dragon Fruit",
+    "scientific": "Hylocereus undatus",
+    "category": "Fruit",
+    "subcategory": "Cactus Fruit",
+    "tags": [
+      "tropical",
+      "cactus",
+      "trendy",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "passion-fruit",
+    "common_en": "Passion Fruit",
+    "common_hi": "Krishna Phal",
+    "common_kn": "Passion Fruit",
+    "common_ta": "Passion Pazham",
+    "common_te": "Passion Fruit",
+    "common_mr": "Passion Fruit",
+    "scientific": "Passiflora edulis",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "vine",
+      "trellis",
+      "exotic"
+    ]
+  },
+  {
+    "id": "avocado",
+    "common_en": "Avocado",
+    "common_hi": "Avocado",
+    "common_kn": "Avocado",
+    "common_ta": "Avocado",
+    "common_te": "Avocado",
+    "common_mr": "Avocado",
+    "scientific": "Persea americana",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "trendy",
+      "premium"
+    ]
+  },
+  {
+    "id": "apple",
+    "common_en": "Apple",
+    "common_hi": "Seb",
+    "common_kn": "Sebu",
+    "common_ta": "Apple",
+    "common_te": "Apple",
+    "common_mr": "Safarchand",
+    "scientific": "Malus domestica",
+    "category": "Fruit",
+    "subcategory": "Temperate Fruit",
+    "tags": [
+      "temperate",
+      "tree",
+      "cool-climate",
+      "premium"
+    ]
+  },
+  {
+    "id": "pear",
+    "common_en": "Pear",
+    "common_hi": "Nashpati",
+    "common_kn": "Pear",
+    "common_ta": "Pear",
+    "common_te": "Pear",
+    "common_mr": "Nashpati",
+    "scientific": "Pyrus communis",
+    "category": "Fruit",
+    "subcategory": "Temperate Fruit",
+    "tags": [
+      "temperate",
+      "tree",
+      "cool-climate"
+    ]
+  },
+  {
+    "id": "peach",
+    "common_en": "Peach",
+    "common_hi": "Aadoo",
+    "common_kn": "Peach",
+    "common_ta": "Peach",
+    "common_te": "Peach",
+    "common_mr": "Peach",
+    "scientific": "Prunus persica",
+    "category": "Fruit",
+    "subcategory": "Temperate Fruit",
+    "tags": [
+      "temperate",
+      "tree",
+      "cool-climate",
+      "fragrant"
+    ]
+  },
+  {
+    "id": "plum",
+    "common_en": "Plum",
+    "common_hi": "Aloo Bukhara",
+    "common_kn": "Plum",
+    "common_ta": "Plum",
+    "common_te": "Plum",
+    "common_mr": "Plum",
+    "scientific": "Prunus domestica",
+    "category": "Fruit",
+    "subcategory": "Temperate Fruit",
+    "tags": [
+      "temperate",
+      "tree",
+      "cool-climate"
+    ]
+  },
+  {
+    "id": "cherry",
+    "common_en": "Cherry",
+    "common_hi": "Cherry",
+    "common_kn": "Cherry",
+    "common_ta": "Cherry",
+    "common_te": "Cherry",
+    "common_mr": "Cherry",
+    "scientific": "Prunus avium",
+    "category": "Fruit",
+    "subcategory": "Temperate Fruit",
+    "tags": [
+      "temperate",
+      "tree",
+      "cool-climate",
+      "premium"
+    ]
+  },
+  {
+    "id": "strawberry",
+    "common_en": "Strawberry",
+    "common_hi": "Strawberry",
+    "common_kn": "Strawberry",
+    "common_ta": "Strawberry",
+    "common_te": "Strawberry",
+    "common_mr": "Strawberry",
+    "scientific": "Fragaria × ananassa",
+    "category": "Fruit",
+    "subcategory": "Berry",
+    "tags": [
+      "cool-season",
+      "container",
+      "beginner",
+      "premium"
+    ]
+  },
+  {
+    "id": "pineapple",
+    "common_en": "Pineapple",
+    "common_hi": "Ananas",
+    "common_kn": "Ananas",
+    "common_ta": "Anasi Pazham",
+    "common_te": "Anasa Pandu",
+    "common_mr": "Ananas",
+    "scientific": "Ananas comosus",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "ground",
+      "slow-growing"
+    ]
+  },
+  {
+    "id": "dates",
+    "common_en": "Date Palm",
+    "common_hi": "Khajoor",
+    "common_kn": "Kharjura",
+    "common_ta": "Pericham",
+    "common_te": "Kharjuram",
+    "common_mr": "Kharjur",
+    "scientific": "Phoenix dactylifera",
+    "category": "Fruit",
+    "subcategory": "Palm Fruit",
+    "tags": [
+      "arid",
+      "palm",
+      "drought-tolerant",
+      "desert"
+    ]
+  },
+  {
+    "id": "mulberry",
+    "common_en": "Mulberry",
+    "common_hi": "Shahtoot",
+    "common_kn": "Hippunerale",
+    "common_ta": "Mucukattai Pazham",
+    "common_te": "Ippa Pandu",
+    "common_mr": "Tuti",
+    "scientific": "Morus alba",
+    "category": "Fruit",
+    "subcategory": "Berry",
+    "tags": [
+      "subtropical",
+      "tree",
+      "fast-growing",
+      "sericulture"
+    ]
+  },
+  {
+    "id": "ber",
+    "common_en": "Indian Jujube / Ber",
+    "common_hi": "Ber",
+    "common_kn": "Yelchi",
+    "common_ta": "Elanthai",
+    "common_te": "Regu",
+    "common_mr": "Bor",
+    "scientific": "Ziziphus mauritiana",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "tree",
+      "drought-tolerant",
+      "hardy"
+    ]
+  },
+  {
+    "id": "karonda",
+    "common_en": "Karonda",
+    "common_hi": "Karonda",
+    "common_kn": "Karonda",
+    "common_ta": "Kalakkai",
+    "common_te": "Vakkay",
+    "common_mr": "Karvand",
+    "scientific": "Carissa carandas",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "shrub",
+      "hedge",
+      "pickle"
+    ]
+  },
+  {
+    "id": "rambutan",
+    "common_en": "Rambutan",
+    "common_hi": "Rambutan",
+    "common_kn": "Rambutan",
+    "common_ta": "Rambutan",
+    "common_te": "Rambutan",
+    "common_mr": "Rambutan",
+    "scientific": "Nephelium lappaceum",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "exotic",
+      "humid"
+    ]
+  },
+  {
+    "id": "mangosteen",
+    "common_en": "Mangosteen",
+    "common_hi": "Mangosteen",
+    "common_kn": "Mangosteen",
+    "common_ta": "Mangosteen",
+    "common_te": "Mangosteen",
+    "common_mr": "Mangosteen",
+    "scientific": "Garcinia mangostana",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "exotic",
+      "premium"
+    ]
+  },
+  {
+    "id": "soursop",
+    "common_en": "Soursop",
+    "common_hi": "Hanuman Phal",
+    "common_kn": "Mullatha Hannu",
+    "common_ta": "Mullu Seetha",
+    "common_te": "Lakshmana Phalam",
+    "common_mr": "Hanuman Phal",
+    "scientific": "Annona muricata",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "medicinal"
+    ]
+  },
+  {
+    "id": "kiwi",
+    "common_en": "Kiwi",
+    "common_hi": "Kiwi",
+    "common_kn": "Kiwi",
+    "common_ta": "Kiwi",
+    "common_te": "Kiwi",
+    "common_mr": "Kiwi",
+    "scientific": "Actinidia deliciosa",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "vine",
+      "cool-climate",
+      "premium"
+    ]
+  },
+  {
+    "id": "wood-apple",
+    "common_en": "Wood Apple / Kaitha",
+    "common_hi": "Kaitha",
+    "common_kn": "Beladahannu",
+    "common_ta": "Vilam Pazham",
+    "common_te": "Velaga Pandu",
+    "common_mr": "Kavath",
+    "scientific": "Limonia acidissima",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "tree",
+      "medicinal",
+      "wild"
+    ]
+  },
+  {
+    "id": "rose-apple",
+    "common_en": "Rose Apple / Wax Jambu",
+    "common_hi": "Gulab Jamun",
+    "common_kn": "Pannerale",
+    "common_ta": "Panneer Pazham",
+    "common_te": "Jamboo Pandu",
+    "common_mr": "Gulab Jamb",
+    "scientific": "Syzygium jambos",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "ornamental",
+      "fragrant"
+    ]
+  },
+  {
+    "id": "falsa",
+    "common_en": "Phalsa / Falsa",
+    "common_hi": "Falsa",
+    "common_kn": "Falsa",
+    "common_ta": "Falsa",
+    "common_te": "Falsa",
+    "common_mr": "Falsa",
+    "scientific": "Grewia asiatica",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "shrub",
+      "summer",
+      "cooling"
+    ]
+  },
+  {
+    "id": "rice-paddy",
+    "common_en": "Rice (Paddy)",
+    "common_hi": "Chawal",
+    "common_kn": "Akki",
+    "common_ta": "Arisi",
+    "common_te": "Biyyam",
+    "common_mr": "Tandul",
+    "scientific": "Oryza sativa",
+    "category": "Grain",
+    "subcategory": "Cereal",
+    "tags": [
+      "tropical",
+      "staple",
+      "kharif",
+      "waterlogged"
+    ]
+  },
+  {
+    "id": "wheat",
+    "common_en": "Wheat",
+    "common_hi": "Gehun",
+    "common_kn": "Godhi",
+    "common_ta": "Gothumai",
+    "common_te": "Godhuma",
+    "common_mr": "Gahu",
+    "scientific": "Triticum aestivum",
+    "category": "Grain",
+    "subcategory": "Cereal",
+    "tags": [
+      "cool-season",
+      "staple",
+      "rabi",
+      "north-india"
+    ]
+  },
+  {
+    "id": "maize",
+    "common_en": "Maize / Corn",
+    "common_hi": "Makka",
+    "common_kn": "Mekkejola",
+    "common_ta": "Cholam",
+    "common_te": "Mokka Jonna",
+    "common_mr": "Makka",
+    "scientific": "Zea mays",
+    "category": "Grain",
+    "subcategory": "Cereal",
+    "tags": [
+      "warm-season",
+      "staple",
+      "versatile"
+    ]
+  },
+  {
+    "id": "sorghum",
+    "common_en": "Sorghum / Jowar",
+    "common_hi": "Jowar",
+    "common_kn": "Jola",
+    "common_ta": "Cholam",
+    "common_te": "Jonna",
+    "common_mr": "Jowar",
+    "scientific": "Sorghum bicolor",
+    "category": "Grain",
+    "subcategory": "Millet",
+    "tags": [
+      "warm-season",
+      "drought-tolerant",
+      "millet",
+      "staple"
+    ]
+  },
+  {
+    "id": "pearl-millet",
+    "common_en": "Pearl Millet / Bajra",
+    "common_hi": "Bajra",
+    "common_kn": "Sajje",
+    "common_ta": "Kambu",
+    "common_te": "Sajja",
+    "common_mr": "Bajri",
+    "scientific": "Pennisetum glaucum",
+    "category": "Grain",
+    "subcategory": "Millet",
+    "tags": [
+      "warm-season",
+      "drought-tolerant",
+      "millet",
+      "arid"
+    ]
+  },
+  {
+    "id": "finger-millet",
+    "common_en": "Finger Millet / Ragi",
+    "common_hi": "Ragi",
+    "common_kn": "Ragi",
+    "common_ta": "Kelvaragu",
+    "common_te": "Ragulu",
+    "common_mr": "Nachni",
+    "scientific": "Eleusine coracana",
+    "category": "Grain",
+    "subcategory": "Millet",
+    "tags": [
+      "warm-season",
+      "nutritious",
+      "millet",
+      "karnataka"
+    ]
+  },
+  {
+    "id": "foxtail-millet",
+    "common_en": "Foxtail Millet",
+    "common_hi": "Kangni",
+    "common_kn": "Navane",
+    "common_ta": "Thinai",
+    "common_te": "Korralu",
+    "common_mr": "Rala",
+    "scientific": "Setaria italica",
+    "category": "Grain",
+    "subcategory": "Millet",
+    "tags": [
+      "warm-season",
+      "millet",
+      "ancient-grain"
+    ]
+  },
+  {
+    "id": "little-millet",
+    "common_en": "Little Millet",
+    "common_hi": "Kutki",
+    "common_kn": "Saame",
+    "common_ta": "Saamai",
+    "common_te": "Samalu",
+    "common_mr": "Sawa",
+    "scientific": "Panicum sumatrense",
+    "category": "Grain",
+    "subcategory": "Millet",
+    "tags": [
+      "warm-season",
+      "millet",
+      "ancient-grain"
+    ]
+  },
+  {
+    "id": "barnyard-millet",
+    "common_en": "Barnyard Millet",
+    "common_hi": "Sanwa",
+    "common_kn": "Oodalu",
+    "common_ta": "Kuthiraivali",
+    "common_te": "Udalu",
+    "common_mr": "Bhagar",
+    "scientific": "Echinochloa frumentacea",
+    "category": "Grain",
+    "subcategory": "Millet",
+    "tags": [
+      "warm-season",
+      "millet",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "kodo-millet",
+    "common_en": "Kodo Millet",
+    "common_hi": "Kodra",
+    "common_kn": "Harka",
+    "common_ta": "Varagu",
+    "common_te": "Arikelu",
+    "common_mr": "Kodra",
+    "scientific": "Paspalum scrobiculatum",
+    "category": "Grain",
+    "subcategory": "Millet",
+    "tags": [
+      "warm-season",
+      "millet",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "proso-millet",
+    "common_en": "Proso Millet",
+    "common_hi": "Cheena",
+    "common_kn": "Baragu",
+    "common_ta": "Panivaragu",
+    "common_te": "Varigalu",
+    "common_mr": "Vari",
+    "scientific": "Panicum miliaceum",
+    "category": "Grain",
+    "subcategory": "Millet",
+    "tags": [
+      "warm-season",
+      "millet",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "barley",
+    "common_en": "Barley",
+    "common_hi": "Jau",
+    "common_kn": "Barley",
+    "common_ta": "Barley",
+    "common_te": "Barley",
+    "common_mr": "Jav",
+    "scientific": "Hordeum vulgare",
+    "category": "Grain",
+    "subcategory": "Cereal",
+    "tags": [
+      "cool-season",
+      "rabi",
+      "hardy"
+    ]
+  },
+  {
+    "id": "oats",
+    "common_en": "Oats",
+    "common_hi": "Jai",
+    "common_kn": "Oats",
+    "common_ta": "Oats",
+    "common_te": "Oats",
+    "common_mr": "Oats",
+    "scientific": "Avena sativa",
+    "category": "Grain",
+    "subcategory": "Cereal",
+    "tags": [
+      "cool-season",
+      "nutritious",
+      "cover-crop"
+    ]
+  },
+  {
+    "id": "quinoa",
+    "common_en": "Quinoa",
+    "common_hi": "Quinoa",
+    "common_kn": "Quinoa",
+    "common_ta": "Quinoa",
+    "common_te": "Quinoa",
+    "common_mr": "Quinoa",
+    "scientific": "Chenopodium quinoa",
+    "category": "Grain",
+    "subcategory": "Pseudo-cereal",
+    "tags": [
+      "cool-season",
+      "superfood",
+      "trendy"
+    ]
+  },
+  {
+    "id": "amaranth-grain",
+    "common_en": "Amaranth Grain / Rajgira",
+    "common_hi": "Rajgira",
+    "common_kn": "Rajgira",
+    "common_ta": "Araikeerai Vidhai",
+    "common_te": "Rajgira",
+    "common_mr": "Rajgira",
+    "scientific": "Amaranthus cruentus",
+    "category": "Grain",
+    "subcategory": "Pseudo-cereal",
+    "tags": [
+      "warm-season",
+      "ancient-grain",
+      "nutritious",
+      "gluten-free"
+    ]
+  },
+  {
+    "id": "buckwheat",
+    "common_en": "Buckwheat",
+    "common_hi": "Kuttu",
+    "common_kn": "Buckwheat",
+    "common_ta": "Buckwheat",
+    "common_te": "Buckwheat",
+    "common_mr": "Kuttu",
+    "scientific": "Fagopyrum esculentum",
+    "category": "Grain",
+    "subcategory": "Pseudo-cereal",
+    "tags": [
+      "cool-season",
+      "gluten-free",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "pigeon-pea",
+    "common_en": "Pigeon Pea / Toor Dal",
+    "common_hi": "Arhar",
+    "common_kn": "Togari",
+    "common_ta": "Thuvaram Paruppu",
+    "common_te": "Kandi",
+    "common_mr": "Tur",
+    "scientific": "Cajanus cajan",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "warm-season",
+      "staple",
+      "nitrogen-fixing",
+      "kharif"
+    ]
+  },
+  {
+    "id": "chickpea",
+    "common_en": "Chickpea / Chana",
+    "common_hi": "Chana",
+    "common_kn": "Kadale",
+    "common_ta": "Kadalai",
+    "common_te": "Shanaga",
+    "common_mr": "Harbhara",
+    "scientific": "Cicer arietinum",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "cool-season",
+      "staple",
+      "rabi",
+      "protein"
+    ]
+  },
+  {
+    "id": "green-gram",
+    "common_en": "Green Gram / Moong",
+    "common_hi": "Moong",
+    "common_kn": "Hesaru",
+    "common_ta": "Pachai Payaru",
+    "common_te": "Pesalu",
+    "common_mr": "Mug",
+    "scientific": "Vigna radiata",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "warm-season",
+      "fast-growing",
+      "sprout",
+      "nitrogen-fixing"
+    ]
+  },
+  {
+    "id": "black-gram",
+    "common_en": "Black Gram / Urad",
+    "common_hi": "Urad",
+    "common_kn": "Uddina Bele",
+    "common_ta": "Ulundu",
+    "common_te": "Minumulu",
+    "common_mr": "Udid",
+    "scientific": "Vigna mungo",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "warm-season",
+      "staple",
+      "nitrogen-fixing"
+    ]
+  },
+  {
+    "id": "red-lentil",
+    "common_en": "Red Lentil / Masoor",
+    "common_hi": "Masoor",
+    "common_kn": "Masoor",
+    "common_ta": "Mysore Paruppu",
+    "common_te": "Masoor",
+    "common_mr": "Masoor",
+    "scientific": "Lens culinaris",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "cool-season",
+      "rabi",
+      "protein"
+    ]
+  },
+  {
+    "id": "cowpea",
+    "common_en": "Cowpea / Lobia",
+    "common_hi": "Lobia",
+    "common_kn": "Alasande",
+    "common_ta": "Karamani",
+    "common_te": "Bobbarlu",
+    "common_mr": "Chawli",
+    "scientific": "Vigna unguiculata",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "warm-season",
+      "drought-tolerant",
+      "nitrogen-fixing"
+    ]
+  },
+  {
+    "id": "horse-gram",
+    "common_en": "Horse Gram / Kulthi",
+    "common_hi": "Kulthi",
+    "common_kn": "Hurali",
+    "common_ta": "Kollu",
+    "common_te": "Ulavalu",
+    "common_mr": "Kulthi",
+    "scientific": "Macrotyloma uniflorum",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "warm-season",
+      "drought-tolerant",
+      "medicinal"
+    ]
+  },
+  {
+    "id": "moth-bean",
+    "common_en": "Moth Bean",
+    "common_hi": "Moth",
+    "common_kn": "Moth",
+    "common_ta": "Moth",
+    "common_te": "Moth",
+    "common_mr": "Matki",
+    "scientific": "Vigna aconitifolia",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "warm-season",
+      "arid",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "kidney-bean",
+    "common_en": "Kidney Bean / Rajma",
+    "common_hi": "Rajma",
+    "common_kn": "Rajma",
+    "common_ta": "Rajma",
+    "common_te": "Rajma",
+    "common_mr": "Rajma",
+    "scientific": "Phaseolus vulgaris",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "cool-season",
+      "protein",
+      "popular"
+    ]
+  },
+  {
+    "id": "soybean",
+    "common_en": "Soybean",
+    "common_hi": "Soybean",
+    "common_kn": "Soybean",
+    "common_ta": "Soya",
+    "common_te": "Soybean",
+    "common_mr": "Soybean",
+    "scientific": "Glycine max",
+    "category": "Pulse",
+    "subcategory": "Oilseed Pulse",
+    "tags": [
+      "warm-season",
+      "protein",
+      "oilseed",
+      "kharif"
+    ]
+  },
+  {
+    "id": "groundnut",
+    "common_en": "Groundnut / Peanut",
+    "common_hi": "Moongphali",
+    "common_kn": "Kadale Kai",
+    "common_ta": "Nilakadalai",
+    "common_te": "Verusenaga",
+    "common_mr": "Shengdana",
+    "scientific": "Arachis hypogaea",
+    "category": "Pulse",
+    "subcategory": "Oilseed Pulse",
+    "tags": [
+      "warm-season",
+      "oilseed",
+      "popular",
+      "kharif"
+    ]
+  },
+  {
+    "id": "black-pepper",
+    "common_en": "Black Pepper",
+    "common_hi": "Kali Mirch",
+    "common_kn": "Kare Menasu",
+    "common_ta": "Milagu",
+    "common_te": "Miriyalu",
+    "common_mr": "Kali Miri",
+    "scientific": "Piper nigrum",
+    "category": "Spice",
+    "subcategory": "Vine Spice",
+    "tags": [
+      "tropical",
+      "vine",
+      "perennial",
+      "king-of-spices"
+    ]
+  },
+  {
+    "id": "cardamom",
+    "common_en": "Cardamom",
+    "common_hi": "Elaichi",
+    "common_kn": "Yalakki",
+    "common_ta": "Elakkai",
+    "common_te": "Elakulu",
+    "common_mr": "Velchi",
+    "scientific": "Elettaria cardamomum",
+    "category": "Spice",
+    "subcategory": "Shade Spice",
+    "tags": [
+      "tropical",
+      "shade-loving",
+      "perennial",
+      "premium"
+    ]
+  },
+  {
+    "id": "cinnamon",
+    "common_en": "Cinnamon",
+    "common_hi": "Dalchini",
+    "common_kn": "Dalchini",
+    "common_ta": "Pattai",
+    "common_te": "Dalchini",
+    "common_mr": "Dalchini",
+    "scientific": "Cinnamomum verum",
+    "category": "Spice",
+    "subcategory": "Bark Spice",
+    "tags": [
+      "tropical",
+      "tree",
+      "perennial",
+      "premium"
+    ]
+  },
+  {
+    "id": "clove",
+    "common_en": "Clove",
+    "common_hi": "Laung",
+    "common_kn": "Lavanga",
+    "common_ta": "Kirambu",
+    "common_te": "Lavangalu",
+    "common_mr": "Lavang",
+    "scientific": "Syzygium aromaticum",
+    "category": "Spice",
+    "subcategory": "Bud Spice",
+    "tags": [
+      "tropical",
+      "tree",
+      "perennial",
+      "premium"
+    ]
+  },
+  {
+    "id": "nutmeg",
+    "common_en": "Nutmeg",
+    "common_hi": "Jaiphal",
+    "common_kn": "Jaajikayi",
+    "common_ta": "Jathikkai",
+    "common_te": "Jajikaya",
+    "common_mr": "Jaiphal",
+    "scientific": "Myristica fragrans",
+    "category": "Spice",
+    "subcategory": "Seed Spice",
+    "tags": [
+      "tropical",
+      "tree",
+      "perennial",
+      "premium"
+    ]
+  },
+  {
+    "id": "cumin",
+    "common_en": "Cumin",
+    "common_hi": "Jeera",
+    "common_kn": "Jeerige",
+    "common_ta": "Jeerakam",
+    "common_te": "Jeelakarra",
+    "common_mr": "Jire",
+    "scientific": "Cuminum cyminum",
+    "category": "Spice",
+    "subcategory": "Seed Spice",
+    "tags": [
+      "cool-season",
+      "essential",
+      "rabi",
+      "annual"
+    ]
+  },
+  {
+    "id": "coriander-seed",
+    "common_en": "Coriander Seeds",
+    "common_hi": "Dhania",
+    "common_kn": "Kottambari",
+    "common_ta": "Kothamalli Vidhai",
+    "common_te": "Dhaniyalu",
+    "common_mr": "Dhane",
+    "scientific": "Coriandrum sativum",
+    "category": "Spice",
+    "subcategory": "Seed Spice",
+    "tags": [
+      "cool-season",
+      "essential",
+      "dual-use"
+    ]
+  },
+  {
+    "id": "mustard-seed",
+    "common_en": "Mustard Seeds",
+    "common_hi": "Rai",
+    "common_kn": "Sasive",
+    "common_ta": "Kadugu",
+    "common_te": "Aavalu",
+    "common_mr": "Mohari",
+    "scientific": "Brassica nigra",
+    "category": "Spice",
+    "subcategory": "Seed Spice",
+    "tags": [
+      "cool-season",
+      "essential",
+      "rabi"
+    ]
+  },
+  {
+    "id": "fennel",
+    "common_en": "Fennel",
+    "common_hi": "Saunf",
+    "common_kn": "Sombu",
+    "common_ta": "Sombu",
+    "common_te": "Sopu",
+    "common_mr": "Badishep",
+    "scientific": "Foeniculum vulgare",
+    "category": "Spice",
+    "subcategory": "Seed Spice",
+    "tags": [
+      "cool-season",
+      "medicinal",
+      "aromatic"
+    ]
+  },
+  {
+    "id": "fenugreek-seed",
+    "common_en": "Fenugreek Seeds",
+    "common_hi": "Methi Dana",
+    "common_kn": "Menthya",
+    "common_ta": "Vendhayam",
+    "common_te": "Menthulu",
+    "common_mr": "Methi Dana",
+    "scientific": "Trigonella foenum-graecum",
+    "category": "Spice",
+    "subcategory": "Seed Spice",
+    "tags": [
+      "cool-season",
+      "medicinal",
+      "dual-use"
+    ]
+  },
+  {
+    "id": "ajwain",
+    "common_en": "Ajwain / Carom Seeds",
+    "common_hi": "Ajwain",
+    "common_kn": "Oma",
+    "common_ta": "Omam",
+    "common_te": "Vamu",
+    "common_mr": "Owa",
+    "scientific": "Trachyspermum ammi",
+    "category": "Spice",
+    "subcategory": "Seed Spice",
+    "tags": [
+      "cool-season",
+      "medicinal",
+      "essential"
+    ]
+  },
+  {
+    "id": "nigella",
+    "common_en": "Nigella / Kalonji",
+    "common_hi": "Kalonji",
+    "common_kn": "Krishna Jeerige",
+    "common_ta": "Karunjeerakam",
+    "common_te": "Nalla Jeelakarra",
+    "common_mr": "Kalonji",
+    "scientific": "Nigella sativa",
+    "category": "Spice",
+    "subcategory": "Seed Spice",
+    "tags": [
+      "cool-season",
+      "medicinal",
+      "rabi"
+    ]
+  },
+  {
+    "id": "asafoetida",
+    "common_en": "Asafoetida / Hing",
+    "common_hi": "Hing",
+    "common_kn": "Ingu",
+    "common_ta": "Perungayam",
+    "common_te": "Inguva",
+    "common_mr": "Hing",
+    "scientific": "Ferula assa-foetida",
+    "category": "Spice",
+    "subcategory": "Resin Spice",
+    "tags": [
+      "temperate",
+      "perennial",
+      "high-altitude",
+      "rare"
+    ]
+  },
+  {
+    "id": "saffron",
+    "common_en": "Saffron",
+    "common_hi": "Kesar",
+    "common_kn": "Keshri",
+    "common_ta": "Kungumappu",
+    "common_te": "Kumkumapuvvu",
+    "common_mr": "Kesar",
+    "scientific": "Crocus sativus",
+    "category": "Spice",
+    "subcategory": "Stigma Spice",
+    "tags": [
+      "temperate",
+      "bulb",
+      "premium",
+      "kashmir"
+    ]
+  },
+  {
+    "id": "star-anise",
+    "common_en": "Star Anise",
+    "common_hi": "Chakra Phool",
+    "common_kn": "Star Anise",
+    "common_ta": "Annasi Poo",
+    "common_te": "Anaspuvvu",
+    "common_mr": "Badiyan",
+    "scientific": "Illicium verum",
+    "category": "Spice",
+    "subcategory": "Pod Spice",
+    "tags": [
+      "subtropical",
+      "tree",
+      "aromatic"
+    ]
+  },
+  {
+    "id": "bay-leaf",
+    "common_en": "Bay Leaf",
+    "common_hi": "Tej Patta",
+    "common_kn": "Masala Ele",
+    "common_ta": "Brindha Elai",
+    "common_te": "Biryani Aaku",
+    "common_mr": "Tej Patta",
+    "scientific": "Cinnamomum tamala",
+    "category": "Spice",
+    "subcategory": "Leaf Spice",
+    "tags": [
+      "subtropical",
+      "tree",
+      "aromatic",
+      "perennial"
+    ]
+  },
+  {
+    "id": "curry-leaf-spice",
+    "common_en": "Curry Leaf (Spice Use)",
+    "common_hi": "Kadi Patta",
+    "common_kn": "Karibevu",
+    "common_ta": "Karuveppilai",
+    "common_te": "Karivepaku",
+    "common_mr": "Kadhi Patta",
+    "scientific": "Murraya koenigii",
+    "category": "Spice",
+    "subcategory": "Leaf Spice",
+    "tags": [
+      "tropical",
+      "tree",
+      "essential",
+      "perennial"
+    ]
+  },
+  {
+    "id": "red-chilli",
+    "common_en": "Red Chilli (Dried)",
+    "common_hi": "Lal Mirch",
+    "common_kn": "Kempu Menasinakayi",
+    "common_ta": "Vatral Milagai",
+    "common_te": "Erra Mirapa",
+    "common_mr": "Lal Mirchi",
+    "scientific": "Capsicum annuum",
+    "category": "Spice",
+    "subcategory": "Pod Spice",
+    "tags": [
+      "warm-season",
+      "essential",
+      "pungent"
+    ]
+  },
+  {
+    "id": "vanilla",
+    "common_en": "Vanilla",
+    "common_hi": "Vanilla",
+    "common_kn": "Vanilla",
+    "common_ta": "Vanilla",
+    "common_te": "Vanilla",
+    "common_mr": "Vanilla",
+    "scientific": "Vanilla planifolia",
+    "category": "Spice",
+    "subcategory": "Orchid Spice",
+    "tags": [
+      "tropical",
+      "vine",
+      "orchid",
+      "premium"
+    ]
+  },
+  {
+    "id": "kokum-spice",
+    "common_en": "Kokum (Spice Use)",
+    "common_hi": "Kokum",
+    "common_kn": "Murgal",
+    "common_ta": "Kokum",
+    "common_te": "Kokum",
+    "common_mr": "Amsul",
+    "scientific": "Garcinia indica",
+    "category": "Spice",
+    "subcategory": "Fruit Spice",
+    "tags": [
+      "tropical",
+      "tree",
+      "souring-agent",
+      "western-ghats"
+    ]
+  },
+  {
+    "id": "poppy-seeds",
+    "common_en": "Poppy Seeds",
+    "common_hi": "Khus Khus",
+    "common_kn": "Gasagase",
+    "common_ta": "Kasakasa",
+    "common_te": "Gasagasalu",
+    "common_mr": "Khus Khus",
+    "scientific": "Papaver somniferum",
+    "category": "Spice",
+    "subcategory": "Seed Spice",
+    "tags": [
+      "cool-season",
+      "annual",
+      "regulated"
+    ]
+  },
+  {
+    "id": "sesame",
+    "common_en": "Sesame",
+    "common_hi": "Til",
+    "common_kn": "Ellu",
+    "common_ta": "Ellu",
+    "common_te": "Nuvvulu",
+    "common_mr": "Til",
+    "scientific": "Sesamum indicum",
+    "category": "Spice",
+    "subcategory": "Oilseed Spice",
+    "tags": [
+      "warm-season",
+      "oilseed",
+      "ancient",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "dry-ginger",
+    "common_en": "Dry Ginger (Sonth)",
+    "common_hi": "Sonth",
+    "common_kn": "Shunti",
+    "common_ta": "Sukku",
+    "common_te": "Sonti",
+    "common_mr": "Sunth",
+    "scientific": "Zingiber officinale",
+    "category": "Spice",
+    "subcategory": "Rhizome Spice",
+    "tags": [
+      "tropical",
+      "medicinal",
+      "essential"
+    ]
+  },
+  {
+    "id": "long-pepper",
+    "common_en": "Long Pepper / Pippali",
+    "common_hi": "Pippali",
+    "common_kn": "Hippali",
+    "common_ta": "Thippili",
+    "common_te": "Pippali",
+    "common_mr": "Pimpli",
+    "scientific": "Piper longum",
+    "category": "Spice",
+    "subcategory": "Vine Spice",
+    "tags": [
+      "tropical",
+      "vine",
+      "medicinal",
+      "ayurvedic"
+    ]
+  },
+  {
+    "id": "mace",
+    "common_en": "Mace / Javitri",
+    "common_hi": "Javitri",
+    "common_kn": "Japatri",
+    "common_ta": "Jathipatri",
+    "common_te": "Jajipathri",
+    "common_mr": "Javitri",
+    "scientific": "Myristica fragrans",
+    "category": "Spice",
+    "subcategory": "Aril Spice",
+    "tags": [
+      "tropical",
+      "tree",
+      "premium",
+      "from-nutmeg"
+    ]
+  },
+  {
+    "id": "marigold",
+    "common_en": "Marigold",
+    "common_hi": "Genda",
+    "common_kn": "Chendu Hoovu",
+    "common_ta": "Samanthi Poo",
+    "common_te": "Banthi Puvvu",
+    "common_mr": "Zendu",
+    "scientific": "Tagetes erecta",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "warm-season",
+      "easy",
+      "pest-repellent",
+      "festival"
+    ]
+  },
+  {
+    "id": "jasmine",
+    "common_en": "Jasmine",
+    "common_hi": "Mogra",
+    "common_kn": "Mallige",
+    "common_ta": "Malli",
+    "common_te": "Malli",
+    "common_mr": "Mogra",
+    "scientific": "Jasminum sambac",
+    "category": "Flower",
+    "subcategory": "Shrub Flower",
+    "tags": [
+      "tropical",
+      "fragrant",
+      "perennial",
+      "sacred"
+    ]
+  },
+  {
+    "id": "rose",
+    "common_en": "Rose",
+    "common_hi": "Gulab",
+    "common_kn": "Gulaabi",
+    "common_ta": "Roja",
+    "common_te": "Gulaabi",
+    "common_mr": "Gulab",
+    "scientific": "Rosa spp.",
+    "category": "Flower",
+    "subcategory": "Shrub Flower",
+    "tags": [
+      "subtropical",
+      "perennial",
+      "popular",
+      "fragrant"
+    ]
+  },
+  {
+    "id": "hibiscus",
+    "common_en": "Hibiscus",
+    "common_hi": "Gudhal",
+    "common_kn": "Dasavala",
+    "common_ta": "Sembaruthi",
+    "common_te": "Mandara",
+    "common_mr": "Jaswandi",
+    "scientific": "Hibiscus rosa-sinensis",
+    "category": "Flower",
+    "subcategory": "Shrub Flower",
+    "tags": [
+      "tropical",
+      "perennial",
+      "medicinal",
+      "ornamental"
+    ]
+  },
+  {
+    "id": "tuberose",
+    "common_en": "Tuberose",
+    "common_hi": "Rajnigandha",
+    "common_kn": "Sugandharaja",
+    "common_ta": "Sambangi",
+    "common_te": "Sugandhiraja",
+    "common_mr": "Nishigandha",
+    "scientific": "Agave amica",
+    "category": "Flower",
+    "subcategory": "Bulb Flower",
+    "tags": [
+      "tropical",
+      "fragrant",
+      "cut-flower",
+      "festival"
+    ]
+  },
+  {
+    "id": "chrysanthemum",
+    "common_en": "Chrysanthemum",
+    "common_hi": "Guldaudi",
+    "common_kn": "Shevanthi",
+    "common_ta": "Samanthi",
+    "common_te": "Chamanthi",
+    "common_mr": "Shevanti",
+    "scientific": "Chrysanthemum spp.",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "cool-season",
+      "popular",
+      "festival",
+      "commercial"
+    ]
+  },
+  {
+    "id": "lotus",
+    "common_en": "Lotus",
+    "common_hi": "Kamal",
+    "common_kn": "Thaavare",
+    "common_ta": "Thamarai",
+    "common_te": "Padmam",
+    "common_mr": "Kamal",
+    "scientific": "Nelumbo nucifera",
+    "category": "Flower",
+    "subcategory": "Aquatic Flower",
+    "tags": [
+      "aquatic",
+      "sacred",
+      "national-flower",
+      "perennial"
+    ]
+  },
+  {
+    "id": "sunflower",
+    "common_en": "Sunflower",
+    "common_hi": "Surajmukhi",
+    "common_kn": "Suryakanthi",
+    "common_ta": "Suryakanthi",
+    "common_te": "Poddu Tiru Puvvu",
+    "common_mr": "Suryaphool",
+    "scientific": "Helianthus annuus",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "warm-season",
+      "oilseed",
+      "tall",
+      "cheerful"
+    ]
+  },
+  {
+    "id": "bougainvillea",
+    "common_en": "Bougainvillea",
+    "common_hi": "Bougainvillea",
+    "common_kn": "Kagada Hoovu",
+    "common_ta": "Kagitha Poo",
+    "common_te": "Bougainvillea",
+    "common_mr": "Bougainvillea",
+    "scientific": "Bougainvillea spp.",
+    "category": "Flower",
+    "subcategory": "Vine Flower",
+    "tags": [
+      "tropical",
+      "drought-tolerant",
+      "colorful",
+      "hardy"
+    ]
+  },
+  {
+    "id": "crossandra",
+    "common_en": "Crossandra / Kanakambaram",
+    "common_hi": "Aboli",
+    "common_kn": "Kanakambara",
+    "common_ta": "Kanakambaram",
+    "common_te": "Kanakambaram",
+    "common_mr": "Aboli",
+    "scientific": "Crossandra infundibuliformis",
+    "category": "Flower",
+    "subcategory": "Shrub Flower",
+    "tags": [
+      "tropical",
+      "perennial",
+      "orange",
+      "south-india"
+    ]
+  },
+  {
+    "id": "zinnia",
+    "common_en": "Zinnia",
+    "common_hi": "Zinnia",
+    "common_kn": "Zinnia",
+    "common_ta": "Zinnia",
+    "common_te": "Zinnia",
+    "common_mr": "Zinnia",
+    "scientific": "Zinnia elegans",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "warm-season",
+      "easy",
+      "colorful",
+      "beginner"
+    ]
+  },
+  {
+    "id": "petunia",
+    "common_en": "Petunia",
+    "common_hi": "Petunia",
+    "common_kn": "Petunia",
+    "common_ta": "Petunia",
+    "common_te": "Petunia",
+    "common_mr": "Petunia",
+    "scientific": "Petunia × atkinsiana",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "cool-season",
+      "container",
+      "colorful",
+      "hanging"
+    ]
+  },
+  {
+    "id": "dahlia",
+    "common_en": "Dahlia",
+    "common_hi": "Dahlia",
+    "common_kn": "Dahlia",
+    "common_ta": "Dahlia",
+    "common_te": "Dahlia",
+    "common_mr": "Dahlia",
+    "scientific": "Dahlia pinnata",
+    "category": "Flower",
+    "subcategory": "Tuber Flower",
+    "tags": [
+      "cool-season",
+      "showy",
+      "cut-flower"
+    ]
+  },
+  {
+    "id": "gladiolus",
+    "common_en": "Gladiolus",
+    "common_hi": "Gladiolus",
+    "common_kn": "Gladiolus",
+    "common_ta": "Gladiolus",
+    "common_te": "Gladiolus",
+    "common_mr": "Gladiolus",
+    "scientific": "Gladiolus spp.",
+    "category": "Flower",
+    "subcategory": "Bulb Flower",
+    "tags": [
+      "cool-season",
+      "cut-flower",
+      "commercial"
+    ]
+  },
+  {
+    "id": "rajnigandha",
+    "common_en": "Night-blooming Jasmine",
+    "common_hi": "Raat ki Rani",
+    "common_kn": "Raatriraani",
+    "common_ta": "Irul Malli",
+    "common_te": "Raatriraani",
+    "common_mr": "Raat Rani",
+    "scientific": "Cestrum nocturnum",
+    "category": "Flower",
+    "subcategory": "Shrub Flower",
+    "tags": [
+      "tropical",
+      "fragrant",
+      "night-blooming",
+      "perennial"
+    ]
+  },
+  {
+    "id": "champa",
+    "common_en": "Frangipani / Champa",
+    "common_hi": "Champa",
+    "common_kn": "Sampige",
+    "common_ta": "Perungalli",
+    "common_te": "Champa",
+    "common_mr": "Champa",
+    "scientific": "Plumeria rubra",
+    "category": "Flower",
+    "subcategory": "Tree Flower",
+    "tags": [
+      "tropical",
+      "tree",
+      "fragrant",
+      "temple"
+    ]
+  },
+  {
+    "id": "mogra",
+    "common_en": "Arabian Jasmine",
+    "common_hi": "Mogra",
+    "common_kn": "Dundu Mallige",
+    "common_ta": "Gundu Malli",
+    "common_te": "Mogra",
+    "common_mr": "Mogra",
+    "scientific": "Jasminum sambac",
+    "category": "Flower",
+    "subcategory": "Shrub Flower",
+    "tags": [
+      "tropical",
+      "fragrant",
+      "garland",
+      "commercial"
+    ]
+  },
+  {
+    "id": "parijat",
+    "common_en": "Night Jasmine / Parijat",
+    "common_hi": "Parijat",
+    "common_kn": "Paarijatha",
+    "common_ta": "Pavazhamalli",
+    "common_te": "Paarijatham",
+    "common_mr": "Prajakata",
+    "scientific": "Nyctanthes arbor-tristis",
+    "category": "Flower",
+    "subcategory": "Tree Flower",
+    "tags": [
+      "tropical",
+      "fragrant",
+      "sacred",
+      "deciduous"
+    ]
+  },
+  {
+    "id": "plumeria",
+    "common_en": "Plumeria",
+    "common_hi": "Chameli",
+    "common_kn": "Devaganneru",
+    "common_ta": "Perungalli",
+    "common_te": "Devaganneru",
+    "common_mr": "Khair Champa",
+    "scientific": "Plumeria obtusa",
+    "category": "Flower",
+    "subcategory": "Tree Flower",
+    "tags": [
+      "tropical",
+      "tree",
+      "fragrant",
+      "ornamental"
+    ]
+  },
+  {
+    "id": "aster",
+    "common_en": "Aster",
+    "common_hi": "Aster",
+    "common_kn": "Aster",
+    "common_ta": "Aster",
+    "common_te": "Aster",
+    "common_mr": "Aster",
+    "scientific": "Callistephus chinensis",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "cool-season",
+      "cut-flower",
+      "commercial"
+    ]
+  },
+  {
+    "id": "gaillardia",
+    "common_en": "Gaillardia / Blanket Flower",
+    "common_hi": "Gaillardia",
+    "common_kn": "Gaillardia",
+    "common_ta": "Gaillardia",
+    "common_te": "Gaillardia",
+    "common_mr": "Gaillardia",
+    "scientific": "Gaillardia pulchella",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "warm-season",
+      "drought-tolerant",
+      "hardy"
+    ]
+  },
+  {
+    "id": "adenium",
+    "common_en": "Adenium / Desert Rose",
+    "common_hi": "Adenium",
+    "common_kn": "Adenium",
+    "common_ta": "Adenium",
+    "common_te": "Adenium",
+    "common_mr": "Adenium",
+    "scientific": "Adenium obesum",
+    "category": "Flower",
+    "subcategory": "Succulent Flower",
+    "tags": [
+      "tropical",
+      "drought-tolerant",
+      "container",
+      "ornamental"
+    ]
+  },
+  {
+    "id": "anthurium",
+    "common_en": "Anthurium",
+    "common_hi": "Anthurium",
+    "common_kn": "Anthurium",
+    "common_ta": "Anthurium",
+    "common_te": "Anthurium",
+    "common_mr": "Anthurium",
+    "scientific": "Anthurium andraeanum",
+    "category": "Flower",
+    "subcategory": "Indoor Flower",
+    "tags": [
+      "tropical",
+      "shade-tolerant",
+      "indoor",
+      "ornamental"
+    ]
+  },
+  {
+    "id": "orchid-dendrobium",
+    "common_en": "Dendrobium Orchid",
+    "common_hi": "Orchid",
+    "common_kn": "Orchid",
+    "common_ta": "Orchid",
+    "common_te": "Orchid",
+    "common_mr": "Orchid",
+    "scientific": "Dendrobium spp.",
+    "category": "Flower",
+    "subcategory": "Orchid",
+    "tags": [
+      "tropical",
+      "epiphyte",
+      "premium",
+      "indoor"
+    ]
+  },
+  {
+    "id": "lavender",
+    "common_en": "Lavender",
+    "common_hi": "Lavender",
+    "common_kn": "Lavender",
+    "common_ta": "Lavender",
+    "common_te": "Lavender",
+    "common_mr": "Lavender",
+    "scientific": "Lavandula angustifolia",
+    "category": "Flower",
+    "subcategory": "Herb Flower",
+    "tags": [
+      "temperate",
+      "fragrant",
+      "medicinal",
+      "aromatic"
+    ]
+  },
+  {
+    "id": "tulsi",
+    "common_en": "Holy Basil / Tulsi",
+    "common_hi": "Tulsi",
+    "common_kn": "Tulasi",
+    "common_ta": "Thulasi",
+    "common_te": "Tulasi",
+    "common_mr": "Tulsi",
+    "scientific": "Ocimum tenuiflorum",
+    "category": "Herb",
+    "subcategory": "Sacred Herb",
+    "tags": [
+      "tropical",
+      "sacred",
+      "medicinal",
+      "essential",
+      "container"
+    ]
+  },
+  {
+    "id": "basil-sweet",
+    "common_en": "Sweet Basil",
+    "common_hi": "Babui Tulsi",
+    "common_kn": "Sabja",
+    "common_ta": "Thiruneetru Pachilai",
+    "common_te": "Bhutulasi",
+    "common_mr": "Sabja",
+    "scientific": "Ocimum basilicum",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "warm-season",
+      "aromatic",
+      "culinary",
+      "container"
+    ]
+  },
+  {
+    "id": "mint",
+    "common_en": "Mint / Pudina",
+    "common_hi": "Pudina",
+    "common_kn": "Pudina",
+    "common_ta": "Pudhinaa",
+    "common_te": "Pudina",
+    "common_mr": "Pudina",
+    "scientific": "Mentha spicata",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "cool-season",
+      "easy",
+      "invasive",
+      "container",
+      "essential"
+    ]
+  },
+  {
+    "id": "lemongrass",
+    "common_en": "Lemongrass",
+    "common_hi": "Nimbu Ghas",
+    "common_kn": "Majjige Hullu",
+    "common_ta": "Elumichai Pul",
+    "common_te": "Nimma Gaddi",
+    "common_mr": "Gavati Chaha",
+    "scientific": "Cymbopogon citratus",
+    "category": "Herb",
+    "subcategory": "Aromatic Herb",
+    "tags": [
+      "tropical",
+      "perennial",
+      "aromatic",
+      "tea",
+      "pest-repellent"
+    ]
+  },
+  {
+    "id": "ashwagandha",
+    "common_en": "Ashwagandha",
+    "common_hi": "Ashwagandha",
+    "common_kn": "Ashwagandha",
+    "common_ta": "Amukkara",
+    "common_te": "Ashwagandha",
+    "common_mr": "Ashwagandha",
+    "scientific": "Withania somnifera",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "warm-season",
+      "adaptogen",
+      "ayurvedic",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "brahmi",
+    "common_en": "Brahmi",
+    "common_hi": "Brahmi",
+    "common_kn": "Brahmi",
+    "common_ta": "Brahmi",
+    "common_te": "Brahmi",
+    "common_mr": "Brahmi",
+    "scientific": "Bacopa monnieri",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "tropical",
+      "aquatic",
+      "nootropic",
+      "ayurvedic"
+    ]
+  },
+  {
+    "id": "aloe-vera",
+    "common_en": "Aloe Vera",
+    "common_hi": "Ghritkumari",
+    "common_kn": "Lolesara",
+    "common_ta": "Sotru Kathalai",
+    "common_te": "Kalabanda",
+    "common_mr": "Korphad",
+    "scientific": "Aloe vera",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "tropical",
+      "succulent",
+      "drought-tolerant",
+      "medicinal",
+      "container"
+    ]
+  },
+  {
+    "id": "neem",
+    "common_en": "Neem",
+    "common_hi": "Neem",
+    "common_kn": "Bevu",
+    "common_ta": "Vembu",
+    "common_te": "Vepa",
+    "common_mr": "Kadunimb",
+    "scientific": "Azadirachta indica",
+    "category": "Herb",
+    "subcategory": "Medicinal Tree",
+    "tags": [
+      "tropical",
+      "tree",
+      "medicinal",
+      "pest-control",
+      "sacred"
+    ]
+  },
+  {
+    "id": "stevia",
+    "common_en": "Stevia",
+    "common_hi": "Stevia",
+    "common_kn": "Stevia",
+    "common_ta": "Stevia",
+    "common_te": "Stevia",
+    "common_mr": "Stevia",
+    "scientific": "Stevia rebaudiana",
+    "category": "Herb",
+    "subcategory": "Sweetener Herb",
+    "tags": [
+      "warm-season",
+      "sugar-free",
+      "container",
+      "perennial"
+    ]
+  },
+  {
+    "id": "rosemary",
+    "common_en": "Rosemary",
+    "common_hi": "Rosemary",
+    "common_kn": "Rosemary",
+    "common_ta": "Rosemary",
+    "common_te": "Rosemary",
+    "common_mr": "Rosemary",
+    "scientific": "Salvia rosmarinus",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "temperate",
+      "aromatic",
+      "perennial",
+      "container"
+    ]
+  },
+  {
+    "id": "thyme",
+    "common_en": "Thyme",
+    "common_hi": "Ajwain ka Patta",
+    "common_kn": "Thyme",
+    "common_ta": "Thyme",
+    "common_te": "Thyme",
+    "common_mr": "Thyme",
+    "scientific": "Thymus vulgaris",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "temperate",
+      "aromatic",
+      "perennial",
+      "container"
+    ]
+  },
+  {
+    "id": "oregano",
+    "common_en": "Oregano",
+    "common_hi": "Ajwain ka Phool",
+    "common_kn": "Oregano",
+    "common_ta": "Oregano",
+    "common_te": "Oregano",
+    "common_mr": "Oregano",
+    "scientific": "Origanum vulgare",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "temperate",
+      "aromatic",
+      "perennial",
+      "container"
+    ]
+  },
+  {
+    "id": "parsley",
+    "common_en": "Parsley",
+    "common_hi": "Ajmod",
+    "common_kn": "Parsley",
+    "common_ta": "Parsley",
+    "common_te": "Parsley",
+    "common_mr": "Ajmod",
+    "scientific": "Petroselinum crispum",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "cool-season",
+      "nutritious",
+      "container"
+    ]
+  },
+  {
+    "id": "dill",
+    "common_en": "Dill / Shepu",
+    "common_hi": "Suwa",
+    "common_kn": "Sabbasige",
+    "common_ta": "Sathakuppi",
+    "common_te": "Soa Kura",
+    "common_mr": "Shepu",
+    "scientific": "Anethum graveolens",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "cool-season",
+      "aromatic",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "shatavari",
+    "common_en": "Shatavari",
+    "common_hi": "Shatavari",
+    "common_kn": "Shatavari",
+    "common_ta": "Thanneer Vittan",
+    "common_te": "Pilli Theegalu",
+    "common_mr": "Shatavari",
+    "scientific": "Asparagus racemosus",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "tropical",
+      "vine",
+      "ayurvedic",
+      "perennial"
+    ]
+  },
+  {
+    "id": "giloy",
+    "common_en": "Giloy / Guduchi",
+    "common_hi": "Giloy",
+    "common_kn": "Amruthaballi",
+    "common_ta": "Seenthil",
+    "common_te": "Tippa Theega",
+    "common_mr": "Gulvel",
+    "scientific": "Tinospora cordifolia",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "tropical",
+      "vine",
+      "immunomodulator",
+      "ayurvedic"
+    ]
+  },
+  {
+    "id": "vetiver",
+    "common_en": "Vetiver / Khus",
+    "common_hi": "Khus",
+    "common_kn": "Laamancha",
+    "common_ta": "Vetiver",
+    "common_te": "Vattiveru",
+    "common_mr": "Vala",
+    "scientific": "Chrysopogon zizanioides",
+    "category": "Herb",
+    "subcategory": "Aromatic Herb",
+    "tags": [
+      "tropical",
+      "grass",
+      "soil-erosion",
+      "fragrant"
+    ]
+  },
+  {
+    "id": "citronella",
+    "common_en": "Citronella",
+    "common_hi": "Java Ghas",
+    "common_kn": "Citronella",
+    "common_ta": "Citronella",
+    "common_te": "Citronella",
+    "common_mr": "Citronella",
+    "scientific": "Cymbopogon nardus",
+    "category": "Herb",
+    "subcategory": "Aromatic Herb",
+    "tags": [
+      "tropical",
+      "grass",
+      "pest-repellent",
+      "essential-oil"
+    ]
+  },
+  {
+    "id": "sage",
+    "common_en": "Sage",
+    "common_hi": "Sage",
+    "common_kn": "Sage",
+    "common_ta": "Sage",
+    "common_te": "Sage",
+    "common_mr": "Sage",
+    "scientific": "Salvia officinalis",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "temperate",
+      "aromatic",
+      "perennial",
+      "medicinal"
+    ]
+  },
+  {
+    "id": "chamomile",
+    "common_en": "Chamomile",
+    "common_hi": "Babuna",
+    "common_kn": "Chamomile",
+    "common_ta": "Chamomile",
+    "common_te": "Chamomile",
+    "common_mr": "Babuna",
+    "scientific": "Matricaria chamomilla",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "cool-season",
+      "tea",
+      "calming",
+      "annual"
+    ]
+  },
+  {
+    "id": "kalmegh",
+    "common_en": "Kalmegh / King of Bitters",
+    "common_hi": "Kalmegh",
+    "common_kn": "Nelaberu",
+    "common_ta": "Nilavembu",
+    "common_te": "Nelavemu",
+    "common_mr": "Kalmegh",
+    "scientific": "Andrographis paniculata",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "tropical",
+      "bitter",
+      "immunomodulator",
+      "annual"
+    ]
+  },
+  {
+    "id": "bhringraj",
+    "common_en": "Bhringraj",
+    "common_hi": "Bhringraj",
+    "common_kn": "Garagada Soppu",
+    "common_ta": "Karisalankanni",
+    "common_te": "Guntakalagara",
+    "common_mr": "Maka",
+    "scientific": "Eclipta prostrata",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "tropical",
+      "hair-care",
+      "ayurvedic",
+      "weed-like"
+    ]
+  },
+  {
+    "id": "patchouli",
+    "common_en": "Patchouli",
+    "common_hi": "Patchouli",
+    "common_kn": "Pachouli",
+    "common_ta": "Pachouli",
+    "common_te": "Pachouli",
+    "common_mr": "Pachouli",
+    "scientific": "Pogostemon cablin",
+    "category": "Herb",
+    "subcategory": "Aromatic Herb",
+    "tags": [
+      "tropical",
+      "essential-oil",
+      "shade-tolerant"
+    ]
+  },
+  {
+    "id": "teak",
+    "common_en": "Teak",
+    "common_hi": "Sagwan",
+    "common_kn": "Thegu",
+    "common_ta": "Thekku",
+    "common_te": "Tekku",
+    "common_mr": "Sagwan",
+    "scientific": "Tectona grandis",
+    "category": "Tree",
+    "subcategory": "Timber Tree",
+    "tags": [
+      "tropical",
+      "timber",
+      "deciduous",
+      "long-term"
+    ]
+  },
+  {
+    "id": "sandalwood",
+    "common_en": "Sandalwood",
+    "common_hi": "Chandan",
+    "common_kn": "Chandana",
+    "common_ta": "Santhanam",
+    "common_te": "Chandanam",
+    "common_mr": "Chandan",
+    "scientific": "Santalum album",
+    "category": "Tree",
+    "subcategory": "Aromatic Tree",
+    "tags": [
+      "tropical",
+      "fragrant",
+      "premium",
+      "karnataka"
+    ]
+  },
+  {
+    "id": "bamboo",
+    "common_en": "Bamboo",
+    "common_hi": "Baans",
+    "common_kn": "Bidiru",
+    "common_ta": "Moongil",
+    "common_te": "Veduru",
+    "common_mr": "Bamboo",
+    "scientific": "Bambusoideae spp.",
+    "category": "Tree",
+    "subcategory": "Grass Tree",
+    "tags": [
+      "tropical",
+      "fast-growing",
+      "versatile",
+      "grass"
+    ]
+  },
+  {
+    "id": "neem-tree",
+    "common_en": "Neem Tree",
+    "common_hi": "Neem",
+    "common_kn": "Bevu",
+    "common_ta": "Vembu",
+    "common_te": "Vepa",
+    "common_mr": "Kadunimb",
+    "scientific": "Azadirachta indica",
+    "category": "Tree",
+    "subcategory": "Multipurpose Tree",
+    "tags": [
+      "tropical",
+      "medicinal",
+      "shade",
+      "pest-control"
+    ]
+  },
+  {
+    "id": "peepal",
+    "common_en": "Peepal / Sacred Fig",
+    "common_hi": "Peepal",
+    "common_kn": "Arali Mara",
+    "common_ta": "Arasa Maram",
+    "common_te": "Ravi Chettu",
+    "common_mr": "Pimpal",
+    "scientific": "Ficus religiosa",
+    "category": "Tree",
+    "subcategory": "Sacred Tree",
+    "tags": [
+      "tropical",
+      "sacred",
+      "shade",
+      "oxygen-producer"
+    ]
+  },
+  {
+    "id": "banyan",
+    "common_en": "Banyan Tree",
+    "common_hi": "Bargad",
+    "common_kn": "Aalada Mara",
+    "common_ta": "Aalamaram",
+    "common_te": "Marri",
+    "common_mr": "Wad",
+    "scientific": "Ficus benghalensis",
+    "category": "Tree",
+    "subcategory": "Sacred Tree",
+    "tags": [
+      "tropical",
+      "national-tree",
+      "shade",
+      "massive"
+    ]
+  },
+  {
+    "id": "gulmohar",
+    "common_en": "Gulmohar / Royal Poinciana",
+    "common_hi": "Gulmohar",
+    "common_kn": "Gulmohar",
+    "common_ta": "Mayil Kondrai",
+    "common_te": "Gulmohar",
+    "common_mr": "Gulmohar",
+    "scientific": "Delonix regia",
+    "category": "Tree",
+    "subcategory": "Ornamental Tree",
+    "tags": [
+      "tropical",
+      "flowering",
+      "shade",
+      "avenue"
+    ]
+  },
+  {
+    "id": "ashoka",
+    "common_en": "Ashoka Tree",
+    "common_hi": "Ashok",
+    "common_kn": "Ashoka",
+    "common_ta": "Asogam",
+    "common_te": "Ashokamu",
+    "common_mr": "Ashok",
+    "scientific": "Saraca asoca",
+    "category": "Tree",
+    "subcategory": "Ornamental Tree",
+    "tags": [
+      "tropical",
+      "sacred",
+      "evergreen",
+      "avenue"
+    ]
+  },
+  {
+    "id": "indian-rosewood",
+    "common_en": "Indian Rosewood / Sheesham",
+    "common_hi": "Sheesham",
+    "common_kn": "Beete Mara",
+    "common_ta": "Iruvagai",
+    "common_te": "Sissu",
+    "common_mr": "Shisav",
+    "scientific": "Dalbergia sissoo",
+    "category": "Tree",
+    "subcategory": "Timber Tree",
+    "tags": [
+      "subtropical",
+      "timber",
+      "deciduous",
+      "nitrogen-fixing"
+    ]
+  },
+  {
+    "id": "eucalyptus",
+    "common_en": "Eucalyptus",
+    "common_hi": "Nilgiri",
+    "common_kn": "Nilgiri",
+    "common_ta": "Thaila Maram",
+    "common_te": "Nilgiri",
+    "common_mr": "Nilgiri",
+    "scientific": "Eucalyptus spp.",
+    "category": "Tree",
+    "subcategory": "Plantation Tree",
+    "tags": [
+      "subtropical",
+      "fast-growing",
+      "essential-oil",
+      "controversial"
+    ]
+  },
+  {
+    "id": "casuarina",
+    "common_en": "Casuarina / Whistling Pine",
+    "common_hi": "Jangli Saru",
+    "common_kn": "Savuku",
+    "common_ta": "Savukku",
+    "common_te": "Sarugu",
+    "common_mr": "Saru",
+    "scientific": "Casuarina equisetifolia",
+    "category": "Tree",
+    "subcategory": "Plantation Tree",
+    "tags": [
+      "tropical",
+      "coastal",
+      "fast-growing",
+      "nitrogen-fixing"
+    ]
+  },
+  {
+    "id": "areca-palm",
+    "common_en": "Areca / Betel Nut Palm",
+    "common_hi": "Supari",
+    "common_kn": "Adike",
+    "common_ta": "Pakku",
+    "common_te": "Vakka",
+    "common_mr": "Supari",
+    "scientific": "Areca catechu",
+    "category": "Tree",
+    "subcategory": "Palm",
+    "tags": [
+      "tropical",
+      "palm",
+      "commercial",
+      "plantation"
+    ]
+  },
+  {
+    "id": "silver-oak",
+    "common_en": "Silver Oak",
+    "common_hi": "Silver Oak",
+    "common_kn": "Silver Oak",
+    "common_ta": "Silver Oak",
+    "common_te": "Silver Oak",
+    "common_mr": "Silver Oak",
+    "scientific": "Grevillea robusta",
+    "category": "Tree",
+    "subcategory": "Shade Tree",
+    "tags": [
+      "subtropical",
+      "shade-tree",
+      "coffee-companion",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "mahogany",
+    "common_en": "Mahogany",
+    "common_hi": "Mahogany",
+    "common_kn": "Mahogany",
+    "common_ta": "Mahogany",
+    "common_te": "Mahogany",
+    "common_mr": "Mahogany",
+    "scientific": "Swietenia macrophylla",
+    "category": "Tree",
+    "subcategory": "Timber Tree",
+    "tags": [
+      "tropical",
+      "timber",
+      "premium",
+      "long-term"
+    ]
+  },
+  {
+    "id": "rain-tree",
+    "common_en": "Rain Tree",
+    "common_hi": "Vilayati Siris",
+    "common_kn": "Rain Tree",
+    "common_ta": "Thoongu Maram",
+    "common_te": "Rain Tree",
+    "common_mr": "Rain Tree",
+    "scientific": "Samanea saman",
+    "category": "Tree",
+    "subcategory": "Shade Tree",
+    "tags": [
+      "tropical",
+      "shade",
+      "avenue",
+      "large"
+    ]
+  },
+  {
+    "id": "moringa-tree",
+    "common_en": "Moringa Tree",
+    "common_hi": "Sahjan",
+    "common_kn": "Nugge Mara",
+    "common_ta": "Murungai Maram",
+    "common_te": "Munaga Chettu",
+    "common_mr": "Shevga",
+    "scientific": "Moringa oleifera",
+    "category": "Tree",
+    "subcategory": "Multipurpose Tree",
+    "tags": [
+      "tropical",
+      "superfood",
+      "fast-growing",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "indian-almond",
+    "common_en": "Indian Almond / Badam",
+    "common_hi": "Jungli Badam",
+    "common_kn": "Nattu Badam",
+    "common_ta": "Nattu Vaadhumai",
+    "common_te": "Badam",
+    "common_mr": "Badam",
+    "scientific": "Terminalia catappa",
+    "category": "Tree",
+    "subcategory": "Shade Tree",
+    "tags": [
+      "tropical",
+      "coastal",
+      "shade",
+      "ornamental"
+    ]
+  },
+  {
+    "id": "curry-leaf-tree",
+    "common_en": "Curry Leaf Tree",
+    "common_hi": "Kadi Patta",
+    "common_kn": "Karibevu Mara",
+    "common_ta": "Karuveppilai Maram",
+    "common_te": "Karivepaku Chettu",
+    "common_mr": "Kadhi Patta",
+    "scientific": "Murraya koenigii",
+    "category": "Tree",
+    "subcategory": "Multipurpose Tree",
+    "tags": [
+      "tropical",
+      "essential",
+      "culinary",
+      "small-tree"
+    ]
+  },
+  {
+    "id": "drumstick-tree",
+    "common_en": "Drumstick Tree",
+    "common_hi": "Sahjan",
+    "common_kn": "Nugge Mara",
+    "common_ta": "Murungai Maram",
+    "common_te": "Munaga Chettu",
+    "common_mr": "Shevga",
+    "scientific": "Moringa oleifera",
+    "category": "Tree",
+    "subcategory": "Multipurpose Tree",
+    "tags": [
+      "tropical",
+      "fast-growing",
+      "multipurpose",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "palash",
+    "common_en": "Flame of the Forest / Palash",
+    "common_hi": "Palash",
+    "common_kn": "Muttuga",
+    "common_ta": "Purasu",
+    "common_te": "Modugu",
+    "common_mr": "Palas",
+    "scientific": "Butea monosperma",
+    "category": "Tree",
+    "subcategory": "Flowering Tree",
+    "tags": [
+      "tropical",
+      "deciduous",
+      "sacred",
+      "dye"
+    ]
+  },
+  {
+    "id": "kadamba",
+    "common_en": "Kadamba",
+    "common_hi": "Kadamb",
+    "common_kn": "Kadamba",
+    "common_ta": "Kadambu",
+    "common_te": "Kadambamu",
+    "common_mr": "Kadamb",
+    "scientific": "Neolamarckia cadamba",
+    "category": "Tree",
+    "subcategory": "Sacred Tree",
+    "tags": [
+      "tropical",
+      "fast-growing",
+      "sacred",
+      "fragrant"
+    ]
+  },
+  {
+    "id": "sugarcane",
+    "common_en": "Sugarcane",
+    "common_hi": "Ganna",
+    "common_kn": "Kabbu",
+    "common_ta": "Karumbu",
+    "common_te": "Cheraku",
+    "common_mr": "Oos",
+    "scientific": "Saccharum officinarum",
+    "category": "Cash Crop",
+    "subcategory": "Sugar Crop",
+    "tags": [
+      "tropical",
+      "perennial",
+      "commercial",
+      "water-intensive"
+    ]
+  },
+  {
+    "id": "cotton",
+    "common_en": "Cotton",
+    "common_hi": "Kapas",
+    "common_kn": "Hatti",
+    "common_ta": "Paruthi",
+    "common_te": "Patti",
+    "common_mr": "Kapus",
+    "scientific": "Gossypium hirsutum",
+    "category": "Cash Crop",
+    "subcategory": "Fiber Crop",
+    "tags": [
+      "warm-season",
+      "kharif",
+      "commercial",
+      "fiber"
+    ]
+  },
+  {
+    "id": "jute",
+    "common_en": "Jute",
+    "common_hi": "Jute",
+    "common_kn": "Chanapa",
+    "common_ta": "Sana Nool",
+    "common_te": "Jute",
+    "common_mr": "Jute",
+    "scientific": "Corchorus capsularis",
+    "category": "Cash Crop",
+    "subcategory": "Fiber Crop",
+    "tags": [
+      "warm-season",
+      "monsoon",
+      "fiber",
+      "eco-friendly"
+    ]
+  },
+  {
+    "id": "tobacco",
+    "common_en": "Tobacco",
+    "common_hi": "Tambaku",
+    "common_kn": "Hogai Soppu",
+    "common_ta": "Pugayilai",
+    "common_te": "Pogaku",
+    "common_mr": "Tambakhu",
+    "scientific": "Nicotiana tabacum",
+    "category": "Cash Crop",
+    "subcategory": "Narcotic Crop",
+    "tags": [
+      "warm-season",
+      "commercial",
+      "controversial"
+    ]
+  },
+  {
+    "id": "tea",
+    "common_en": "Tea",
+    "common_hi": "Chai",
+    "common_kn": "Tea",
+    "common_ta": "Theyilai",
+    "common_te": "Tea",
+    "common_mr": "Chai",
+    "scientific": "Camellia sinensis",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "subtropical",
+      "hills",
+      "perennial",
+      "commercial"
+    ]
+  },
+  {
+    "id": "coffee-arabica",
+    "common_en": "Coffee (Arabica)",
+    "common_hi": "Coffee",
+    "common_kn": "Coffee",
+    "common_ta": "Kapi",
+    "common_te": "Coffee",
+    "common_mr": "Coffee",
+    "scientific": "Coffea arabica",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "tropical",
+      "shade-grown",
+      "hills",
+      "premium"
+    ]
+  },
+  {
+    "id": "coffee-robusta",
+    "common_en": "Coffee (Robusta)",
+    "common_hi": "Coffee",
+    "common_kn": "Coffee",
+    "common_ta": "Kapi",
+    "common_te": "Coffee",
+    "common_mr": "Coffee",
+    "scientific": "Coffea canephora",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "tropical",
+      "shade-grown",
+      "lowland",
+      "hardy"
+    ]
+  },
+  {
+    "id": "rubber",
+    "common_en": "Rubber",
+    "common_hi": "Rubber",
+    "common_kn": "Rubber",
+    "common_ta": "Rubber",
+    "common_te": "Rubber",
+    "common_mr": "Rubber",
+    "scientific": "Hevea brasiliensis",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "tropical",
+      "tree",
+      "perennial",
+      "commercial"
+    ]
+  },
+  {
+    "id": "cashew",
+    "common_en": "Cashew",
+    "common_hi": "Kaju",
+    "common_kn": "Godambi",
+    "common_ta": "Mundiri",
+    "common_te": "Jidi",
+    "common_mr": "Kaju",
+    "scientific": "Anacardium occidentale",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "tropical",
+      "tree",
+      "coastal",
+      "commercial"
+    ]
+  },
+  {
+    "id": "arecanut",
+    "common_en": "Arecanut",
+    "common_hi": "Supari",
+    "common_kn": "Adike",
+    "common_ta": "Pakku",
+    "common_te": "Vakka",
+    "common_mr": "Supari",
+    "scientific": "Areca catechu",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "tropical",
+      "palm",
+      "commercial",
+      "south-india"
+    ]
+  },
+  {
+    "id": "oil-palm",
+    "common_en": "Oil Palm",
+    "common_hi": "Oil Palm",
+    "common_kn": "Oil Palm",
+    "common_ta": "Oil Palm",
+    "common_te": "Oil Palm",
+    "common_mr": "Oil Palm",
+    "scientific": "Elaeis guineensis",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "tropical",
+      "palm",
+      "oilseed",
+      "controversial"
+    ]
+  },
+  {
+    "id": "sunflower-oil",
+    "common_en": "Sunflower (Oilseed)",
+    "common_hi": "Surajmukhi",
+    "common_kn": "Suryakanthi",
+    "common_ta": "Suryakanthi",
+    "common_te": "Poddu Tiru",
+    "common_mr": "Suryaphool",
+    "scientific": "Helianthus annuus",
+    "category": "Cash Crop",
+    "subcategory": "Oilseed Crop",
+    "tags": [
+      "warm-season",
+      "oilseed",
+      "kharif"
+    ]
+  },
+  {
+    "id": "rapeseed-mustard",
+    "common_en": "Rapeseed Mustard",
+    "common_hi": "Sarson",
+    "common_kn": "Sasive",
+    "common_ta": "Kadugu",
+    "common_te": "Aavalu",
+    "common_mr": "Mohari",
+    "scientific": "Brassica juncea",
+    "category": "Cash Crop",
+    "subcategory": "Oilseed Crop",
+    "tags": [
+      "cool-season",
+      "oilseed",
+      "rabi",
+      "north-india"
+    ]
+  },
+  {
+    "id": "linseed",
+    "common_en": "Linseed / Flax",
+    "common_hi": "Alsi",
+    "common_kn": "Agase",
+    "common_ta": "Ali Vidhai",
+    "common_te": "Avise Ginjalu",
+    "common_mr": "Javas",
+    "scientific": "Linum usitatissimum",
+    "category": "Cash Crop",
+    "subcategory": "Oilseed Crop",
+    "tags": [
+      "cool-season",
+      "oilseed",
+      "fiber",
+      "omega-3"
+    ]
+  },
+  {
+    "id": "castor",
+    "common_en": "Castor",
+    "common_hi": "Arandi",
+    "common_kn": "Haralu",
+    "common_ta": "Amanakku",
+    "common_te": "Aamudamu",
+    "common_mr": "Erandi",
+    "scientific": "Ricinus communis",
+    "category": "Cash Crop",
+    "subcategory": "Oilseed Crop",
+    "tags": [
+      "warm-season",
+      "oilseed",
+      "drought-tolerant",
+      "industrial"
+    ]
+  },
+  {
+    "id": "coconut-palm",
+    "common_en": "Coconut Palm",
+    "common_hi": "Nariyal",
+    "common_kn": "Thengu",
+    "common_ta": "Thennai",
+    "common_te": "Kobbari",
+    "common_mr": "Naral",
+    "scientific": "Cocos nucifera",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "tropical",
+      "palm",
+      "coastal",
+      "multipurpose"
+    ]
+  },
+  {
+    "id": "indigo",
+    "common_en": "Indigo",
+    "common_hi": "Neel",
+    "common_kn": "Neeli",
+    "common_ta": "Avuri",
+    "common_te": "Neeli",
+    "common_mr": "Neel",
+    "scientific": "Indigofera tinctoria",
+    "category": "Cash Crop",
+    "subcategory": "Dye Crop",
+    "tags": [
+      "tropical",
+      "dye",
+      "historic",
+      "nitrogen-fixing"
+    ]
+  },
+  {
+    "id": "henna",
+    "common_en": "Henna / Mehendi",
+    "common_hi": "Mehendi",
+    "common_kn": "Goranti",
+    "common_ta": "Marudhani",
+    "common_te": "Gorinta",
+    "common_mr": "Mehendi",
+    "scientific": "Lawsonia inermis",
+    "category": "Cash Crop",
+    "subcategory": "Dye Crop",
+    "tags": [
+      "tropical",
+      "shrub",
+      "cosmetic",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "money-plant",
+    "common_en": "Money Plant / Pothos",
+    "common_hi": "Money Plant",
+    "common_kn": "Money Plant",
+    "common_ta": "Money Plant",
+    "common_te": "Money Plant",
+    "common_mr": "Money Plant",
+    "scientific": "Epipremnum aureum",
+    "category": "Indoor Plant",
+    "subcategory": "Trailing Plant",
+    "tags": [
+      "indoor",
+      "easy",
+      "air-purifier",
+      "low-light"
+    ]
+  },
+  {
+    "id": "snake-plant",
+    "common_en": "Snake Plant",
+    "common_hi": "Sansevieria",
+    "common_kn": "Snake Plant",
+    "common_ta": "Snake Plant",
+    "common_te": "Snake Plant",
+    "common_mr": "Snake Plant",
+    "scientific": "Dracaena trifasciata",
+    "category": "Indoor Plant",
+    "subcategory": "Succulent",
+    "tags": [
+      "indoor",
+      "easy",
+      "air-purifier",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "spider-plant",
+    "common_en": "Spider Plant",
+    "common_hi": "Spider Plant",
+    "common_kn": "Spider Plant",
+    "common_ta": "Spider Plant",
+    "common_te": "Spider Plant",
+    "common_mr": "Spider Plant",
+    "scientific": "Chlorophytum comosum",
+    "category": "Indoor Plant",
+    "subcategory": "Hanging Plant",
+    "tags": [
+      "indoor",
+      "easy",
+      "air-purifier",
+      "propagation"
+    ]
+  },
+  {
+    "id": "peace-lily",
+    "common_en": "Peace Lily",
+    "common_hi": "Peace Lily",
+    "common_kn": "Peace Lily",
+    "common_ta": "Peace Lily",
+    "common_te": "Peace Lily",
+    "common_mr": "Peace Lily",
+    "scientific": "Spathiphyllum spp.",
+    "category": "Indoor Plant",
+    "subcategory": "Flowering Indoor",
+    "tags": [
+      "indoor",
+      "shade-tolerant",
+      "air-purifier",
+      "flowering"
+    ]
+  },
+  {
+    "id": "rubber-plant",
+    "common_en": "Rubber Plant",
+    "common_hi": "Rubber Plant",
+    "common_kn": "Rubber Plant",
+    "common_ta": "Rubber Plant",
+    "common_te": "Rubber Plant",
+    "common_mr": "Rubber Plant",
+    "scientific": "Ficus elastica",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "easy",
+      "large-leaf",
+      "air-purifier"
+    ]
+  },
+  {
+    "id": "areca-palm-indoor",
+    "common_en": "Areca Palm (Indoor)",
+    "common_hi": "Areca Palm",
+    "common_kn": "Areca Palm",
+    "common_ta": "Areca Palm",
+    "common_te": "Areca Palm",
+    "common_mr": "Areca Palm",
+    "scientific": "Dypsis lutescens",
+    "category": "Indoor Plant",
+    "subcategory": "Palm",
+    "tags": [
+      "indoor",
+      "air-purifier",
+      "elegant",
+      "tropical"
+    ]
+  },
+  {
+    "id": "philodendron",
+    "common_en": "Philodendron",
+    "common_hi": "Philodendron",
+    "common_kn": "Philodendron",
+    "common_ta": "Philodendron",
+    "common_te": "Philodendron",
+    "common_mr": "Philodendron",
+    "scientific": "Philodendron spp.",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "climbing",
+      "easy",
+      "tropical"
+    ]
+  },
+  {
+    "id": "monstera",
+    "common_en": "Monstera",
+    "common_hi": "Monstera",
+    "common_kn": "Monstera",
+    "common_ta": "Monstera",
+    "common_te": "Monstera",
+    "common_mr": "Monstera",
+    "scientific": "Monstera deliciosa",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "trendy",
+      "climbing",
+      "large-leaf"
+    ]
+  },
+  {
+    "id": "zz-plant",
+    "common_en": "ZZ Plant",
+    "common_hi": "ZZ Plant",
+    "common_kn": "ZZ Plant",
+    "common_ta": "ZZ Plant",
+    "common_te": "ZZ Plant",
+    "common_mr": "ZZ Plant",
+    "scientific": "Zamioculcas zamiifolia",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "easy",
+      "drought-tolerant",
+      "low-light"
+    ]
+  },
+  {
+    "id": "jade-plant",
+    "common_en": "Jade Plant",
+    "common_hi": "Jade Plant",
+    "common_kn": "Jade Plant",
+    "common_ta": "Jade Plant",
+    "common_te": "Jade Plant",
+    "common_mr": "Jade Plant",
+    "scientific": "Crassula ovata",
+    "category": "Indoor Plant",
+    "subcategory": "Succulent",
+    "tags": [
+      "indoor",
+      "succulent",
+      "easy",
+      "feng-shui"
+    ]
+  },
+  {
+    "id": "boston-fern",
+    "common_en": "Boston Fern",
+    "common_hi": "Boston Fern",
+    "common_kn": "Boston Fern",
+    "common_ta": "Boston Fern",
+    "common_te": "Boston Fern",
+    "common_mr": "Boston Fern",
+    "scientific": "Nephrolepis exaltata",
+    "category": "Indoor Plant",
+    "subcategory": "Fern",
+    "tags": [
+      "indoor",
+      "humidity",
+      "hanging",
+      "shade-tolerant"
+    ]
+  },
+  {
+    "id": "syngonium",
+    "common_en": "Syngonium / Arrowhead Plant",
+    "common_hi": "Syngonium",
+    "common_kn": "Syngonium",
+    "common_ta": "Syngonium",
+    "common_te": "Syngonium",
+    "common_mr": "Syngonium",
+    "scientific": "Syngonium podophyllum",
+    "category": "Indoor Plant",
+    "subcategory": "Climbing Plant",
+    "tags": [
+      "indoor",
+      "easy",
+      "climbing",
+      "air-purifier"
+    ]
+  },
+  {
+    "id": "aglaonema",
+    "common_en": "Aglaonema / Chinese Evergreen",
+    "common_hi": "Aglaonema",
+    "common_kn": "Aglaonema",
+    "common_ta": "Aglaonema",
+    "common_te": "Aglaonema",
+    "common_mr": "Aglaonema",
+    "scientific": "Aglaonema spp.",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "low-light",
+      "colorful",
+      "easy"
+    ]
+  },
+  {
+    "id": "dieffenbachia",
+    "common_en": "Dieffenbachia / Dumb Cane",
+    "common_hi": "Dieffenbachia",
+    "common_kn": "Dieffenbachia",
+    "common_ta": "Dieffenbachia",
+    "common_te": "Dieffenbachia",
+    "common_mr": "Dieffenbachia",
+    "scientific": "Dieffenbachia spp.",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "large-leaf",
+      "toxic",
+      "shade-tolerant"
+    ]
+  },
+  {
+    "id": "croton",
+    "common_en": "Croton",
+    "common_hi": "Croton",
+    "common_kn": "Croton",
+    "common_ta": "Croton",
+    "common_te": "Croton",
+    "common_mr": "Croton",
+    "scientific": "Codiaeum variegatum",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "colorful",
+      "tropical",
+      "bright-light"
+    ]
+  },
+  {
+    "id": "lucky-bamboo",
+    "common_en": "Lucky Bamboo",
+    "common_hi": "Lucky Bamboo",
+    "common_kn": "Lucky Bamboo",
+    "common_ta": "Lucky Bamboo",
+    "common_te": "Lucky Bamboo",
+    "common_mr": "Lucky Bamboo",
+    "scientific": "Dracaena sanderiana",
+    "category": "Indoor Plant",
+    "subcategory": "Water Plant",
+    "tags": [
+      "indoor",
+      "easy",
+      "feng-shui",
+      "water-grown"
+    ]
+  },
+  {
+    "id": "succulent-echeveria",
+    "common_en": "Echeveria",
+    "common_hi": "Echeveria",
+    "common_kn": "Echeveria",
+    "common_ta": "Echeveria",
+    "common_te": "Echeveria",
+    "common_mr": "Echeveria",
+    "scientific": "Echeveria spp.",
+    "category": "Indoor Plant",
+    "subcategory": "Succulent",
+    "tags": [
+      "indoor",
+      "succulent",
+      "drought-tolerant",
+      "ornamental"
+    ]
+  },
+  {
+    "id": "cactus-prickly-pear",
+    "common_en": "Prickly Pear Cactus",
+    "common_hi": "Nagphani",
+    "common_kn": "Papas Kalli",
+    "common_ta": "Sappathikalli",
+    "common_te": "Nagajemudu",
+    "common_mr": "Nagphani",
+    "scientific": "Opuntia ficus-indica",
+    "category": "Indoor Plant",
+    "subcategory": "Cactus",
+    "tags": [
+      "arid",
+      "drought-tolerant",
+      "edible",
+      "ornamental"
+    ]
+  },
+  {
+    "id": "bonsai-ficus",
+    "common_en": "Bonsai Ficus",
+    "common_hi": "Bonsai",
+    "common_kn": "Bonsai",
+    "common_ta": "Bonsai",
+    "common_te": "Bonsai",
+    "common_mr": "Bonsai",
+    "scientific": "Ficus retusa",
+    "category": "Indoor Plant",
+    "subcategory": "Bonsai",
+    "tags": [
+      "indoor",
+      "miniature",
+      "artistic",
+      "patient"
+    ]
+  },
+  {
+    "id": "english-ivy",
+    "common_en": "English Ivy",
+    "common_hi": "English Ivy",
+    "common_kn": "English Ivy",
+    "common_ta": "English Ivy",
+    "common_te": "English Ivy",
+    "common_mr": "English Ivy",
+    "scientific": "Hedera helix",
+    "category": "Indoor Plant",
+    "subcategory": "Climbing Plant",
+    "tags": [
+      "indoor",
+      "climbing",
+      "air-purifier",
+      "shade-tolerant"
+    ]
+  },
+  {
+    "id": "chow-chow",
+    "common_en": "Chow Chow / Chayote",
+    "common_hi": "Chow Chow",
+    "common_kn": "Seeme Badane",
+    "common_ta": "Chow Chow",
+    "common_te": "Bengaluru Vankaya",
+    "common_mr": "Chow Chow",
+    "scientific": "Sechium edule",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "vine",
+      "prolific",
+      "hills"
+    ]
+  },
+  {
+    "id": "tinda",
+    "common_en": "Tinda / Apple Gourd",
+    "common_hi": "Tinda",
+    "common_kn": "Tinda",
+    "common_ta": "Tinda",
+    "common_te": "Tinda",
+    "common_mr": "Tinda",
+    "scientific": "Praecitrullus fistulosus",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "north-india",
+      "summer"
+    ]
+  },
+  {
+    "id": "parval",
+    "common_en": "Parval / Pointed Gourd",
+    "common_hi": "Parval",
+    "common_kn": "Parval",
+    "common_ta": "Kambupudalai",
+    "common_te": "Potla Kaaya",
+    "common_mr": "Parval",
+    "scientific": "Trichosanthes dioica",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "vine",
+      "east-india"
+    ]
+  },
+  {
+    "id": "kale",
+    "common_en": "Kale",
+    "common_hi": "Kale",
+    "common_kn": "Kale",
+    "common_ta": "Kale",
+    "common_te": "Kale",
+    "common_mr": "Kale",
+    "scientific": "Brassica oleracea var. sabellica",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "cool-season",
+      "superfood",
+      "trendy"
+    ]
+  },
+  {
+    "id": "asparagus",
+    "common_en": "Asparagus",
+    "common_hi": "Shatavari Sabzi",
+    "common_kn": "Asparagus",
+    "common_ta": "Asparagus",
+    "common_te": "Asparagus",
+    "common_mr": "Asparagus",
+    "scientific": "Asparagus officinalis",
+    "category": "Vegetable",
+    "subcategory": "Stem Vegetable",
+    "tags": [
+      "cool-season",
+      "perennial",
+      "premium"
+    ]
+  },
+  {
+    "id": "celery",
+    "common_en": "Celery",
+    "common_hi": "Ajmoda",
+    "common_kn": "Celery",
+    "common_ta": "Celery",
+    "common_te": "Celery",
+    "common_mr": "Ajmoda",
+    "scientific": "Apium graveolens",
+    "category": "Vegetable",
+    "subcategory": "Stem Vegetable",
+    "tags": [
+      "cool-season",
+      "aromatic",
+      "crunchy"
+    ]
+  },
+  {
+    "id": "leek",
+    "common_en": "Leek",
+    "common_hi": "Leek",
+    "common_kn": "Leek",
+    "common_ta": "Leek",
+    "common_te": "Leek",
+    "common_mr": "Leek",
+    "scientific": "Allium ampeloprasum",
+    "category": "Vegetable",
+    "subcategory": "Bulb Vegetable",
+    "tags": [
+      "cool-season",
+      "mild",
+      "premium"
+    ]
+  },
+  {
+    "id": "brussels-sprouts",
+    "common_en": "Brussels Sprouts",
+    "common_hi": "Chhoti Gobhi",
+    "common_kn": "Brussels Sprouts",
+    "common_ta": "Brussels Sprouts",
+    "common_te": "Brussels Sprouts",
+    "common_mr": "Brussels Sprouts",
+    "scientific": "Brassica oleracea var. gemmifera",
+    "category": "Vegetable",
+    "subcategory": "Brassica",
+    "tags": [
+      "cool-season",
+      "nutritious",
+      "premium"
+    ]
+  },
+  {
+    "id": "artichoke",
+    "common_en": "Artichoke",
+    "common_hi": "Hathichak",
+    "common_kn": "Artichoke",
+    "common_ta": "Artichoke",
+    "common_te": "Artichoke",
+    "common_mr": "Artichoke",
+    "scientific": "Cynara cardunculus",
+    "category": "Vegetable",
+    "subcategory": "Flower Vegetable",
+    "tags": [
+      "cool-season",
+      "perennial",
+      "exotic"
+    ]
+  },
+  {
+    "id": "zucchini",
+    "common_en": "Zucchini",
+    "common_hi": "Zucchini",
+    "common_kn": "Zucchini",
+    "common_ta": "Zucchini",
+    "common_te": "Zucchini",
+    "common_mr": "Zucchini",
+    "scientific": "Cucurbita pepo",
+    "category": "Vegetable",
+    "subcategory": "Gourd",
+    "tags": [
+      "warm-season",
+      "fast-growing",
+      "prolific"
+    ]
+  },
+  {
+    "id": "double-beans",
+    "common_en": "Double Beans / Lima Beans",
+    "common_hi": "Sem",
+    "common_kn": "Avarekayi",
+    "common_ta": "Mochai",
+    "common_te": "Chikkudu",
+    "common_mr": "Pavta",
+    "scientific": "Phaseolus lunatus",
+    "category": "Vegetable",
+    "subcategory": "Bean",
+    "tags": [
+      "warm-season",
+      "popular",
+      "south-india"
+    ]
+  },
+  {
+    "id": "chilli-bhavnagari",
+    "common_en": "Bhavnagari Chilli",
+    "common_hi": "Bhavnagari Mirch",
+    "common_kn": "Bhavnagari Menasu",
+    "common_ta": "Bhavnagari Milagai",
+    "common_te": "Bhavnagari Mirapa",
+    "common_mr": "Bhavnagari Mirchi",
+    "scientific": "Capsicum annuum",
+    "category": "Vegetable",
+    "subcategory": "Fruiting Vegetable",
+    "tags": [
+      "warm-season",
+      "mild",
+      "stuffing",
+      "gujarati"
+    ]
+  },
+  {
+    "id": "yam",
+    "common_en": "Greater Yam",
+    "common_hi": "Zimikand",
+    "common_kn": "Gadde Genasu",
+    "common_ta": "Karunai Kizhangu",
+    "common_te": "Kanda",
+    "common_mr": "Suran",
+    "scientific": "Dioscorea alata",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "tropical",
+      "tuber",
+      "starchy"
+    ]
+  },
+  {
+    "id": "water-spinach",
+    "common_en": "Water Spinach / Kangkong",
+    "common_hi": "Kalmi Saag",
+    "common_kn": "Neeruhonne",
+    "common_ta": "Vellai Keerai",
+    "common_te": "Tutikura",
+    "common_mr": "Nalichi Bhaji",
+    "scientific": "Ipomoea aquatica",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "tropical",
+      "aquatic",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "sorrel",
+    "common_en": "Roselle / Gongura",
+    "common_hi": "Ambadi",
+    "common_kn": "Pundi Soppu",
+    "common_ta": "Pulicha Keerai",
+    "common_te": "Gongura",
+    "common_mr": "Ambadi",
+    "scientific": "Hibiscus sabdariffa",
+    "category": "Vegetable",
+    "subcategory": "Leafy Green",
+    "tags": [
+      "warm-season",
+      "sour",
+      "south-india",
+      "andhra"
+    ]
+  },
+  {
+    "id": "coleus",
+    "common_en": "Koorka / Coleus Root",
+    "common_hi": "Koorka",
+    "common_kn": "Sambrani Gadde",
+    "common_ta": "Koorka Kizhangu",
+    "common_te": "Koorka",
+    "common_mr": "Koorka",
+    "scientific": "Coleus rotundifolius",
+    "category": "Vegetable",
+    "subcategory": "Root Vegetable",
+    "tags": [
+      "tropical",
+      "tuber",
+      "kerala",
+      "monsoon"
+    ]
+  },
+  {
+    "id": "sitaphal-ramphal",
+    "common_en": "Ramphal / Bullock's Heart",
+    "common_hi": "Ramphal",
+    "common_kn": "Ramphal",
+    "common_ta": "Ramphal",
+    "common_te": "Ramphal",
+    "common_mr": "Ramphal",
+    "scientific": "Annona reticulata",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "sweet",
+      "rare"
+    ]
+  },
+  {
+    "id": "water-apple",
+    "common_en": "Water Apple",
+    "common_hi": "Hara Jamun",
+    "common_kn": "Water Apple",
+    "common_ta": "Water Apple",
+    "common_te": "Water Apple",
+    "common_mr": "Water Apple",
+    "scientific": "Syzygium aqueum",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "juicy",
+      "refreshing"
+    ]
+  },
+  {
+    "id": "carambola",
+    "common_en": "Star Fruit / Carambola",
+    "common_hi": "Kamrakh",
+    "common_kn": "Kamrakh",
+    "common_ta": "Thambaratham",
+    "common_te": "Ambanam",
+    "common_mr": "Kamrakh",
+    "scientific": "Averrhoa carambola",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "ornamental",
+      "exotic"
+    ]
+  },
+  {
+    "id": "sapota-rayan",
+    "common_en": "Rayan / Khirni",
+    "common_hi": "Khirni",
+    "common_kn": "Rayan",
+    "common_ta": "Paalai Pazham",
+    "common_te": "Rayan",
+    "common_mr": "Rayan",
+    "scientific": "Manilkara hexandra",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "wild",
+      "rare"
+    ]
+  },
+  {
+    "id": "persimmon",
+    "common_en": "Persimmon",
+    "common_hi": "Japani Phal",
+    "common_kn": "Persimmon",
+    "common_ta": "Persimmon",
+    "common_te": "Persimmon",
+    "common_mr": "Persimmon",
+    "scientific": "Diospyros kaki",
+    "category": "Fruit",
+    "subcategory": "Temperate Fruit",
+    "tags": [
+      "temperate",
+      "tree",
+      "autumn",
+      "premium"
+    ]
+  },
+  {
+    "id": "gooseberry-cape",
+    "common_en": "Cape Gooseberry / Rasbhari",
+    "common_hi": "Rasbhari",
+    "common_kn": "Budde Hannu",
+    "common_ta": "Thol Thakkali",
+    "common_te": "Budama Pandu",
+    "common_mr": "Tepari",
+    "scientific": "Physalis peruviana",
+    "category": "Fruit",
+    "subcategory": "Berry",
+    "tags": [
+      "cool-season",
+      "container",
+      "exotic",
+      "tangy"
+    ]
+  },
+  {
+    "id": "blueberry",
+    "common_en": "Blueberry",
+    "common_hi": "Blueberry",
+    "common_kn": "Blueberry",
+    "common_ta": "Blueberry",
+    "common_te": "Blueberry",
+    "common_mr": "Blueberry",
+    "scientific": "Vaccinium corymbosum",
+    "category": "Fruit",
+    "subcategory": "Berry",
+    "tags": [
+      "temperate",
+      "acidic-soil",
+      "premium",
+      "superfood"
+    ]
+  },
+  {
+    "id": "raspberry",
+    "common_en": "Raspberry",
+    "common_hi": "Raspberry",
+    "common_kn": "Raspberry",
+    "common_ta": "Raspberry",
+    "common_te": "Raspberry",
+    "common_mr": "Raspberry",
+    "scientific": "Rubus idaeus",
+    "category": "Fruit",
+    "subcategory": "Berry",
+    "tags": [
+      "temperate",
+      "cool-climate",
+      "premium"
+    ]
+  },
+  {
+    "id": "indian-blackberry",
+    "common_en": "Indian Blackberry / Karonda",
+    "common_hi": "Phalsa",
+    "common_kn": "Phalsa",
+    "common_ta": "Phalsa",
+    "common_te": "Phalsa",
+    "common_mr": "Phalsa",
+    "scientific": "Grewia asiatica",
+    "category": "Fruit",
+    "subcategory": "Subtropical Fruit",
+    "tags": [
+      "subtropical",
+      "shrub",
+      "summer"
+    ]
+  },
+  {
+    "id": "chempedak",
+    "common_en": "Chempedak",
+    "common_hi": "Chempedak",
+    "common_kn": "Chempedak",
+    "common_ta": "Chempedak",
+    "common_te": "Chempedak",
+    "common_mr": "Chempedak",
+    "scientific": "Artocarpus integer",
+    "category": "Fruit",
+    "subcategory": "Tropical Fruit",
+    "tags": [
+      "tropical",
+      "tree",
+      "jackfruit-relative",
+      "rare"
+    ]
+  },
+  {
+    "id": "pomelo",
+    "common_en": "Pomelo / Chakotra",
+    "common_hi": "Chakotra",
+    "common_kn": "Chakotra",
+    "common_ta": "Bamblimas",
+    "common_te": "Pampara Panasa",
+    "common_mr": "Chakotra",
+    "scientific": "Citrus maxima",
+    "category": "Fruit",
+    "subcategory": "Citrus",
+    "tags": [
+      "subtropical",
+      "citrus",
+      "large",
+      "sweet"
+    ]
+  },
+  {
+    "id": "mandarin",
+    "common_en": "Mandarin / Nagpur Orange",
+    "common_hi": "Santara",
+    "common_kn": "Kittale",
+    "common_ta": "Kamala",
+    "common_te": "Kamala",
+    "common_mr": "Santara",
+    "scientific": "Citrus reticulata",
+    "category": "Fruit",
+    "subcategory": "Citrus",
+    "tags": [
+      "subtropical",
+      "citrus",
+      "nagpur",
+      "popular"
+    ]
+  },
+  {
+    "id": "rajnigandha-double",
+    "common_en": "Tuberose (Double)",
+    "common_hi": "Rajnigandha",
+    "common_kn": "Sugandharaja",
+    "common_ta": "Sambangi",
+    "common_te": "Sugandhiraja",
+    "common_mr": "Nishigandha",
+    "scientific": "Agave amica",
+    "category": "Flower",
+    "subcategory": "Bulb Flower",
+    "tags": [
+      "tropical",
+      "fragrant",
+      "commercial",
+      "garland"
+    ]
+  },
+  {
+    "id": "cosmos",
+    "common_en": "Cosmos",
+    "common_hi": "Cosmos",
+    "common_kn": "Cosmos",
+    "common_ta": "Cosmos",
+    "common_te": "Cosmos",
+    "common_mr": "Cosmos",
+    "scientific": "Cosmos bipinnatus",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "warm-season",
+      "easy",
+      "wildflower",
+      "pollinator"
+    ]
+  },
+  {
+    "id": "portulaca",
+    "common_en": "Portulaca / Moss Rose",
+    "common_hi": "Portulaca",
+    "common_kn": "Portulaca",
+    "common_ta": "Portulaca",
+    "common_te": "Portulaca",
+    "common_mr": "Portulaca",
+    "scientific": "Portulaca grandiflora",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "warm-season",
+      "drought-tolerant",
+      "colorful",
+      "ground-cover"
+    ]
+  },
+  {
+    "id": "balsam",
+    "common_en": "Balsam",
+    "common_hi": "Gul Mehndi",
+    "common_kn": "Kanakambara",
+    "common_ta": "Balsam",
+    "common_te": "Balsam",
+    "common_mr": "Terda",
+    "scientific": "Impatiens balsamina",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "warm-season",
+      "easy",
+      "monsoon",
+      "colorful"
+    ]
+  },
+  {
+    "id": "pansy",
+    "common_en": "Pansy",
+    "common_hi": "Pansy",
+    "common_kn": "Pansy",
+    "common_ta": "Pansy",
+    "common_te": "Pansy",
+    "common_mr": "Pansy",
+    "scientific": "Viola tricolor var. hortensis",
+    "category": "Flower",
+    "subcategory": "Annual Flower",
+    "tags": [
+      "cool-season",
+      "colorful",
+      "container",
+      "edible"
+    ]
+  },
+  {
+    "id": "carnation",
+    "common_en": "Carnation",
+    "common_hi": "Carnation",
+    "common_kn": "Carnation",
+    "common_ta": "Carnation",
+    "common_te": "Carnation",
+    "common_mr": "Carnation",
+    "scientific": "Dianthus caryophyllus",
+    "category": "Flower",
+    "subcategory": "Perennial Flower",
+    "tags": [
+      "cool-season",
+      "cut-flower",
+      "fragrant",
+      "commercial"
+    ]
+  },
+  {
+    "id": "lily-asiatic",
+    "common_en": "Asiatic Lily",
+    "common_hi": "Lily",
+    "common_kn": "Lily",
+    "common_ta": "Lily",
+    "common_te": "Lily",
+    "common_mr": "Lily",
+    "scientific": "Lilium spp.",
+    "category": "Flower",
+    "subcategory": "Bulb Flower",
+    "tags": [
+      "cool-season",
+      "bulb",
+      "cut-flower",
+      "showy"
+    ]
+  },
+  {
+    "id": "gerbera",
+    "common_en": "Gerbera Daisy",
+    "common_hi": "Gerbera",
+    "common_kn": "Gerbera",
+    "common_ta": "Gerbera",
+    "common_te": "Gerbera",
+    "common_mr": "Gerbera",
+    "scientific": "Gerbera jamesonii",
+    "category": "Flower",
+    "subcategory": "Perennial Flower",
+    "tags": [
+      "cool-season",
+      "cut-flower",
+      "commercial",
+      "colorful"
+    ]
+  },
+  {
+    "id": "morning-glory",
+    "common_en": "Morning Glory",
+    "common_hi": "Prabhati",
+    "common_kn": "Morning Glory",
+    "common_ta": "Morning Glory",
+    "common_te": "Morning Glory",
+    "common_mr": "Morning Glory",
+    "scientific": "Ipomoea purpurea",
+    "category": "Flower",
+    "subcategory": "Vine Flower",
+    "tags": [
+      "warm-season",
+      "vine",
+      "fast-growing",
+      "colorful"
+    ]
+  },
+  {
+    "id": "night-queen",
+    "common_en": "Night Blooming Cereus",
+    "common_hi": "Bramha Kamal",
+    "common_kn": "Bramha Kamal",
+    "common_ta": "Bramha Kamal",
+    "common_te": "Bramha Kamal",
+    "common_mr": "Bramha Kamal",
+    "scientific": "Epiphyllum oxypetalum",
+    "category": "Flower",
+    "subcategory": "Cactus Flower",
+    "tags": [
+      "tropical",
+      "night-blooming",
+      "rare",
+      "fragrant"
+    ]
+  },
+  {
+    "id": "insulin-plant",
+    "common_en": "Insulin Plant",
+    "common_hi": "Insulin Plant",
+    "common_kn": "Insulin Gida",
+    "common_ta": "Insulin Chedi",
+    "common_te": "Insulin Plant",
+    "common_mr": "Insulin Plant",
+    "scientific": "Costus igneus",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "tropical",
+      "medicinal",
+      "diabetes",
+      "easy"
+    ]
+  },
+  {
+    "id": "ajwain-plant",
+    "common_en": "Indian Borage / Ajwain Plant",
+    "common_hi": "Patharchatta",
+    "common_kn": "Doddapatre",
+    "common_ta": "Karpuravalli",
+    "common_te": "Vamu Aaku",
+    "common_mr": "Patharchur",
+    "scientific": "Coleus amboinicus",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "tropical",
+      "medicinal",
+      "aromatic",
+      "easy"
+    ]
+  },
+  {
+    "id": "wheatgrass",
+    "common_en": "Wheatgrass",
+    "common_hi": "Gehun Ghas",
+    "common_kn": "Wheatgrass",
+    "common_ta": "Wheatgrass",
+    "common_te": "Wheatgrass",
+    "common_mr": "Wheatgrass",
+    "scientific": "Triticum aestivum",
+    "category": "Herb",
+    "subcategory": "Health Herb",
+    "tags": [
+      "cool-season",
+      "superfood",
+      "juice",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "peppermint",
+    "common_en": "Peppermint",
+    "common_hi": "Vilayati Pudina",
+    "common_kn": "Peppermint",
+    "common_ta": "Peppermint",
+    "common_te": "Peppermint",
+    "common_mr": "Peppermint",
+    "scientific": "Mentha × piperita",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "cool-season",
+      "aromatic",
+      "tea",
+      "container"
+    ]
+  },
+  {
+    "id": "tarragon",
+    "common_en": "Tarragon",
+    "common_hi": "Tarragon",
+    "common_kn": "Tarragon",
+    "common_ta": "Tarragon",
+    "common_te": "Tarragon",
+    "common_mr": "Tarragon",
+    "scientific": "Artemisia dracunculus",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "temperate",
+      "aromatic",
+      "french-cuisine"
+    ]
+  },
+  {
+    "id": "chives",
+    "common_en": "Chives",
+    "common_hi": "Chives",
+    "common_kn": "Chives",
+    "common_ta": "Chives",
+    "common_te": "Chives",
+    "common_mr": "Chives",
+    "scientific": "Allium schoenoprasum",
+    "category": "Herb",
+    "subcategory": "Culinary Herb",
+    "tags": [
+      "cool-season",
+      "mild",
+      "container",
+      "perennial"
+    ]
+  },
+  {
+    "id": "noni",
+    "common_en": "Noni",
+    "common_hi": "Noni",
+    "common_kn": "Noni",
+    "common_ta": "Noni",
+    "common_te": "Noni",
+    "common_mr": "Noni",
+    "scientific": "Morinda citrifolia",
+    "category": "Herb",
+    "subcategory": "Medicinal Herb",
+    "tags": [
+      "tropical",
+      "tree",
+      "medicinal",
+      "superfood"
+    ]
+  },
+  {
+    "id": "jamun-tree",
+    "common_en": "Jamun Tree",
+    "common_hi": "Jamun",
+    "common_kn": "Nerale Mara",
+    "common_ta": "Naval Maram",
+    "common_te": "Neredu Chettu",
+    "common_mr": "Jambhul",
+    "scientific": "Syzygium cumini",
+    "category": "Tree",
+    "subcategory": "Fruit Tree",
+    "tags": [
+      "tropical",
+      "shade",
+      "sacred",
+      "medicinal"
+    ]
+  },
+  {
+    "id": "tamarind-tree",
+    "common_en": "Tamarind Tree",
+    "common_hi": "Imli Ka Ped",
+    "common_kn": "Hunase Mara",
+    "common_ta": "Puli Maram",
+    "common_te": "Chinta Chettu",
+    "common_mr": "Chinch",
+    "scientific": "Tamarindus indica",
+    "category": "Tree",
+    "subcategory": "Fruit Tree",
+    "tags": [
+      "tropical",
+      "shade",
+      "essential",
+      "large"
+    ]
+  },
+  {
+    "id": "jackfruit-tree",
+    "common_en": "Jackfruit Tree",
+    "common_hi": "Kathal Ka Ped",
+    "common_kn": "Halasu Mara",
+    "common_ta": "Palaa Maram",
+    "common_te": "Panasa Chettu",
+    "common_mr": "Fanas",
+    "scientific": "Artocarpus heterophyllus",
+    "category": "Tree",
+    "subcategory": "Fruit Tree",
+    "tags": [
+      "tropical",
+      "large",
+      "versatile",
+      "evergreen"
+    ]
+  },
+  {
+    "id": "mango-tree",
+    "common_en": "Mango Tree",
+    "common_hi": "Aam Ka Ped",
+    "common_kn": "Maavina Mara",
+    "common_ta": "Maa Maram",
+    "common_te": "Mamidi Chettu",
+    "common_mr": "Amba",
+    "scientific": "Mangifera indica",
+    "category": "Tree",
+    "subcategory": "Fruit Tree",
+    "tags": [
+      "tropical",
+      "iconic",
+      "shade",
+      "long-lived"
+    ]
+  },
+  {
+    "id": "bauhinia",
+    "common_en": "Bauhinia / Kachnar",
+    "common_hi": "Kachnar",
+    "common_kn": "Basavana Pada",
+    "common_ta": "Mandarai",
+    "common_te": "Devakancanamu",
+    "common_mr": "Kanchnar",
+    "scientific": "Bauhinia variegata",
+    "category": "Tree",
+    "subcategory": "Flowering Tree",
+    "tags": [
+      "subtropical",
+      "flowering",
+      "edible-flower",
+      "avenue"
+    ]
+  },
+  {
+    "id": "subabul",
+    "common_en": "Subabul / Leucaena",
+    "common_hi": "Subabul",
+    "common_kn": "Subabul",
+    "common_ta": "Subabul",
+    "common_te": "Subabul",
+    "common_mr": "Subabul",
+    "scientific": "Leucaena leucocephala",
+    "category": "Tree",
+    "subcategory": "Multipurpose Tree",
+    "tags": [
+      "tropical",
+      "nitrogen-fixing",
+      "fodder",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "coconut-tree",
+    "common_en": "Coconut Tree",
+    "common_hi": "Nariyal Ka Ped",
+    "common_kn": "Tengu Mara",
+    "common_ta": "Thennai Maram",
+    "common_te": "Kobbari Chettu",
+    "common_mr": "Naral",
+    "scientific": "Cocos nucifera",
+    "category": "Tree",
+    "subcategory": "Palm",
+    "tags": [
+      "tropical",
+      "coastal",
+      "multipurpose",
+      "iconic"
+    ]
+  },
+  {
+    "id": "agarwood",
+    "common_en": "Agarwood / Oud",
+    "common_hi": "Agar",
+    "common_kn": "Agarwood",
+    "common_ta": "Agarwood",
+    "common_te": "Agarwood",
+    "common_mr": "Agar",
+    "scientific": "Aquilaria malaccensis",
+    "category": "Tree",
+    "subcategory": "Aromatic Tree",
+    "tags": [
+      "tropical",
+      "premium",
+      "fragrant",
+      "endangered"
+    ]
+  },
+  {
+    "id": "red-sanders",
+    "common_en": "Red Sanders",
+    "common_hi": "Raktachandan",
+    "common_kn": "Rakta Chandan",
+    "common_ta": "Sivappu Sandhanam",
+    "common_te": "Errachondanam",
+    "common_mr": "Raktchandan",
+    "scientific": "Pterocarpus santalinus",
+    "category": "Tree",
+    "subcategory": "Timber Tree",
+    "tags": [
+      "tropical",
+      "premium",
+      "andhra",
+      "endangered"
+    ]
+  },
+  {
+    "id": "black-eyed-pea",
+    "common_en": "Black-eyed Pea",
+    "common_hi": "Lobia",
+    "common_kn": "Alsande",
+    "common_ta": "Thattapayiru",
+    "common_te": "Bobbarlu",
+    "common_mr": "Chawli",
+    "scientific": "Vigna unguiculata",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "warm-season",
+      "protein",
+      "popular"
+    ]
+  },
+  {
+    "id": "field-bean",
+    "common_en": "Field Bean / Avarekai",
+    "common_hi": "Sem",
+    "common_kn": "Avarekayi",
+    "common_ta": "Avarai",
+    "common_te": "Chikkudu",
+    "common_mr": "Val",
+    "scientific": "Lablab purpureus",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "warm-season",
+      "south-india",
+      "popular"
+    ]
+  },
+  {
+    "id": "green-gram-whole",
+    "common_en": "Whole Green Gram",
+    "common_hi": "Sabut Moong",
+    "common_kn": "Sabut Hesaru",
+    "common_ta": "Pachai Payaru",
+    "common_te": "Sabut Pesalu",
+    "common_mr": "Sabut Mug",
+    "scientific": "Vigna radiata",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "warm-season",
+      "sprouting",
+      "nutritious"
+    ]
+  },
+  {
+    "id": "bengal-gram",
+    "common_en": "Bengal Gram / Chana Dal",
+    "common_hi": "Chana Dal",
+    "common_kn": "Kadale Bele",
+    "common_ta": "Kadalai Paruppu",
+    "common_te": "Senaga Pappu",
+    "common_mr": "Harbhara Dal",
+    "scientific": "Cicer arietinum",
+    "category": "Pulse",
+    "subcategory": "Pulse",
+    "tags": [
+      "cool-season",
+      "staple",
+      "rabi"
+    ]
+  },
+  {
+    "id": "teff",
+    "common_en": "Teff",
+    "common_hi": "Teff",
+    "common_kn": "Teff",
+    "common_ta": "Teff",
+    "common_te": "Teff",
+    "common_mr": "Teff",
+    "scientific": "Eragrostis tef",
+    "category": "Grain",
+    "subcategory": "Ancient Grain",
+    "tags": [
+      "warm-season",
+      "ancient-grain",
+      "gluten-free",
+      "ethiopian"
+    ]
+  },
+  {
+    "id": "tamarind-spice",
+    "common_en": "Tamarind (Spice)",
+    "common_hi": "Imli",
+    "common_kn": "Hunase",
+    "common_ta": "Puli",
+    "common_te": "Chintapandu",
+    "common_mr": "Chinch",
+    "scientific": "Tamarindus indica",
+    "category": "Spice",
+    "subcategory": "Fruit Spice",
+    "tags": [
+      "tropical",
+      "souring-agent",
+      "essential"
+    ]
+  },
+  {
+    "id": "garcinia",
+    "common_en": "Garcinia / Malabar Tamarind",
+    "common_hi": "Vrindavan",
+    "common_kn": "Uppage",
+    "common_ta": "Kudampuli",
+    "common_te": "Chintapandu",
+    "common_mr": "Ratambi",
+    "scientific": "Garcinia gummi-gutta",
+    "category": "Spice",
+    "subcategory": "Fruit Spice",
+    "tags": [
+      "tropical",
+      "souring-agent",
+      "western-ghats",
+      "weight-loss"
+    ]
+  },
+  {
+    "id": "white-pepper",
+    "common_en": "White Pepper",
+    "common_hi": "Safed Mirch",
+    "common_kn": "Bili Menasu",
+    "common_ta": "Vellai Milagu",
+    "common_te": "Tella Miriyalu",
+    "common_mr": "Pandhari Miri",
+    "scientific": "Piper nigrum",
+    "category": "Spice",
+    "subcategory": "Vine Spice",
+    "tags": [
+      "tropical",
+      "vine",
+      "premium"
+    ]
+  },
+  {
+    "id": "allspice",
+    "common_en": "Allspice",
+    "common_hi": "Kebab Chini",
+    "common_kn": "Allspice",
+    "common_ta": "Allspice",
+    "common_te": "Allspice",
+    "common_mr": "Allspice",
+    "scientific": "Pimenta dioica",
+    "category": "Spice",
+    "subcategory": "Berry Spice",
+    "tags": [
+      "tropical",
+      "tree",
+      "caribbean",
+      "aromatic"
+    ]
+  },
+  {
+    "id": "silk-cotton",
+    "common_en": "Silk Cotton Tree / Kapok",
+    "common_hi": "Semal",
+    "common_kn": "Booruga",
+    "common_ta": "Ilavu",
+    "common_te": "Buruga",
+    "common_mr": "Saavar",
+    "scientific": "Bombax ceiba",
+    "category": "Cash Crop",
+    "subcategory": "Fiber Crop",
+    "tags": [
+      "tropical",
+      "tree",
+      "fiber",
+      "deciduous"
+    ]
+  },
+  {
+    "id": "sisal",
+    "common_en": "Sisal",
+    "common_hi": "Sisal",
+    "common_kn": "Sisal",
+    "common_ta": "Sisal",
+    "common_te": "Sisal",
+    "common_mr": "Sisal",
+    "scientific": "Agave sisalana",
+    "category": "Cash Crop",
+    "subcategory": "Fiber Crop",
+    "tags": [
+      "tropical",
+      "drought-tolerant",
+      "fiber",
+      "industrial"
+    ]
+  },
+  {
+    "id": "safflower",
+    "common_en": "Safflower / Kusum",
+    "common_hi": "Kusum",
+    "common_kn": "Kusumbe",
+    "common_ta": "Kusumba",
+    "common_te": "Kusuma",
+    "common_mr": "Kardai",
+    "scientific": "Carthamus tinctorius",
+    "category": "Cash Crop",
+    "subcategory": "Oilseed Crop",
+    "tags": [
+      "warm-season",
+      "oilseed",
+      "dye",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "niger-seed",
+    "common_en": "Niger Seed",
+    "common_hi": "Ramtil",
+    "common_kn": "Gurellu",
+    "common_ta": "Payellu",
+    "common_te": "Velliselu",
+    "common_mr": "Karale",
+    "scientific": "Guizotia abyssinica",
+    "category": "Cash Crop",
+    "subcategory": "Oilseed Crop",
+    "tags": [
+      "warm-season",
+      "oilseed",
+      "tribal",
+      "tribal-areas"
+    ]
+  },
+  {
+    "id": "betel-vine",
+    "common_en": "Betel Vine / Paan",
+    "common_hi": "Paan",
+    "common_kn": "Veelyadele",
+    "common_ta": "Vetrilai",
+    "common_te": "Tamalapaaku",
+    "common_mr": "Nagvel",
+    "scientific": "Piper betle",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "tropical",
+      "vine",
+      "traditional",
+      "shade-grown"
+    ]
+  },
+  {
+    "id": "fiddle-leaf-fig",
+    "common_en": "Fiddle Leaf Fig",
+    "common_hi": "Fiddle Leaf Fig",
+    "common_kn": "Fiddle Leaf Fig",
+    "common_ta": "Fiddle Leaf Fig",
+    "common_te": "Fiddle Leaf Fig",
+    "common_mr": "Fiddle Leaf Fig",
+    "scientific": "Ficus lyrata",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "trendy",
+      "large-leaf",
+      "statement"
+    ]
+  },
+  {
+    "id": "calathea",
+    "common_en": "Calathea",
+    "common_hi": "Calathea",
+    "common_kn": "Calathea",
+    "common_ta": "Calathea",
+    "common_te": "Calathea",
+    "common_mr": "Calathea",
+    "scientific": "Calathea spp.",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "colorful",
+      "humidity",
+      "prayer-plant"
+    ]
+  },
+  {
+    "id": "string-of-pearls",
+    "common_en": "String of Pearls",
+    "common_hi": "String of Pearls",
+    "common_kn": "String of Pearls",
+    "common_ta": "String of Pearls",
+    "common_te": "String of Pearls",
+    "common_mr": "String of Pearls",
+    "scientific": "Curio rowleyanus",
+    "category": "Indoor Plant",
+    "subcategory": "Succulent",
+    "tags": [
+      "indoor",
+      "hanging",
+      "succulent",
+      "unusual"
+    ]
+  },
+  {
+    "id": "air-plant",
+    "common_en": "Air Plant / Tillandsia",
+    "common_hi": "Air Plant",
+    "common_kn": "Air Plant",
+    "common_ta": "Air Plant",
+    "common_te": "Air Plant",
+    "common_mr": "Air Plant",
+    "scientific": "Tillandsia spp.",
+    "category": "Indoor Plant",
+    "subcategory": "Epiphyte",
+    "tags": [
+      "indoor",
+      "soilless",
+      "easy",
+      "ornamental"
+    ]
+  },
+  {
+    "id": "birds-nest-fern",
+    "common_en": "Bird's Nest Fern",
+    "common_hi": "Bird's Nest Fern",
+    "common_kn": "Bird's Nest Fern",
+    "common_ta": "Bird's Nest Fern",
+    "common_te": "Bird's Nest Fern",
+    "common_mr": "Bird's Nest Fern",
+    "scientific": "Asplenium nidus",
+    "category": "Indoor Plant",
+    "subcategory": "Fern",
+    "tags": [
+      "indoor",
+      "shade-tolerant",
+      "humidity",
+      "elegant"
+    ]
+  },
+  {
+    "id": "christmas-cactus",
+    "common_en": "Christmas Cactus",
+    "common_hi": "Christmas Cactus",
+    "common_kn": "Christmas Cactus",
+    "common_ta": "Christmas Cactus",
+    "common_te": "Christmas Cactus",
+    "common_mr": "Christmas Cactus",
+    "scientific": "Schlumbergera bridgesii",
+    "category": "Indoor Plant",
+    "subcategory": "Cactus",
+    "tags": [
+      "indoor",
+      "flowering",
+      "winter-bloom",
+      "easy"
+    ]
+  },
+  {
+    "id": "ponytail-palm",
+    "common_en": "Ponytail Palm",
+    "common_hi": "Ponytail Palm",
+    "common_kn": "Ponytail Palm",
+    "common_ta": "Ponytail Palm",
+    "common_te": "Ponytail Palm",
+    "common_mr": "Ponytail Palm",
+    "scientific": "Beaucarnea recurvata",
+    "category": "Indoor Plant",
+    "subcategory": "Succulent",
+    "tags": [
+      "indoor",
+      "drought-tolerant",
+      "unusual",
+      "slow-growing"
+    ]
+  },
+  {
+    "id": "tradescantia",
+    "common_en": "Tradescantia / Wandering Jew",
+    "common_hi": "Tradescantia",
+    "common_kn": "Tradescantia",
+    "common_ta": "Tradescantia",
+    "common_te": "Tradescantia",
+    "common_mr": "Tradescantia",
+    "scientific": "Tradescantia zebrina",
+    "category": "Indoor Plant",
+    "subcategory": "Trailing Plant",
+    "tags": [
+      "indoor",
+      "colorful",
+      "easy",
+      "fast-growing"
+    ]
+  },
+  {
+    "id": "pothos-neon",
+    "common_en": "Neon Pothos",
+    "common_hi": "Neon Pothos",
+    "common_kn": "Neon Pothos",
+    "common_ta": "Neon Pothos",
+    "common_te": "Neon Pothos",
+    "common_mr": "Neon Pothos",
+    "scientific": "Epipremnum aureum 'Neon'",
+    "category": "Indoor Plant",
+    "subcategory": "Trailing Plant",
+    "tags": [
+      "indoor",
+      "easy",
+      "bright-green",
+      "low-light"
+    ]
+  },
+  {
+    "id": "dracaena",
+    "common_en": "Dracaena / Dragon Tree",
+    "common_hi": "Dracaena",
+    "common_kn": "Dracaena",
+    "common_ta": "Dracaena",
+    "common_te": "Dracaena",
+    "common_mr": "Dracaena",
+    "scientific": "Dracaena marginata",
+    "category": "Indoor Plant",
+    "subcategory": "Foliage Plant",
+    "tags": [
+      "indoor",
+      "air-purifier",
+      "tall",
+      "easy"
+    ]
+  },
+  {
+    "id": "olive",
+    "common_en": "Olive",
+    "common_hi": "Jaitun",
+    "common_kn": "Olive",
+    "common_ta": "Olive",
+    "common_te": "Olive",
+    "common_mr": "Jaitun",
+    "scientific": "Olea europaea",
+    "category": "Tree",
+    "subcategory": "Mediterranean Tree",
+    "tags": [
+      "subtropical",
+      "tree",
+      "oil",
+      "drought-tolerant"
+    ]
+  },
+  {
+    "id": "almond",
+    "common_en": "Almond",
+    "common_hi": "Badam",
+    "common_kn": "Badam",
+    "common_ta": "Badam",
+    "common_te": "Badam",
+    "common_mr": "Badam",
+    "scientific": "Prunus amygdalus",
+    "category": "Tree",
+    "subcategory": "Nut Tree",
+    "tags": [
+      "temperate",
+      "tree",
+      "nut",
+      "premium"
+    ]
+  },
+  {
+    "id": "walnut",
+    "common_en": "Walnut",
+    "common_hi": "Akhrot",
+    "common_kn": "Akrota",
+    "common_ta": "Akhrot",
+    "common_te": "Akhrot",
+    "common_mr": "Akrod",
+    "scientific": "Juglans regia",
+    "category": "Tree",
+    "subcategory": "Nut Tree",
+    "tags": [
+      "temperate",
+      "tree",
+      "nut",
+      "kashmir"
+    ]
+  },
+  {
+    "id": "pistachio",
+    "common_en": "Pistachio",
+    "common_hi": "Pista",
+    "common_kn": "Pista",
+    "common_ta": "Pista",
+    "common_te": "Pista",
+    "common_mr": "Pista",
+    "scientific": "Pistacia vera",
+    "category": "Tree",
+    "subcategory": "Nut Tree",
+    "tags": [
+      "arid",
+      "tree",
+      "nut",
+      "premium"
+    ]
+  },
+  {
+    "id": "macadamia",
+    "common_en": "Macadamia",
+    "common_hi": "Macadamia",
+    "common_kn": "Macadamia",
+    "common_ta": "Macadamia",
+    "common_te": "Macadamia",
+    "common_mr": "Macadamia",
+    "scientific": "Macadamia integrifolia",
+    "category": "Tree",
+    "subcategory": "Nut Tree",
+    "tags": [
+      "subtropical",
+      "tree",
+      "nut",
+      "premium"
+    ]
+  },
+  {
+    "id": "cacao",
+    "common_en": "Cacao / Cocoa",
+    "common_hi": "Cocoa",
+    "common_kn": "Cocoa",
+    "common_ta": "Cocoa",
+    "common_te": "Cocoa",
+    "common_mr": "Cocoa",
+    "scientific": "Theobroma cacao",
+    "category": "Cash Crop",
+    "subcategory": "Plantation Crop",
+    "tags": [
+      "tropical",
+      "shade-grown",
+      "chocolate",
+      "premium"
+    ]
+  }
+]

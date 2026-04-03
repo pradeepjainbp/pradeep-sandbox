@@ -1,0 +1,56 @@
+Given this location profile:
+{{LOCATION_PROFILE}}
+
+{{#if_score_mode}}
+Score the suitability of growing {{PLANT_NAME}} ({{PLANT_SCIENTIFIC}}, category: {{PLANT_CATEGORY}}) at this location in the selected month.
+
+Consider: temperature match, rainfall, humidity, soil pH, soil texture, frost risk, season timing, and local growing traditions.
+
+Respond with this exact JSON structure:
+{
+  "suitability": {
+    "score": "integer 0-100",
+    "grade": "string — 'Excellent' | 'Good' | 'Fair' | 'Poor' | 'Not Recommended'",
+    "color": "string — '#22c55e' | '#84cc16' | '#eab308' | '#f97316' | '#ef4444'",
+    "why": "string — 40 words max explaining the score"
+  },
+  "key_factors": {
+    "temperature_match": { "score": "integer 0-100", "detail": "string 25 words max" },
+    "water_needs_match": { "score": "integer 0-100", "detail": "string 25 words max" },
+    "soil_match":        { "score": "integer 0-100", "detail": "string 25 words max" },
+    "season_match":      { "score": "integer 0-100", "detail": "string 25 words max" }
+  },
+  "growing_requirements": {
+    "sunlight_hours": "integer — hours per day",
+    "water_needs": "string — 'low' | 'moderate' | 'high'",
+    "optimal_temp_range_c": { "min": 20, "max": 35 },
+    "soil_pH_preferred": { "min": 6.0, "max": 7.0 },
+    "days_to_harvest": "integer — approximate",
+    "spacing_cm": "integer — between plants",
+    "depth_cm": "integer — planting depth"
+  },
+  "alternatives": [
+    { "name": "string", "score": "integer 0-100", "why": "string 25 words max" }
+  ],
+  "initial_plant_vitality": "integer 0-100 — starting vitality based on suitability match"
+}
+{{/if_score_mode}}
+
+{{#if_suggest_mode}}
+Suggest the top 8 plants to grow at this location in the selected month. Include a mix of vegetables, fruits, herbs, and flowers. Prioritize plants that are locally popular and well-suited to conditions.
+
+Respond with this exact JSON structure:
+{
+  "suggestions": [
+    {
+      "name": "string",
+      "scientific": "string",
+      "category": "string",
+      "score": "integer 0-100",
+      "color": "string — hex color",
+      "why": "string 30 words max",
+      "difficulty": "string — 'beginner' | 'intermediate' | 'advanced'"
+    }
+  ]
+}
+{{/if_suggest_mode}}

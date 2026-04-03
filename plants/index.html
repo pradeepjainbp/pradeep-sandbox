@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plant Growth Simulator — Pradeep's Sandbox</title>
+  <meta name="description" content="Simulate plant growth based on your location, soil, and care decisions. Powered by Gemini AI." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/plant-visual.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       SITE HEADER
+  ═══════════════════════════════════════════ -->
+  <header class="site-header">
+    <a href="../" class="back-link">← Pradeep's Sandbox</a>
+    <div class="header-center">
+      <span class="header-icon">🌱</span>
+      <div>
+        <h1 class="header-title">Plant Growth Simulator</h1>
+        <p class="header-subtitle">Learn to grow anything, anywhere</p>
+      </div>
+    </div>
+    <div class="header-badge">
+      <span class="badge-dot"></span>
+      Powered by Gemini
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       PROGRESS BAR
+  ═══════════════════════════════════════════ -->
+  <nav class="progress-nav" aria-label="Simulation progress">
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <ol class="progress-steps">
+      <li class="step active" data-stage="1">
+        <div class="step-dot"><span>1</span></div>
+        <div class="step-label">Location</div>
+      </li>
+      <li class="step" data-stage="2">
+        <div class="step-dot"><span>2</span></div>
+        <div class="step-label">Season</div>
+      </li>
+      <li class="step" data-stage="3">
+        <div class="step-dot"><span>3</span></div>
+        <div class="step-label">Plant</div>
+      </li>
+      <li class="step" data-stage="4">
+        <div class="step-dot"><span>4</span></div>
+        <div class="step-label">Prep</div>
+      </li>
+      <li class="step" data-stage="5">
+        <div class="step-dot"><span>5</span></div>
+        <div class="step-label">Plant It</div>
+      </li>
+      <li class="step" data-stage="6">
+        <div class="step-dot"><span>6</span></div>
+        <div class="step-label">Grow</div>
+      </li>
+    </ol>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════════ -->
+  <main class="sim-main">
+
+    <!-- STAGE 1: Pick Location -->
+    <section class="stage active" id="stage-1" aria-label="Pick your location">
+      <div class="stage-inner">
+        <div class="stage-header">
+          <h2 class="stage-title">🌍 Where will you grow?</h2>
+          <p class="stage-desc">Your location determines climate, soil, and what plants thrive.</p>
+        </div>
+        <div id="location-ui"></div>
+        <div class="stage-nav">
+          <span></span>
+          <button class="btn btn-primary btn-next" id="btn-1-next" disabled>
+            Next <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 2: Pick Season -->
+    <section class="stage" id="stage-2" aria-label="Pick your planting month">
+      <div class="stage-inner">
+        <div class="stage-header">
+          <h2 class="stage-title">📅 When do you want to plant?</h2>
+          <p class="stage-desc">The season shapes what you can grow and how hard it will be.</p>
+        </div>
+        <div id="season-ui"></div>
+        <div class="stage-nav">
+          <button class="btn btn-ghost btn-back" data-to="1">← Back</button>
+          <button class="btn btn-primary btn-next" id="btn-2-next">
+            Next <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 3: Pick Plant -->
+    <section class="stage" id="stage-3" aria-label="Choose your plant">
+      <div class="stage-inner">
+        <div class="stage-header">
+          <h2 class="stage-title">🌿 What do you want to grow?</h2>
+          <p class="stage-desc">GrowBot will score each plant's suitability for your location and season.</p>
+        </div>
+        <div id="plant-picker-ui"></div>
+        <div class="stage-nav">
+          <button class="btn btn-ghost btn-back" data-to="2">← Back</button>
+          <button class="btn btn-primary btn-next" id="btn-3-next" disabled>
+            Start Growing <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 4: Pre-Planting Decisions -->
+    <section class="stage" id="stage-4" aria-label="Pre-planting decisions">
+      <div class="stage-inner">
+        <div class="stage-header">
+          <h2 class="stage-title">🪴 Prepare Your Growing Space</h2>
+          <p class="stage-desc">Stage 1 of 6 — Pre-Planting. Your decisions here shape the foundation.</p>
+        </div>
+        <div id="pre-planting-ui"></div>
+        <div class="stage-nav">
+          <button class="btn btn-ghost btn-back" data-to="3">← Back</button>
+          <button class="btn btn-primary btn-next" id="btn-4-next" disabled>
+            Next Stage <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 5: Planting -->
+    <section class="stage" id="stage-5" aria-label="Planting decisions">
+      <div class="stage-inner">
+        <div class="stage-header">
+          <h2 class="stage-title">🌱 Time to Plant</h2>
+          <p class="stage-desc">Stage 2 of 6 — Planting. How you plant matters as much as what you plant.</p>
+        </div>
+        <div id="planting-ui"></div>
+        <div class="stage-nav">
+          <button class="btn btn-ghost btn-back" data-to="4">← Back</button>
+          <button class="btn btn-primary btn-next" id="btn-5-next" disabled>
+            Start Growing <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE 6: Growth Timeline -->
+    <section class="stage" id="stage-6" aria-label="Growth timeline">
+      <div class="stage-inner stage-inner--wide">
+        <div id="timeline-ui"></div>
+      </div>
+    </section>
+
+    <!-- HARVEST SUMMARY (shown inside stage-6 when complete) -->
+    <section class="stage" id="stage-harvest" aria-label="Harvest summary">
+      <div class="stage-inner">
+        <div id="harvest-ui"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PERSISTENT SIDEBAR: Plant Visual + Scores
+       (visible from stage 4 onwards)
+  ═══════════════════════════════════════════ -->
+  <aside class="sim-sidebar" id="sim-sidebar" aria-label="Plant status">
+
+    <!-- CSS Plant Illustration -->
+    <div class="plant-container" id="plant-visual">
+      <div class="plant" id="plant-el">
+        <div class="fruit fruit-1"></div>
+        <div class="fruit fruit-2"></div>
+        <div class="flower"></div>
+        <div class="leaf leaf-left-1"></div>
+        <div class="leaf leaf-right-1"></div>
+        <div class="leaf leaf-left-2"></div>
+        <div class="leaf leaf-right-2"></div>
+        <div class="leaf leaf-left-3"></div>
+        <div class="leaf leaf-right-3"></div>
+        <div class="stem"></div>
+      </div>
+      <div class="soil">
+        <div class="soil-surface"></div>
+        <div class="soil-body"></div>
+      </div>
+    </div>
+
+    <!-- Score Dashboard -->
+    <div class="score-dashboard" id="score-dashboard">
+      <div class="score-gauge" data-score="soilHealth" title="Reflects pH balance, nutrient levels, organic matter, and drainage quality">
+        <div class="gauge-arc-wrap">
+          <svg class="gauge-arc" viewBox="0 0 80 80">
+            <circle class="gauge-track" cx="40" cy="40" r="32" />
+            <circle class="gauge-fill" id="gauge-soil" cx="40" cy="40" r="32" />
+          </svg>
+          <div class="gauge-value" id="val-soilHealth">50</div>
+        </div>
+        <div class="gauge-label">🪨 Soil</div>
+      </div>
+      <div class="score-gauge" data-score="plantVitality" title="Overall plant health — driven by soil, water, weather, and your care decisions">
+        <div class="gauge-arc-wrap">
+          <svg class="gauge-arc" viewBox="0 0 80 80">
+            <circle class="gauge-track" cx="40" cy="40" r="32" />
+            <circle class="gauge-fill" id="gauge-vitality" cx="40" cy="40" r="32" />
+          </svg>
+          <div class="gauge-value" id="val-plantVitality">50</div>
+        </div>
+        <div class="gauge-label">💚 Vitality</div>
+      </div>
+      <div class="score-gauge" data-score="waterBalance" title="How well-watered your plant is — too much or too little both hurt">
+        <div class="gauge-arc-wrap">
+          <svg class="gauge-arc" viewBox="0 0 80 80">
+            <circle class="gauge-track" cx="40" cy="40" r="32" />
+            <circle class="gauge-fill" id="gauge-water" cx="40" cy="40" r="32" />
+          </svg>
+          <div class="gauge-value" id="val-waterBalance">70</div>
+        </div>
+        <div class="gauge-label">💧 Water</div>
+      </div>
+      <div class="score-gauge" data-score="ecosystem" title="Long-term soil ecosystem health — builds with organic practices over time">
+        <div class="gauge-arc-wrap">
+          <svg class="gauge-arc" viewBox="0 0 80 80">
+            <circle class="gauge-track" cx="40" cy="40" r="32" />
+            <circle class="gauge-fill" id="gauge-ecosystem" cx="40" cy="40" r="32" />
+          </svg>
+          <div class="gauge-value" id="val-ecosystem">50</div>
+        </div>
+        <div class="gauge-label">🌍 Ecosystem</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ═══════════════════════════════════════════
+       LOADING OVERLAY
+  ═══════════════════════════════════════════ -->
+  <div class="loading-overlay" id="loading-overlay" aria-hidden="true">
+    <div class="loading-spinner">
+      <div class="loading-icon">🌱</div>
+      <p class="loading-message" id="loading-message">GrowBot is thinking...</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       TOAST NOTIFICATIONS
+  ═══════════════════════════════════════════ -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- ═══════════════════════════════════════════
+       DIAGNOSTIC MODAL
+  ═══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="diagnostic-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-label="Plant diagnostician">
+      <div id="diagnostic-ui"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <span>Built by Pradeep Jain · Pradeep's Sandbox</span>
+    <span class="footer-sep">·</span>
+    <span>Plant data: 344 species · Climate: Open-Meteo ERA5</span>
+    <span class="footer-sep">·</span>
+    <span class="gemini-badge">AI: Gemini 2.5 Flash</span>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT (load order matters)
+  ═══════════════════════════════════════════ -->
+  <script src="js/utils.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/api-nominatim.js"></script>
+  <script src="js/api-weather.js"></script>
+  <script src="js/api-gemini.js"></script>
+  <script src="js/ui-location.js"></script>
+  <script src="js/ui-season.js"></script>
+  <script src="js/ui-plant-picker.js"></script>
+  <script src="js/ui-pre-planting.js"></script>
+  <script src="js/ui-planting.js"></script>
+  <script src="js/ui-plant-visual.js"></script>
+  <script src="js/ui-scores.js"></script>
+  <script src="js/ui-timeline.js"></script>
+  <script src="js/ui-diagnostic.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

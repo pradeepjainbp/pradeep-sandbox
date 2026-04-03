@@ -1,0 +1,44 @@
+Diagnose this plant issue:
+
+Plant: {{PLANT_NAME}}
+Growth stage: {{CURRENT_STAGE}}
+Reported symptoms: {{SYMPTOMS}}
+Current scores: {{CURRENT_SCORES}}
+Recent care decisions: {{RECENT_DECISIONS}}
+
+Use differential diagnosis: consider the most likely cause first, then alternatives. Factor in the care history — user decisions may have caused the issue.
+
+Respond with this exact JSON structure:
+{
+  "diagnosis": {
+    "primary": {
+      "condition": "string — e.g., 'Nitrogen Deficiency'",
+      "confidence": "number 0.0-1.0",
+      "category": "string — 'nutrient' | 'pest' | 'disease' | 'environmental' | 'care_error'",
+      "description": "string — 50 words max explaining what it is",
+      "why": "string — 40 words max connecting symptoms to cause",
+      "caused_by_user_decision": "boolean — true if likely caused by a past decision"
+    },
+    "alternatives": [
+      {
+        "condition": "string",
+        "confidence": "number 0.0-1.0",
+        "why": "string — 25 words max"
+      }
+    ]
+  },
+  "treatment": {
+    "immediate_action": "string — 40 words max",
+    "long_term_fix": "string — 40 words max",
+    "recovery_time_days": "integer",
+    "score_adjustments": {
+      "soil_health": "integer — expected delta after treatment",
+      "plant_vitality": "integer — expected delta",
+      "ecosystem": "integer — expected delta"
+    }
+  },
+  "prevention": {
+    "tip": "string — 40 words max on preventing recurrence",
+    "related_decision": "string — which future decision to pay attention to"
+  }
+}

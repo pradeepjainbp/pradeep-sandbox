@@ -1,0 +1,57 @@
+Generate growing guidance for Stage {{CURRENT_STAGE}} of {{PLANT_NAME}} ({{PLANT_CATEGORY}}).
+
+Location: {{LOCATION_PROFILE}}
+Current scores: {{CURRENT_SCORES}}
+Past decisions: {{DECISIONS_HISTORY}}
+
+Provide the stage guide with 3-5 decisions the user needs to make, each with 2-3 options that have different effects on scores. Make the decisions educational and realistic for this plant and location.
+
+Respond with this exact JSON structure:
+{
+  "stage": {
+    "number": "integer 1-6",
+    "name": "string",
+    "description": "string — 50 words max describing this stage",
+    "duration_days": "integer — typical duration",
+    "visual_state": {
+      "plant_height_pct": "integer 0-100 — % of full height",
+      "leaf_count": "string — 'none' | 'few' | 'moderate' | 'full' | 'declining'",
+      "leaf_color": "string — CSS hex color value",
+      "has_flowers": "boolean",
+      "has_fruit": "boolean",
+      "stem_thickness": "string — 'seedling' | 'thin' | 'moderate' | 'thick'",
+      "soil_condition": "string — 'dry' | 'moist' | 'wet' | 'waterlogged'"
+    }
+  },
+  "decisions": [
+    {
+      "id": "string — unique ID like 'preplant_compost'",
+      "title": "string — e.g., 'Add Compost?'",
+      "description": "string — 40 words max explaining the decision",
+      "options": [
+        {
+          "id": "string — e.g., 'compost_yes'",
+          "label": "string — e.g., 'Yes, add compost'",
+          "effects": {
+            "soil_health": "integer delta -20 to +20",
+            "plant_vitality": "integer delta -20 to +20",
+            "water_balance": "integer delta -20 to +20",
+            "ecosystem": "integer delta -20 to +20"
+          },
+          "why": "string — 30 words max explaining the effect",
+          "cost_indicator": "string — 'free' | 'low' | 'medium' | 'high'"
+        }
+      ]
+    }
+  ],
+  "care_tips": [
+    {
+      "tip": "string — 40 words max",
+      "category": "string — 'watering' | 'nutrition' | 'pest' | 'pruning' | 'general'"
+    }
+  ],
+  "upcoming_alert": {
+    "type": "string — 'none' | 'pest_risk' | 'weather' | 'nutrient' | 'timing'",
+    "message": "string — 30 words max, or empty string if type is 'none'"
+  }
+}

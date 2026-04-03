@@ -1,0 +1,19 @@
+Given this location profile:
+{{LOCATION_PROFILE}}
+
+Suggest the top 8 plants to grow at this location in the selected month. Include a mix of vegetables, fruits, herbs, and flowers. Prioritize plants that are locally popular and well-suited to conditions.
+
+Respond with this exact JSON structure:
+{
+  "suggestions": [
+    {
+      "name": "string — common English plant name",
+      "scientific": "string — scientific name",
+      "category": "string — e.g. 'Vegetable', 'Fruit', 'Herb'",
+      "score": "integer 0-100",
+      "color": "string — hex color matching the score (#22c55e for high, #ef4444 for low)",
+      "why": "string — 30 words max explaining why it suits this location",
+      "difficulty": "string — 'beginner' | 'intermediate' | 'advanced'"
+    }
+  ]
+}

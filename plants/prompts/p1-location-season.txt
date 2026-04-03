@@ -1,0 +1,55 @@
+Analyze this location for plant growing:
+
+Location: {{LOCATION_NAME}}, {{COUNTRY}}
+Coordinates: {{LAT}}, {{LON}}
+Selected planting month: {{MONTH}}
+
+Climate data (12 monthly averages):
+{{CLIMATE_DATA}}
+
+Provide a complete location growing profile. Infer the soil type from the geographic location (you know typical soil profiles for most regions — e.g., Bangalore has red laterite soil, Indo-Gangetic plains have alluvial soil, etc.). If you're not confident about the soil, set soil_confidence to a low value.
+
+Respond with this exact JSON structure:
+{
+  "location_profile": {
+    "name": "string — location display name",
+    "climate_zone": "string — e.g., 'Tropical Wet', 'Semi-Arid', 'Temperate Continental'",
+    "hardiness_zone": "string — USDA equivalent, e.g., '11a' or 'unknown'",
+    "growing_season": {
+      "type": "string — 'year-round' | 'kharif-rabi-zaid' | 'spring-fall' | 'monsoon-based'",
+      "current_season": "string — season name for selected month",
+      "months_remaining": "integer — months left in current season",
+      "best_months": [3, 4, 10, 11]
+    },
+    "climate_summary": {
+      "annual_rainfall_mm": "integer",
+      "avg_temp_selected_month_c": "number",
+      "min_temp_coldest_month_c": "number",
+      "max_temp_hottest_month_c": "number",
+      "humidity_selected_month_pct": "integer",
+      "frost_risk": "boolean",
+      "monsoon_months": [6, 7, 8, 9]
+    }
+  },
+  "soil_profile": {
+    "type": "string — e.g., 'Red Laterite', 'Alluvial', 'Black Cotton', 'Sandy Loam'",
+    "pH_range": { "min": 5.5, "max": 6.5 },
+    "texture": "string — 'sandy' | 'loamy' | 'clayey' | 'silty' | 'laterite'",
+    "drainage": "string — 'well-drained' | 'moderate' | 'poor'",
+    "organic_matter": "string — 'low' | 'medium' | 'high'",
+    "fertility": "string — 'low' | 'medium' | 'high'",
+    "typical_deficiencies": ["nitrogen", "phosphorus"],
+    "soil_confidence": 0.8,
+    "why": "string — 40 words max explaining the soil inference"
+  },
+  "initial_scores": {
+    "soil_health": "integer 0-100 — based on natural soil quality for the region",
+    "water_balance": "integer 0-100 — based on current month rainfall vs evaporation",
+    "ecosystem": 50
+  },
+  "recommendations": {
+    "general_advice": "string — 60 words max of practical advice for this location/season",
+    "watch_out_for": ["string — key challenge 1", "string — key challenge 2"],
+    "ideal_for": ["string — what grows well here this season"]
+  }
+}
