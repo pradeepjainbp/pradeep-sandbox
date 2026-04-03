@@ -358,6 +358,7 @@ const PlantPickerUI = (() => {
 
     } catch (err) {
       hideLoading();
+      console.error('suggestPlants error:', err);
       showToast('GrowBot had trouble — please try again', 'error');
     }
   }

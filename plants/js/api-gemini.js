@@ -61,11 +61,18 @@ const GeminiAPI = (() => {
       return SimState.geminiCache[cacheKey];
     }
 
-    // Load templates
-    const [systemPrompt, promptTemplate] = await Promise.all([
-      loadPrompt('system-prompt'),
-      loadPrompt(promptId),
-    ]);
+    let systemPrompt, promptTemplate;
+    try {
+      [systemPrompt, promptTemplate] = await Promise.all([
+        loadPrompt('system-prompt'),
+        loadPrompt(promptId),
+      ]);
+    } catch (err) {
+      SimState.isLoading = false;
+      console.error(`Failed to load prompt "${promptId}":`, err);
+      showToast('GrowBot had trouble thinking — please try again', 'error');
+      return null;
+    }
 
     const prompt = interpolate(promptTemplate, variables);
 
