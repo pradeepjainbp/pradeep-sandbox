@@ -16,7 +16,7 @@ const GeminiAPI = (() => {
   const WORKER_URL = 'https://growbot-gemini-proxy.pradeepjainbp.workers.dev';
 
   const MAX_RETRIES = 2;
-  const TIMEOUT_MS  = 15000;
+  const TIMEOUT_MS  = 30000;
 
   // In-memory prompt cache (so .txt files are only fetched once)
   const promptCache = {};

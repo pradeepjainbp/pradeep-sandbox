@@ -341,7 +341,7 @@ const PlantPickerUI = (() => {
       // Annotate plants with suitability scores
       p2.suggestions.forEach(sug => {
         const match = allPlants.find(p =>
-          p.name_en.toLowerCase() === sug.name.toLowerCase()
+          p.name_en && p.name_en.toLowerCase() === sug.name.toLowerCase()
         );
         if (match) match._suitabilityScore = sug.score;
       });
@@ -351,7 +351,7 @@ const PlantPickerUI = (() => {
       if (input) input.value = '';
 
       const suggested = p2.suggestions
-        .map(sug => allPlants.find(p => p.name_en.toLowerCase() === sug.name.toLowerCase()))
+        .map(sug => allPlants.find(p => p.name_en && p.name_en.toLowerCase() === sug.name.toLowerCase()))
         .filter(Boolean);
 
       renderResults(suggested.length ? suggested : filteredPlants.slice(0, 20));
