@@ -89,9 +89,6 @@ const GeminiAPI = (() => {
         topK:             40,
         maxOutputTokens:  8192,
         responseMimeType: 'application/json',
-        thinkingConfig: {
-          thinkingBudget: 0,   // disable extended thinking — not needed for structured JSON
-        },
       }
     };
 
