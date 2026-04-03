@@ -80,7 +80,7 @@ const GeminiAPI = (() => {
         temperature:      0.3,
         topP:             0.8,
         topK:             40,
-        maxOutputTokens:  2048,
+        maxOutputTokens:  4096,
         responseMimeType: 'application/json',
       }
     };
@@ -115,8 +115,11 @@ const GeminiAPI = (() => {
 
         if (!text) throw new Error('Empty response from Gemini');
 
+        // Strip markdown code fences Gemini sometimes adds despite responseMimeType
+        const cleanText = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+
         // Parse and validate
-        const parsed = JSON.parse(text);
+        const parsed = JSON.parse(cleanText);
         validateTopLevelKeys(promptId, parsed);
 
         // Cache successful result
