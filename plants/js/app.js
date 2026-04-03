@@ -200,10 +200,21 @@ const App = (() => {
     if (btn) btn.disabled = !enabled;
   }
 
+  // ─── Clickable progress steps (completed = go back) ──
+  function wireProgressSteps() {
+    document.querySelectorAll('.progress-steps .step').forEach(el => {
+      el.addEventListener('click', () => {
+        const target = parseInt(el.dataset.stage, 10);
+        if (target < currentStage) goToStage(target);
+      });
+    });
+  }
+
   // ─── Init ─────────────────────────────────────────────
   function init() {
     updateProgress();
     wireNavButtons();
+    wireProgressSteps();
     onStageEnter(1);
   }
 

@@ -273,6 +273,15 @@ body {
   color: var(--accent);
 }
 
+.step.completed {
+  cursor: pointer;
+}
+
+.step.completed:hover .step-dot {
+  box-shadow: 0 0 0 3px rgba(45,138,78,0.2);
+  transform: scale(1.1);
+}
+
 /* ─── Main Stage Area ────────────────────────────────── */
 .sim-main {
   grid-area: main;

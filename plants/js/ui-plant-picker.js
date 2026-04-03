@@ -19,6 +19,23 @@ const PlantPickerUI = (() => {
 
   const CATEGORIES = ['All','Vegetable','Fruit','Flower','Tree','Indoor Plant','Herb','Spice','Cash Crop','Grain','Pulse'];
 
+  const CATEGORY_EMOJI = {
+    'Vegetable':    '🥬',
+    'Fruit':        '🍎',
+    'Flower':       '🌸',
+    'Tree':         '🌳',
+    'Indoor Plant': '🪴',
+    'Herb':         '🌿',
+    'Spice':        '🌶️',
+    'Cash Crop':    '🌾',
+    'Grain':        '🌾',
+    'Pulse':        '🫘',
+  };
+
+  function plantEmoji(p) {
+    return CATEGORY_EMOJI[p.category] || '🌿';
+  }
+
   // Score color thresholds
   const SCORE_COLOR = (s) =>
     s >= 80 ? '#22c55e' :
@@ -134,7 +151,7 @@ const PlantPickerUI = (() => {
     if (query.length >= 1) {
       list = list.filter(p => {
         const haystack = [
-          p.name_en, p.name_hi, p.name_kn, p.name_ta, p.name_te, p.name_mr,
+          p.common_en, p.common_hi, p.common_kn, p.common_ta, p.common_te, p.common_mr,
           p.scientific, p.category, ...(p.tags || [])
         ].filter(Boolean).join(' ').toLowerCase();
         return haystack.includes(query);
@@ -163,13 +180,13 @@ const PlantPickerUI = (() => {
         </div>
       ` : '';
 
-      const localName = p.name_hi || p.name_kn || '';
+      const localName = p.common_hi || p.common_kn || p.common_ta || '';
 
       return `
-        <div class="plant-result-item" data-id="${p.id}" tabindex="0" role="button" aria-label="Select ${p.name_en}">
-          <div class="plant-result-emoji">${p.emoji || '🌿'}</div>
+        <div class="plant-result-item" data-id="${p.id}" tabindex="0" role="button" aria-label="Select ${p.common_en}">
+          <div class="plant-result-emoji">${plantEmoji(p)}</div>
           <div class="plant-result-info">
-            <div class="plant-result-name">${escapeHtml(p.name_en)}</div>
+            <div class="plant-result-name">${escapeHtml(p.common_en)}</div>
             ${localName ? `<div class="plant-result-local">${escapeHtml(localName)}</div>` : ''}
             <div class="plant-result-sci">${escapeHtml(p.scientific || '')}</div>
           </div>
@@ -201,18 +218,18 @@ const PlantPickerUI = (() => {
 
     // Save to SimState
     SimState.plant.id         = plant.id;
-    SimState.plant.name       = plant.name_en;
+    SimState.plant.name       = plant.common_en;
     SimState.plant.scientific = plant.scientific || '';
     SimState.plant.category   = plant.category;
-    SimState.plant.emoji      = plant.emoji || '🌿';
+    SimState.plant.emoji      = plantEmoji(plant);
 
     // Call P2 via Gemini
     try {
-      showLoading(`GrowBot is checking if ${plant.name_en} will thrive here...`);
+      showLoading(`GrowBot is checking if ${plant.common_en} will thrive here...`);
       const p2 = await GeminiAPI.callGemini('p2-plant-match-score', {
         LOCATION_PROFILE: JSON.stringify(SimState.location.locationProfile),
-        PLANT_NAME:       plant.name_en,
-        PLANT_SCIENTIFIC: plant.scientific || plant.name_en,
+        PLANT_NAME:       plant.common_en,
+        PLANT_SCIENTIFIC: plant.scientific || plant.common_en,
         PLANT_CATEGORY:   plant.category,
       });
 
@@ -247,7 +264,7 @@ const PlantPickerUI = (() => {
       <div class="suit-card-header">
         <span class="suit-emoji">${plant.emoji || '🌿'}</span>
         <div>
-          <div class="suit-plant-name">${escapeHtml(plant.name_en)}</div>
+          <div class="suit-plant-name">${escapeHtml(plant.common_en)}</div>
           <div class="suit-plant-sci">${escapeHtml(plant.scientific || '')}</div>
         </div>
         <div class="suit-grade-badge" style="background:${s.color || SCORE_COLOR(s.score)}">
@@ -300,7 +317,7 @@ const PlantPickerUI = (() => {
     card.querySelectorAll('.suit-alt-item').forEach(el => {
       el.addEventListener('click', () => {
         const name = el.dataset.name;
-        const match = allPlants.find(p => p.name_en.toLowerCase() === name.toLowerCase());
+        const match = allPlants.find(p => p.common_en && p.common_en.toLowerCase() === name.toLowerCase());
         if (match) {
           const input = document.getElementById('plant-input');
           if (input) { input.value = name; applyFilters(); }
@@ -341,7 +358,7 @@ const PlantPickerUI = (() => {
       // Annotate plants with suitability scores
       p2.suggestions.forEach(sug => {
         const match = allPlants.find(p =>
-          p.name_en && p.name_en.toLowerCase() === sug.name.toLowerCase()
+          p.common_en && p.common_en.toLowerCase() === sug.name.toLowerCase()
         );
         if (match) match._suitabilityScore = sug.score;
       });
@@ -351,7 +368,7 @@ const PlantPickerUI = (() => {
       if (input) input.value = '';
 
       const suggested = p2.suggestions
-        .map(sug => allPlants.find(p => p.name_en && p.name_en.toLowerCase() === sug.name.toLowerCase()))
+        .map(sug => allPlants.find(p => p.common_en && p.common_en.toLowerCase() === sug.name.toLowerCase()))
         .filter(Boolean);
 
       renderResults(suggested.length ? suggested : filteredPlants.slice(0, 20));
