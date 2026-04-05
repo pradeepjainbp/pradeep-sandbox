@@ -628,3 +628,22 @@
   .lang-ring, .lang-inner { width: 76px; height: 76px; }
   .lang-inner { width: 55px; height: 55px; }
 }
+
+@media (max-width: 360px) {
+  .about-wrap        { padding: 32px 16px 0; }
+  .about-name        { font-size: 34px; letter-spacing: -1px; }
+  .about-stat-card   { padding: 24px 16px; }
+  .about-stat-num    { font-size: 30px; }
+  .about-viz-card    { padding: 20px 16px; }
+  /* CTA strip: match reduced padding so negative margin stays flush */
+  .about-cta-strip   { margin: 20px -16px 0; padding: 32px 16px; }
+  /* Language rings: wrap to 2-per-row on tiny screens */
+  .lang-rings        { flex-wrap: wrap; justify-content: center; gap: 16px; }
+  .lang-ring         { width: 72px; height: 72px; }
+  .lang-inner        { width: 52px; height: 52px; }
+  .lang-val          { font-size: 12px; }
+  /* Life grid: single col on tiny */
+  .life-grid         { grid-template-columns: 1fr; }
+  /* Pills: tighten */
+  .about-pill        { padding: 9px 16px; font-size: 12px; }
+}

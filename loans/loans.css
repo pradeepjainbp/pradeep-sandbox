@@ -176,3 +176,27 @@
   .lt-field-row { grid-template-columns: 1fr; }
   .lt-modal-box { padding: 24px; }
 }
+
+@media (max-width: 480px) {
+  .lt-landing     { padding: 28px 16px 56px; }
+  .lt-cta-section { padding: 32px 20px; }
+  .lt-cta-title   { font-size: 22px; }
+  /* App title bar: stack name + user block vertically */
+  .lt-app-title-bar   { flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px; }
+  .lt-app-user-block  { text-align: left; }
+  /* Summary and loan list: tighten padding */
+  .lt-summary-section { padding: 16px; }
+  .lt-loan-list       { padding: 0 16px; }
+  .lt-recent-header   { padding: 0 16px; }
+  /* Dash cards: remove min-width so they fill the column */
+  .lt-dash-card       { min-width: unset; }
+  .lt-dash-card-val   { font-size: 22px; }
+  /* Modal: tighten on tiny screens */
+  .lt-modal-box       { padding: 20px 16px; margin: 0 8px; }
+}
+
+@media (max-width: 360px) {
+  .lt-hero-title  { font-size: 28px; }
+  .lt-hero-sub    { font-size: 14px; }
+  .lt-google-btn  { font-size: 13px; padding: 10px 18px; }
+}

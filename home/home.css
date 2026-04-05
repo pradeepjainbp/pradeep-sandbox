@@ -462,7 +462,21 @@
 }
 
 @media (max-width: 480px) {
-  .home-hero     { padding: 40px 20px; }
+  .home-hero       { padding: 40px 20px; }
   .home-hero-stats { gap: 16px; }
-  .hs-num        { font-size: 26px; }
+  .hs-num          { font-size: 26px; }
+  /* Terminal: cap height so it doesn't dominate on stacked layout */
+  .home-terminal   { max-height: 340px; overflow: hidden; }
+  .ht-body         { gap: 8px; }
+}
+
+@media (max-width: 360px) {
+  .home-hero       { padding: 32px 16px; }
+  .home-projects-section { padding: 36px 16px 0; }
+  .home-ideas-section    { padding: 32px 16px 48px; }
+  /* Wrap hero stats so they don't overflow tiny screens */
+  .home-hero-stats { flex-wrap: wrap; gap: 10px; }
+  .hs-divider      { display: none; }
+  .hs-num          { font-size: 24px; }
+  .home-title      { letter-spacing: -2px; }
 }
