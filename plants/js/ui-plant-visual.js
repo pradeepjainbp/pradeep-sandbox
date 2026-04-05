@@ -23,6 +23,7 @@ const PlantVisualUI = (() => {
   // ─── Growth stage → plant state ──────────────────────
   const STAGE_MAP = {
     'none':        { stemH: '0%',   leafVis: 0,   flowers: false, fruits: false, thickness: '3px' },
+    'seed':        { stemH: '2%',   leafVis: 0,   flowers: false, fruits: false, thickness: '2px' },
     'planting':    { stemH: '5%',   leafVis: 0,   flowers: false, fruits: false, thickness: '3px' },
     'sprouting':   { stemH: '18%',  leafVis: 0.4, flowers: false, fruits: false, thickness: '3px' },
     'vegetative':  { stemH: '55%',  leafVis: 1,   flowers: false, fruits: false, thickness: '5px' },
@@ -154,8 +155,16 @@ const PlantVisualUI = (() => {
   // ─── Helpers ──────────────────────────────────────────
   function capitalize(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
 
+  // ─── Stage advance burst ──────────────────────────────
+  function triggerGrowBurst() {
+    const container = getContainer();
+    if (!container) return;
+    container.classList.add('stage-advancing');
+    setTimeout(() => container.classList.remove('stage-advancing'), 800);
+  }
+
   // ─── Public API ───────────────────────────────────────
-  return { init, update, setStage, setStageByIndex, applyStageVisual };
+  return { init, update, setStage, setStageByIndex, applyStageVisual, triggerGrowBurst };
 
 })();
 

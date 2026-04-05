@@ -39,7 +39,9 @@ Respond with this exact JSON structure:
             "ecosystem": "integer delta -20 to +20"
           },
           "why": "string — 30 words max explaining the effect",
-          "cost_indicator": "string — 'free' | 'low' | 'medium' | 'high'"
+          "cost_indicator": "string — 'free' | 'low' | 'medium' | 'high'",
+          "cost_rupees": "integer — actual rupee cost (0 if free/DIY). Use realistic Indian market prices.",
+          "cost_label": "string — e.g., 'Organic compost 5kg — ₹500' or 'Free (kitchen waste)'"
         }
       ]
     }
@@ -53,5 +55,6 @@ Respond with this exact JSON structure:
   "upcoming_alert": {
     "type": "string — 'none' | 'pest_risk' | 'weather' | 'nutrient' | 'timing'",
     "message": "string — 30 words max, or empty string if type is 'none'"
-  }
+  },
+  "harvest_economics": "null for all stages except Stage 6. For Stage 6 (Harvest), include: { \"yield_amount\": float, \"yield_unit\": \"string — 'kg' | 'g' | 'bunch' | 'pieces'\", \"market_price_per_unit\": integer (₹), \"market_price_label\": \"string — e.g. '₹8 per 100g at local mandi'\", \"gross_revenue\": integer, \"quality_label\": \"string — 'Poor' | 'Average' | 'Good' | 'Excellent'\", \"farmer_insight\": \"string — 60 words max: the real economic lesson from this crop\" }"
 }

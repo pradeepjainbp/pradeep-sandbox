@@ -6,6 +6,36 @@
 
 'use strict';
 
+// ─── Budget by plant category ─────────────────────────────
+const BUDGET_BY_CATEGORY = {
+  'Herb':              800,
+  'Leafy Vegetable':   800,
+  'Vegetable':        1500,
+  'Fruit':            2500,
+  'Flower':           1200,
+  'Spice':            2000,
+  'Cash Crop':        4000,
+  'Grain':            4000,
+  'Pulse':            4000,
+  'Tree':             6000,
+  'Fruit Tree':       6000,
+  'Indoor Plant':      600,
+};
+
+// Default for unknown categories
+const DEFAULT_BUDGET = 1500;
+
+function getBudgetForPlant(category) {
+  if (!category) return DEFAULT_BUDGET;
+  // Try exact match first, then partial match
+  if (BUDGET_BY_CATEGORY[category]) return BUDGET_BY_CATEGORY[category];
+  const key = Object.keys(BUDGET_BY_CATEGORY).find(k =>
+    category.toLowerCase().includes(k.toLowerCase()) ||
+    k.toLowerCase().includes(category.toLowerCase())
+  );
+  return key ? BUDGET_BY_CATEGORY[key] : DEFAULT_BUDGET;
+}
+
 // ─── SimState ─────────────────────────────────────────────
 const SimState = {
 
@@ -56,6 +86,18 @@ const SimState = {
 
   // Gemini response cache
   geminiCache: {},           // keyed by prompt hash
+
+  // Wallet / economy
+  wallet: {
+    startingBudget: 0,     // set on plant selection from BUDGET_BY_CATEGORY
+    balance:        0,     // current balance (decreases as money is spent)
+    totalSpent:     0,
+    transactions:   [],    // [{label, amount, stage, timestamp}]
+    estimatedYield: null,  // from harvest stage
+    marketPrice:    null,  // ₹ per unit
+    grossRevenue:   null,
+    harvestEconomics: null, // full P3 harvest_economics object
+  },
 
   // UI state
   isLoading: false,
@@ -144,6 +186,33 @@ function computeGrade() {
     avg >= 40 ? 'Poor' : 'Failed';
 
   return { avg, grade, label };
+}
+
+// ─── Wallet helpers ───────────────────────────────────────
+function initWallet(category) {
+  const budget = getBudgetForPlant(category);
+  SimState.wallet.startingBudget = budget;
+  SimState.wallet.balance        = budget;
+  SimState.wallet.totalSpent     = 0;
+  SimState.wallet.transactions   = [];
+  SimState.wallet.estimatedYield = null;
+  SimState.wallet.marketPrice    = null;
+  SimState.wallet.grossRevenue   = null;
+  SimState.wallet.harvestEconomics = null;
+  if (typeof WalletUI !== 'undefined') WalletUI.init(budget);
+}
+
+function spendMoney(amount, label, stage) {
+  if (!amount || amount <= 0) return;
+  SimState.wallet.balance    -= amount;
+  SimState.wallet.totalSpent += amount;
+  SimState.wallet.transactions.push({
+    label,
+    amount,
+    stage: stage || SimState.currentGrowthStage,
+    timestamp: Date.now(),
+  });
+  if (typeof WalletUI !== 'undefined') WalletUI.render(amount);
 }
 
 // ─── Helpers ──────────────────────────────────────────────

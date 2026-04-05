@@ -58,20 +58,23 @@ function hideLoading() {
 }
 
 // ─── Toast notifications ──────────────────────────────────
-function showToast(message, type = 'default') {
+function showToast(message, type = 'default', duration = 3000) {
   const container = document.getElementById('toast-container');
   if (!container) return;
 
+  const typeClass = type === 'error'   ? 'toast-error'   :
+                    type === 'success' ? 'toast-success' :
+                    type === 'info'    ? 'toast-info'    : '';
+
   const toast = document.createElement('div');
-  toast.className = `toast ${type === 'error' ? 'toast-error' : type === 'success' ? 'toast-success' : ''}`;
+  toast.className = `toast ${typeClass}`;
   toast.textContent = message;
   container.appendChild(toast);
 
-  // Auto-remove after 3s
   setTimeout(() => {
     toast.classList.add('toast-out');
     setTimeout(() => toast.remove(), 350);
-  }, 3000);
+  }, duration);
 }
 
 // ─── Capitalize first letter ──────────────────────────────

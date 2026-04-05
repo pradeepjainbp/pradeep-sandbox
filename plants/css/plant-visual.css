@@ -191,10 +191,39 @@
   75%       { transform: rotate(-1.5deg); }
 }
 
+/* Thriving: lush leaves, soft glow on stem */
+.plant-container.vitality-high .leaf {
+  filter: saturate(1.3) brightness(1.08);
+}
+.plant-container.vitality-high .stem {
+  filter: drop-shadow(0 0 6px rgba(45,138,78,0.35));
+}
+
 /* ─── Wilting override for critical state ────────────── */
 .plant-container.vitality-critical .stem {
   transform: rotate(8deg);
   transform-origin: bottom center;
+}
+
+/* Stressed leaves droop and wilt */
+.plant-container.vitality-critical .leaf {
+  animation: wilt-droop 2s ease-in-out infinite alternate;
+}
+
+@keyframes wilt-droop {
+  from { filter: saturate(0.6); }
+  to   { filter: saturate(0.3) brightness(0.85); }
+}
+
+/* ─── Stage advance burst animation ─────────────────── */
+@keyframes growBurst {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.09); }
+  100% { transform: scale(1); }
+}
+
+.plant-container.stage-advancing {
+  animation: growBurst 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 /* ─── Stage: seed bump ───────────────────────────────── */

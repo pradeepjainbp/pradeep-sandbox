@@ -31,6 +31,17 @@
         <p class="header-subtitle">Learn to grow anything, anywhere</p>
       </div>
     </div>
+    <div class="wallet-widget" id="wallet-widget" style="display:none">
+      <div class="wallet-icon">💰</div>
+      <div class="wallet-body">
+        <div class="wallet-amount" id="wallet-amount">₹0</div>
+        <div class="wallet-label">budget left</div>
+      </div>
+      <div class="wallet-bar-wrap">
+        <div class="wallet-bar-fill" id="wallet-bar-fill"></div>
+      </div>
+    </div>
+
     <div class="header-badge">
       <span class="badge-dot"></span>
       Powered by Gemini
@@ -290,6 +301,7 @@
   ═══════════════════════════════════════════ -->
   <script src="js/utils.js"></script>
   <script src="js/state.js"></script>
+  <script src="js/ui-wallet.js"></script>
   <script src="js/api-nominatim.js"></script>
   <script src="js/api-weather.js"></script>
   <script src="js/api-gemini.js"></script>

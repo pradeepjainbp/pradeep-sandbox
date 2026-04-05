@@ -31,5 +31,6 @@ Respond with this exact JSON structure:
   "alternatives": [
     { "name": "string", "score": "integer 0-100", "why": "string 25 words max" }
   ],
-  "initial_plant_vitality": "integer 0-100 — starting vitality based on suitability match"
+  "initial_plant_vitality": "integer 0-100 — starting vitality based on suitability match",
+  "seed_cost_rupees": "integer — realistic cost in Indian rupees to buy seeds or a sapling for a home garden / container setup. E.g. methi seeds 50g = ₹30, tomato seedlings = ₹40, mango sapling = ₹250"
 }

@@ -180,10 +180,15 @@ const App = (() => {
       });
     }
 
-    // Stage 3 next — P2 already fired by PlantPickerUI; just advance
+    // Stage 3 next — P2 already fired by PlantPickerUI; init wallet, show seed purchase, then advance
     const btn3Next = document.getElementById('btn-3-next');
     if (btn3Next) {
-      btn3Next.addEventListener('click', () => goToStage(4));
+      btn3Next.addEventListener('click', () => {
+        // Init wallet before entering stage 4
+        initWallet(SimState.plant.category);
+        showSeedPurchaseToast();
+        goToStage(4);
+      });
     }
 
     // Stages 4 and 5 — enabled by their UI modules when all decisions made
@@ -192,6 +197,34 @@ const App = (() => {
 
     const btn5Next = document.getElementById('btn-5-next');
     if (btn5Next) btn5Next.addEventListener('click', () => goToStage(6));
+  }
+
+  // ─── Seed purchase notification (fires on Stage 3→4) ─
+  function showSeedPurchaseToast() {
+    const suitability = SimState.plant.suitability;
+    const seedCost    = suitability?.seed_cost_rupees;
+    const plantName   = SimState.plant.name || 'your plant';
+    const budget      = SimState.wallet.startingBudget;
+
+    if (seedCost && seedCost > 0) {
+      spendMoney(seedCost, `Seeds / sapling — ${plantName}`, 0);
+      showToast(
+        `🌱 GrowBot sourced your ${plantName} seeds — ₹${seedCost.toLocaleString('en-IN')} spent. Budget: ₹${SimState.wallet.balance.toLocaleString('en-IN')} remaining.`,
+        'info',
+        5000
+      );
+    } else {
+      showToast(
+        `💰 Your farming budget: ₹${budget.toLocaleString('en-IN')}. Every decision has a cost — spend wisely.`,
+        'info',
+        5000
+      );
+    }
+
+    // Set plant to seed visual state
+    if (typeof PlantVisualUI !== 'undefined') {
+      PlantVisualUI.setStage('seed');
+    }
   }
 
   // ─── Enable/Disable Next Button ───────────────────────

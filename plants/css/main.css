@@ -685,3 +685,303 @@ body {
   color: var(--text-muted);
   font-style: italic;
 }
+
+/* ═══════════════════════════════════════════════════════
+   WALLET WIDGET — Header budget bar
+   ═══════════════════════════════════════════════════════ */
+.wallet-widget {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  min-width: 130px;
+  transition: background 0.3s ease;
+}
+
+.wallet-widget.wallet-flash {
+  background: rgba(255,184,0,0.2);
+  border-color: rgba(255,184,0,0.4);
+}
+
+.wallet-widget.wallet-low {
+  animation: wallet-pulse-red 0.6s ease 2;
+}
+
+@keyframes wallet-pulse-red {
+  0%, 100% { background: rgba(255,255,255,0.08); }
+  50%       { background: rgba(244,67,54,0.25);  }
+}
+
+.wallet-icon { font-size: 1rem; line-height: 1; }
+
+.wallet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 56px;
+}
+
+.wallet-amount {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.wallet-label {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wallet-bar-wrap {
+  width: 40px;
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.wallet-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: #4caf50;
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+/* ─── Floating cost chip ─────────────────────────────── */
+.wallet-float-chip {
+  position: fixed;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f44336;
+  background: rgba(244,67,54,0.12);
+  border: 1px solid rgba(244,67,54,0.3);
+  border-radius: var(--radius-full);
+  padding: 3px 10px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translateX(-50%);
+  transition: transform 0.7s ease, opacity 0.7s ease;
+  white-space: nowrap;
+}
+
+/* ─── Toast info variant ─────────────────────────────── */
+.toast.toast-info {
+  background: #2d5a8e;
+  color: #fff;
+}
+
+/* ═══════════════════════════════════════════════════════
+   OPTION COST PILLS — on decision cards
+   ═══════════════════════════════════════════════════════ */
+.option-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.option-cost-pill {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cost-spend {
+  background: rgba(244,67,54,0.10);
+  color: #c62828;
+  border: 1px solid rgba(244,67,54,0.25);
+}
+
+.cost-free {
+  background: rgba(45,138,78,0.10);
+  color: #1b5e20;
+  border: 1px solid rgba(45,138,78,0.25);
+}
+
+/* ═══════════════════════════════════════════════════════
+   GROWBOT NARRATION — stage story text
+   ═══════════════════════════════════════════════════════ */
+.growbot-narration {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  background: rgba(45,138,78,0.06);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.growbot-avatar {
+  font-size: 1.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.growbot-narration p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HARVEST P&L STATEMENT
+   ═══════════════════════════════════════════════════════ */
+.harvest-report-header {
+  margin-bottom: var(--space-5);
+  text-align: center;
+}
+
+.harvest-report-title {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-1);
+}
+
+.harvest-report-meta {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.pl-statement {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  font-family: var(--font-mono);
+  margin-bottom: var(--space-4);
+}
+
+.pl-section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+.pl-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.pl-label { flex: 1; }
+
+.pl-muted { color: var(--text-muted); font-style: italic; }
+
+.pl-amount { font-weight: 700; }
+
+.pl-debit  { color: #c62828; }
+.pl-credit { color: var(--green-lush); }
+
+.pl-divider {
+  height: 1px;
+  background: var(--border);
+  margin: var(--space-2) 0;
+}
+
+.pl-total {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pl-net {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.pl-net.pl-profit {
+  background: rgba(45,138,78,0.10);
+  color: var(--green-lush);
+  border: 1.5px solid rgba(45,138,78,0.3);
+}
+
+.pl-net.pl-loss {
+  background: rgba(198,40,40,0.08);
+  color: #c62828;
+  border: 1.5px solid rgba(198,40,40,0.25);
+}
+
+.pl-scores {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.pl-score-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.harvest-grade-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.pl-grade {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--grade-color, var(--green-lush));
+}
+
+.pl-insight {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  background: rgba(255,184,0,0.08);
+  border-left: 3px solid #ffc107;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.pl-insight-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+.pl-insight p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}

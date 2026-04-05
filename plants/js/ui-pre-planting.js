@@ -93,17 +93,25 @@ const PrePlantingUI = (() => {
   function buildOptionTile(opt) {
     const effects  = opt.effects || {};
     const chips    = buildEffectChips(effects);
-    const costLabel = opt.cost_indicator ? `💰 ${capitalize(opt.cost_indicator)}` : '';
+    const rupees   = opt.cost_rupees ?? 0;
+    const costText = rupees > 0
+      ? `─₹${rupees.toLocaleString('en-IN')}`
+      : 'Free';
+    const costCls  = rupees > 0 ? 'cost-spend' : 'cost-free';
 
     return `
       <button
         class="decision-option"
         data-option="${opt.id}"
+        data-cost-rupees="${rupees}"
+        data-cost-label="${escapeHtml(opt.cost_label || opt.label)}"
         data-decision-option
       >
-        <span class="option-label">${escapeHtml(opt.label)}</span>
+        <div class="option-top">
+          <span class="option-label">${escapeHtml(opt.label)}</span>
+          <span class="option-cost-pill ${costCls}">${costText}</span>
+        </div>
         <div class="option-effects">${chips}</div>
-        ${costLabel ? `<span class="option-cost">${costLabel}</span>` : ''}
         <span class="option-why">${escapeHtml(opt.why || '')}</span>
       </button>
     `;
@@ -138,7 +146,7 @@ const PrePlantingUI = (() => {
       const option   = decision?.options.find(o => o.id === optId);
       if (!decision || !option) return;
 
-      // If this decision was already answered, reverse previous effects
+      // Reverse prior score effects if re-selecting
       if (answeredMap[decId]) {
         const prev = decision.options.find(o => o.id === answeredMap[decId]);
         if (prev?.effects) {
@@ -149,8 +157,28 @@ const PrePlantingUI = (() => {
         }
       }
 
+      // Spend money for new selection (reverse previous spend if re-selecting)
+      const prevOptId = answeredMap[decId];
+      if (prevOptId) {
+        const prev = decision.options.find(o => o.id === prevOptId);
+        const prevCost = prev?.cost_rupees ?? 0;
+        if (prevCost > 0) {
+          // Refund previous choice
+          SimState.wallet.balance    += prevCost;
+          SimState.wallet.totalSpent -= prevCost;
+          SimState.wallet.transactions.pop();
+          if (typeof WalletUI !== 'undefined') WalletUI.render(0);
+        }
+      }
+
+      const rupees = parseInt(optBtn.dataset.costRupees || '0', 10);
+      const costLbl = optBtn.dataset.costLabel || option.label;
+      spendMoney(rupees, costLbl, growthStage);
+      if (rupees > 0 && typeof WalletUI !== 'undefined') {
+        WalletUI.showFloatingCost(rupees, optBtn);
+      }
+
       // Apply new effects
-      const effects = option.effects || {};
       applyDecision(decId, optId, option);
 
       // Track answer

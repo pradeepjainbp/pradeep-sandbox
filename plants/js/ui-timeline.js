@@ -23,6 +23,18 @@ const TimelineUI = (() => {
   let stageGuideData       = null;
   let pendingEvent         = null;
 
+  // ─── Stage narrative text (GrowBot story) ─────────────
+  const STAGE_STORIES = {
+    0: (plant, loc) =>
+      `The ${plant.name} seeds are in the ground. The ${loc.current_season || 'season'} air in ${loc.name || 'your location'} carries that mix of earth and possibility. GrowBot is watching closely — the first weeks will tell us a lot.`,
+    1: (plant) =>
+      `Something is happening under the surface. Roots are reaching. The leaves you see now will determine how much energy this plant can capture. Your earlier choices are starting to compound.`,
+    2: (plant) =>
+      `The ${plant.name} is committing to its form — stems thickening, leaves spreading, roots going deep. What you do with water and nutrition now will shape everything that follows.`,
+    3: (plant) =>
+      `The ${plant.name} is at its most vulnerable and its most promising. Almost there. One wrong move — too much water, a pest unnoticed — can still derail it. Trust the process and watch carefully.`,
+  };
+
   // ─── Init ─────────────────────────────────────────────
   async function init() {
     const container = document.getElementById('timeline-ui');
@@ -64,6 +76,14 @@ const TimelineUI = (() => {
 
       stageGuideData = guide;
       SimState.stageGuide = guide;
+
+      // Save harvest economics if this is the harvest stage
+      if (guide.harvest_economics && stageIdx === TIMELINE_STAGES.length - 1) {
+        SimState.wallet.harvestEconomics = guide.harvest_economics;
+        SimState.wallet.estimatedYield   = guide.harvest_economics.yield_amount;
+        SimState.wallet.marketPrice      = guide.harvest_economics.market_price_per_unit;
+        SimState.wallet.grossRevenue     = guide.harvest_economics.gross_revenue;
+      }
 
       if (!guide) {
         detailEl.innerHTML = buildErrorHTML();
@@ -140,7 +160,19 @@ const TimelineUI = (() => {
     const { stage, decisions, care_tips } = guide;
     const answeredMap = {};
 
+    // Build location summary for narrative
+    const locSummary = buildLocationSummary();
+    const storyFn    = STAGE_STORIES[stageIdx];
+    const storyText  = storyFn ? storyFn(SimState.plant, locSummary) : '';
+
     el.innerHTML = `
+      ${storyText ? `
+        <blockquote class="growbot-narration">
+          <span class="growbot-avatar">🤖</span>
+          <p>${escapeHtml(storyText)}</p>
+        </blockquote>
+      ` : ''}
+
       <div class="tl-stage-info">
         <div class="tl-stage-title">${TIMELINE_STAGES[stageIdx].emoji} ${escapeHtml(stage.name)}</div>
         <div class="tl-stage-desc">${escapeHtml(stage.description)}</div>
@@ -178,13 +210,27 @@ const TimelineUI = (() => {
         <div class="decision-card-title">${escapeHtml(decision.title)}</div>
         <div class="decision-card-desc">${escapeHtml(decision.description)}</div>
         <div class="decision-options">
-          ${decision.options.map(opt => `
-            <button class="decision-option" data-option="${opt.id}" data-decision-option>
-              <span class="option-label">${escapeHtml(opt.label)}</span>
-              <div class="option-effects">${buildEffectChips(opt.effects || {})}</div>
-              <span class="option-why">${escapeHtml(opt.why || '')}</span>
-            </button>
-          `).join('')}
+          ${decision.options.map(opt => {
+            const rupees   = opt.cost_rupees ?? 0;
+            const costText = rupees > 0 ? `─₹${rupees.toLocaleString('en-IN')}` : 'Free';
+            const costCls  = rupees > 0 ? 'cost-spend' : 'cost-free';
+            return `
+              <button
+                class="decision-option"
+                data-option="${opt.id}"
+                data-cost-rupees="${rupees}"
+                data-cost-label="${escapeHtml(opt.cost_label || opt.label)}"
+                data-decision-option
+              >
+                <div class="option-top">
+                  <span class="option-label">${escapeHtml(opt.label)}</span>
+                  <span class="option-cost-pill ${costCls}">${costText}</span>
+                </div>
+                <div class="option-effects">${buildEffectChips(opt.effects || {})}</div>
+                <span class="option-why">${escapeHtml(opt.why || '')}</span>
+              </button>
+            `;
+          }).join('')}
         </div>
       </div>
     `;
@@ -212,13 +258,30 @@ const TimelineUI = (() => {
       const option   = decision?.options.find(o => o.id === optId);
       if (!decision || !option) return;
 
-      // Reverse prior selection
+      // Reverse prior selection (scores + wallet)
       if (answeredMap[decId]) {
         const prev = decision.options.find(o => o.id === answeredMap[decId]);
         if (prev?.effects) {
           const rev = Object.fromEntries(Object.entries(prev.effects).map(([k,v]) => [k,-v]));
           updateScores(toScoreKeys(rev));
         }
+        const prevCost = parseInt(
+          card.querySelector('.decision-option.selected')?.dataset.costRupees || '0', 10
+        );
+        if (prevCost > 0) {
+          SimState.wallet.balance    += prevCost;
+          SimState.wallet.totalSpent -= prevCost;
+          SimState.wallet.transactions.pop();
+          if (typeof WalletUI !== 'undefined') WalletUI.render(0);
+        }
+      }
+
+      // Spend money
+      const rupees  = parseInt(optBtn.dataset.costRupees || '0', 10);
+      const costLbl = optBtn.dataset.costLabel || option.label;
+      spendMoney(rupees, costLbl, SimState.currentGrowthStage);
+      if (rupees > 0 && typeof WalletUI !== 'undefined') {
+        WalletUI.showFloatingCost(rupees, optBtn);
       }
 
       applyDecision(decId, optId, option);
@@ -286,6 +349,10 @@ const TimelineUI = (() => {
   // ─── Advance to next timeline stage ───────────────────
   async function advanceTimelineStage() {
     passiveVitalityAdjustment();
+
+    // Trigger grow burst BEFORE advancing (visual payoff moment)
+    if (typeof PlantVisualUI !== 'undefined') PlantVisualUI.triggerGrowBurst();
+
     currentTimelineStage++;
     SimState.currentGrowthStage = TIMELINE_STAGES[currentTimelineStage].num;
 
@@ -387,42 +454,90 @@ const TimelineUI = (() => {
     const { avg, grade, label } = computeGrade();
     const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const monthName  = monthNames[(SimState.selectedMonth || 1) - 1];
+    const plant      = SimState.plant;
+    const loc        = SimState.location;
+    const wallet     = SimState.wallet;
+    const eco        = wallet.harvestEconomics;
 
-    // Build "what you learned" from decision history
-    const highlights = SimState.decisions.slice(-6).map(d => {
-      const totalEffect = Object.values(d.effects || {}).reduce((a,b) => a + b, 0);
-      const arrow = totalEffect > 0 ? '✅' : totalEffect < 0 ? '⚠️' : '➡️';
-      return `<li>${arrow} ${d.choice.replace(/_/g,' ')}</li>`;
-    }).join('');
+    // Build expense ledger from wallet transactions
+    const txRows = wallet.transactions.length
+      ? wallet.transactions.map(tx => `
+          <div class="pl-row pl-expense">
+            <span class="pl-label">${escapeHtml(tx.label)}</span>
+            <span class="pl-amount pl-debit">─₹${tx.amount.toLocaleString('en-IN')}</span>
+          </div>
+        `).join('')
+      : `<div class="pl-row"><span class="pl-label pl-muted">No expenses recorded</span><span></span></div>`;
+
+    // P&L numbers
+    const totalSpent   = wallet.totalSpent || 0;
+    const grossRevenue = eco?.gross_revenue ?? wallet.grossRevenue ?? 0;
+    const netResult    = grossRevenue - totalSpent;
+    const isProfit     = netResult >= 0;
+    const netCls       = isProfit ? 'pl-profit' : 'pl-loss';
+    const netPrefix    = isProfit ? '+₹' : '─₹';
+    const netAbs       = Math.abs(netResult);
+
+    // Yield info
+    const yieldText = eco
+      ? `${eco.yield_amount} ${eco.yield_unit} (${eco.quality_label || 'N/A'} quality)`
+      : 'Harvest complete';
+    const priceText = eco?.market_price_label || '';
 
     container.innerHTML = `
       <div class="harvest-summary">
-        <div class="harvest-header">
-          <div class="harvest-congrats">🎉 Harvest Complete!</div>
-          <div class="harvest-subtitle">
-            ${SimState.plant.emoji} <strong>${escapeHtml(SimState.plant.name)}</strong>
-            &nbsp;·&nbsp; 📍 ${escapeHtml(SimState.location.name)}
+        <div class="harvest-report-header">
+          <div class="harvest-report-title">🌾 HARVEST REPORT</div>
+          <div class="harvest-report-meta">
+            ${plant.emoji} <strong>${escapeHtml(plant.name)}</strong>
+            &nbsp;·&nbsp; 📍 ${escapeHtml(loc.name)}
             &nbsp;·&nbsp; 📅 ${monthName}
           </div>
         </div>
 
-        <div class="harvest-grade-card" style="--grade-color:${gradeColor(avg)}">
-          <div class="harvest-grade">${grade}</div>
-          <div class="harvest-grade-label">${label}</div>
-          <div class="harvest-score-avg">Overall: ${avg}/100</div>
+        <div class="pl-statement">
+          <div class="pl-section-label">EXPENSES</div>
+          ${txRows}
+          <div class="pl-divider"></div>
+          <div class="pl-row pl-total">
+            <span class="pl-label">Total Invested</span>
+            <span class="pl-amount pl-debit">─₹${totalSpent.toLocaleString('en-IN')}</span>
+          </div>
+
+          <div class="pl-section-label" style="margin-top:16px">YIELD</div>
+          <div class="pl-row">
+            <span class="pl-label">Harvest: ${escapeHtml(yieldText)}</span>
+          </div>
+          ${priceText ? `<div class="pl-row"><span class="pl-label pl-muted">${escapeHtml(priceText)}</span></div>` : ''}
+          <div class="pl-divider"></div>
+          <div class="pl-row pl-total">
+            <span class="pl-label">Gross Revenue</span>
+            <span class="pl-amount pl-credit">+₹${grossRevenue.toLocaleString('en-IN')}</span>
+          </div>
+
+          <div class="pl-net ${netCls}">
+            <span>NET RESULT</span>
+            <span>${netPrefix}${netAbs.toLocaleString('en-IN')} ${isProfit ? 'profit' : 'loss'}</span>
+          </div>
         </div>
 
-        <div class="harvest-scores">
-          <div class="harvest-score-item">🪨 Soil Health <strong>${SimState.scores.soilHealth}</strong></div>
-          <div class="harvest-score-item">💚 Plant Vitality <strong>${SimState.scores.plantVitality}</strong></div>
-          <div class="harvest-score-item">💧 Water Balance <strong>${SimState.scores.waterBalance}</strong></div>
-          <div class="harvest-score-item">🌍 Ecosystem <strong>${SimState.scores.ecosystem}</strong></div>
+        <div class="pl-scores">
+          <div class="pl-score-row">
+            <span>🪨 Soil ${SimState.scores.soilHealth}</span>
+            <span>💚 Vitality ${SimState.scores.plantVitality}</span>
+            <span>💧 Water ${SimState.scores.waterBalance}</span>
+            <span>🌍 Eco ${SimState.scores.ecosystem}</span>
+          </div>
+          <div class="harvest-grade-inline" style="--grade-color:${gradeColor(avg)}">
+            <strong class="pl-grade">${grade}</strong>
+            <span>${label} &nbsp;·&nbsp; Overall ${avg}/100</span>
+          </div>
         </div>
 
-        ${highlights ? `
-          <div class="harvest-learned">
-            <h3>📖 What happened</h3>
-            <ul>${highlights}</ul>
+        ${eco?.farmer_insight ? `
+          <div class="pl-insight">
+            <span class="pl-insight-icon">💡</span>
+            <p>${escapeHtml(eco.farmer_insight)}</p>
           </div>
         ` : ''}
 

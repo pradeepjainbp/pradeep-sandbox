@@ -98,13 +98,25 @@ const PlantingUI = (() => {
   }
 
   function buildOptionTile(opt) {
-    const chips    = buildEffectChips(opt.effects || {});
-    const costLabel = opt.cost_indicator ? `💰 ${capitalize(opt.cost_indicator)}` : '';
+    const chips   = buildEffectChips(opt.effects || {});
+    const rupees  = opt.cost_rupees ?? 0;
+    const costText = rupees > 0
+      ? `─₹${rupees.toLocaleString('en-IN')}`
+      : 'Free';
+    const costCls = rupees > 0 ? 'cost-spend' : 'cost-free';
     return `
-      <button class="decision-option" data-option="${opt.id}" data-decision-option>
-        <span class="option-label">${escapeHtml(opt.label)}</span>
+      <button
+        class="decision-option"
+        data-option="${opt.id}"
+        data-cost-rupees="${rupees}"
+        data-cost-label="${escapeHtml(opt.cost_label || opt.label)}"
+        data-decision-option
+      >
+        <div class="option-top">
+          <span class="option-label">${escapeHtml(opt.label)}</span>
+          <span class="option-cost-pill ${costCls}">${costText}</span>
+        </div>
         <div class="option-effects">${chips}</div>
-        ${costLabel ? `<span class="option-cost">${costLabel}</span>` : ''}
         <span class="option-why">${escapeHtml(opt.why || '')}</span>
       </button>
     `;
@@ -132,7 +144,7 @@ const PlantingUI = (() => {
       const option   = decision?.options.find(o => o.id === optId);
       if (!decision || !option) return;
 
-      // Reverse previous if re-selecting
+      // Reverse previous if re-selecting (scores + wallet)
       if (answeredMap[decId]) {
         const prev = decision.options.find(o => o.id === answeredMap[decId]);
         if (prev?.effects) {
@@ -140,6 +152,22 @@ const PlantingUI = (() => {
           for (const [k,v] of Object.entries(prev.effects)) rev[k] = -v;
           updateScores(toScoreKeys(rev));
         }
+        const prevCost = parseInt(
+          card.querySelector('.decision-option.selected')?.dataset.costRupees || '0', 10
+        );
+        if (prevCost > 0) {
+          SimState.wallet.balance    += prevCost;
+          SimState.wallet.totalSpent -= prevCost;
+          SimState.wallet.transactions.pop();
+          if (typeof WalletUI !== 'undefined') WalletUI.render(0);
+        }
+      }
+
+      const rupees  = parseInt(optBtn.dataset.costRupees || '0', 10);
+      const costLbl = optBtn.dataset.costLabel || option.label;
+      spendMoney(rupees, costLbl, GROWTH_STAGE);
+      if (rupees > 0 && typeof WalletUI !== 'undefined') {
+        WalletUI.showFloatingCost(rupees, optBtn);
       }
 
       applyDecision(decId, optId, option);
