@@ -1,6 +1,12 @@
-/* ══════════════ LOAN TRACKER - Material 3 Style ══════════════ */
+/* ══════════════ LOAN TRACKER - Material 3 Style ══════════════
+   Responsive strategy: intrinsic CSS
+   — auto-fit/minmax() for features, steps, hero, detail grids
+   — flex-wrap on title bar and dash cards
+   — clamp() for fluid type and padding
+   — 1 breakpoint remains (hide hero visual below 600px)
+*/
 
-/* Variables matching the React Native App */
+/* Variables */
 :root {
   --lt-primary: #6366F1;
   --lt-surface: #FFFFFF;
@@ -15,6 +21,7 @@
   --lt-lent: #10B981;
   --lt-borrowed: #EF4444;
   --lt-observer: #3B82F6;
+  --lt-pad: clamp(16px, 3.5vw, 32px); /* shared horizontal padding */
 }
 
 /* Base resets for the tab */
@@ -23,12 +30,26 @@
   color: var(--lt-text-main);
 }
 
-/* Landing */
-.lt-landing { padding: 48px 32px 80px; max-width: 900px; margin: 0 auto; background: var(--lt-background); }
-.lt-hero { display: grid; grid-template-columns: 1fr 240px; gap: 40px; align-items: center; margin-bottom: 64px; }
+/* ── LANDING PAGE ── */
+.lt-landing {
+  padding: clamp(32px, 4vw, 48px) var(--lt-pad) clamp(56px, 7vw, 80px);
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--lt-background);
+}
+
+/* Hero: two columns when ≥280px each fits, stacks automatically below ~600px */
+.lt-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: clamp(24px, 4vw, 40px);
+  align-items: center;
+  margin-bottom: clamp(40px, 6vw, 64px);
+}
+
 .lt-hero-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--lt-primary); margin-bottom: 16px; }
-.lt-hero-title { font-size: clamp(34px, 5vw, 52px); font-weight: 800; letter-spacing: -1px; line-height: 1.2; color: var(--lt-text-main); margin-bottom: 16px; }
-.lt-hero-sub { font-size: 16px; color: var(--lt-text-sub); max-width: 480px; line-height: 1.6; margin-bottom: 32px; }
+.lt-hero-title { font-size: clamp(28px, 5vw, 52px); font-weight: 800; letter-spacing: -1px; line-height: 1.2; color: var(--lt-text-main); margin-bottom: 16px; }
+.lt-hero-sub { font-size: clamp(14px, 2vw, 16px); color: var(--lt-text-sub); max-width: 480px; line-height: 1.6; margin-bottom: 32px; }
 
 .lt-google-btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; font-size: 15px; font-weight: 600; padding: 12px 24px; border: 1px solid var(--lt-border); border-radius: 8px; background: #fff; color: #3c4043; cursor: pointer; box-shadow: var(--lt-shadow); transition: all 0.2s; }
 .lt-google-btn:hover { background: #f8f9fa; box-shadow: var(--lt-shadow-hover); }
@@ -41,29 +62,68 @@
 .lt-hero-mini-val.lent { color: var(--lt-lent); }
 .lt-hero-mini-val.borrowed { color: var(--lt-borrowed); }
 
-.lt-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px; }
+/* Features: 3-col when wide, wraps to 2 then 1 automatically */
+.lt-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 24px;
+  margin-bottom: clamp(40px, 6vw, 64px);
+}
 .lt-feature-card { background: var(--lt-surface); border: 1px solid var(--lt-border); border-radius: var(--lt-radius); padding: 24px; box-shadow: var(--lt-shadow); }
 .lt-feature-icon { font-size: 28px; margin-bottom: 16px; display: inline-block; }
 .lt-feature-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--lt-text-main); }
 .lt-feature-desc { font-size: 14px; color: var(--lt-text-sub); line-height: 1.6; }
 
-.lt-how-section { margin-bottom: 64px; }
+.lt-how-section { margin-bottom: clamp(40px, 6vw, 64px); }
 .lt-section-label { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--lt-text-sub); margin-bottom: 32px; text-align: center; }
-.lt-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+/* Steps: 3-col when wide, wraps automatically */
+.lt-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 32px;
+}
 .lt-step { display: flex; align-items: flex-start; gap: 16px; }
 .lt-step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--lt-primary); color: white; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .lt-step-text-title { font-weight: 600; font-size: 16px; margin-bottom: 6px; color: var(--lt-text-main); }
 .lt-step-text-desc { font-size: 14px; color: var(--lt-text-sub); line-height: 1.5; }
 
-.lt-cta-section { background: var(--lt-surface); border: 1px solid var(--lt-border); border-radius: 16px; padding: 48px; text-align: center; margin-bottom: 32px; box-shadow: var(--lt-shadow); }
-.lt-cta-title { font-size: 28px; font-weight: 700; color: var(--lt-text-main); margin-bottom: 12px; }
+/* CTA section: fluid padding */
+.lt-cta-section {
+  background: var(--lt-surface);
+  border: 1px solid var(--lt-border);
+  border-radius: 16px;
+  padding: clamp(28px, 5vw, 48px);
+  text-align: center;
+  margin-bottom: 32px;
+  box-shadow: var(--lt-shadow);
+}
+.lt-cta-title { font-size: clamp(20px, 3.5vw, 28px); font-weight: 700; color: var(--lt-text-main); margin-bottom: 12px; }
 .lt-cta-sub { font-size: 16px; color: var(--lt-text-sub); margin-bottom: 32px; }
 .lt-cta-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 15px; font-weight: 600; padding: 14px 28px; border-radius: 8px; background: var(--lt-primary); color: white; border: none; cursor: pointer; transition: background 0.2s; box-shadow: var(--lt-shadow); margin-top: 10px; }
 .lt-cta-btn:hover { background: #4F46E5; }
 
-/* App view */
-.lt-app { padding: 0 0 80px; max-width: 1000px; margin: 0 auto; background: var(--lt-background); min-height: 100vh; position: relative; }
-.lt-app-title-bar { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 24px; background: var(--lt-surface); border-bottom: 1px solid var(--lt-border); }
+/* ── APP VIEW ── */
+.lt-app {
+  padding: 0 0 80px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: var(--lt-background);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Title bar: flex-wrap so it stacks gracefully on narrow screens without a breakpoint */
+.lt-app-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: clamp(14px, 2.5vw, 20px) clamp(16px, 3vw, 24px);
+  background: var(--lt-surface);
+  border-bottom: 1px solid var(--lt-border);
+}
 .lt-app-title-text { font-size: 20px; font-weight: 700; color: var(--lt-text-main); }
 .lt-app-user-block { text-align: right; }
 .lt-app-greeting { font-size: 14px; font-weight: 500; color: var(--lt-text-main); margin-bottom: 4px; }
@@ -72,9 +132,21 @@
 
 .lt-disclaimer-banner { background: #FEF08A; padding: 12px 24px; font-size: 13px; color: #854D0E; }
 
-.lt-summary-section { padding: 24px; }
+/* Summary: fluid padding */
+.lt-summary-section { padding: clamp(16px, 2.5vw, 24px); }
+
+/* Dash cards: flex-wrap with flex: 1 1 220px so they wrap naturally */
 .lt-summary-row-2 { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
-.lt-dash-card { background: var(--lt-surface); border: 1px solid var(--lt-border); border-radius: var(--lt-radius); padding: 20px; box-shadow: var(--lt-shadow); position: relative; overflow: hidden; flex: 1; min-width: 250px; }
+.lt-dash-card {
+  background: var(--lt-surface);
+  border: 1px solid var(--lt-border);
+  border-radius: var(--lt-radius);
+  padding: 20px;
+  box-shadow: var(--lt-shadow);
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 220px; /* grows/shrinks, wraps below 220px — no min-width needed */
+}
 .lt-dash-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
 .lt-dash-card.border-top-lent::before { background: var(--lt-lent); }
 .lt-dash-card.border-top-borrowed::before { background: var(--lt-borrowed); }
@@ -83,14 +155,14 @@
 .dot.lent { color: var(--lt-lent); font-size: 10px; }
 .dot.borrowed { color: var(--lt-borrowed); font-size: 10px; }
 .dot.observer { color: var(--lt-observer); font-size: 10px; }
-.lt-dash-card-val { font-size: 28px; font-weight: 700; color: var(--lt-text-main); margin-bottom: 4px; }
+.lt-dash-card-val { font-size: clamp(20px, 3.5vw, 28px); font-weight: 700; color: var(--lt-text-main); margin-bottom: 4px; }
 .lt-dash-card-sub { font-size: 13px; color: var(--lt-text-sub); }
 
-.lt-recent-header { display: flex; justify-content: space-between; align-items: center; padding: 0 24px; margin-bottom: 16px; margin-top: 8px; }
+.lt-recent-header { display: flex; justify-content: space-between; align-items: center; padding: 0 clamp(16px, 2.5vw, 24px); margin-bottom: 16px; margin-top: 8px; }
 .lt-recent-title { font-size: 16px; font-weight: 700; color: var(--lt-text-main); }
 .lt-recent-see-all { font-size: 13px; color: var(--lt-primary); font-weight: 500; text-decoration: none; }
 
-.lt-loan-list { padding: 0 24px; display: flex; flex-direction: column; gap: 12px; }
+.lt-loan-list { padding: 0 clamp(16px, 2.5vw, 24px); display: flex; flex-direction: column; gap: 12px; }
 .lt-list-item { background: var(--lt-surface); display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border: 1px solid var(--lt-border); border-radius: var(--lt-radius); cursor: pointer; transition: background 0.2s, box-shadow 0.2s; box-shadow: var(--lt-shadow); }
 .lt-list-item:hover { transform: translateY(-1px); box-shadow: var(--lt-shadow-hover); }
 .lt-list-item-left { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -116,7 +188,7 @@
 /* Modals */
 .lt-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(2px); }
 .lt-modal-overlay.open { display: flex; }
-.lt-modal-box { background: var(--lt-surface); border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 32px; position: relative; }
+.lt-modal-box { background: var(--lt-surface); border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; padding: clamp(20px, 4vw, 32px); position: relative; }
 .lt-modal-close { position: absolute; top: 16px; right: 16px; background: #F3F4F6; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; color: var(--lt-text-sub); transition: all 0.2s; }
 .lt-modal-close:hover { background: #E5E7EB; color: var(--lt-text-main); }
 .lt-modal-title { font-size: 20px; font-weight: 700; color: var(--lt-text-main); margin-bottom: 24px; }
@@ -126,11 +198,12 @@
 .lt-field label { display: block; font-size: 13px; font-weight: 600; color: var(--lt-text-main); margin-bottom: 8px; }
 .lt-field input, .lt-field select, .lt-field textarea { width: 100%; font-family: inherit; font-size: 15px; padding: 12px 14px; border: 1px solid var(--lt-border); border-radius: 8px; background: var(--lt-surface); color: var(--lt-text-main); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
 .lt-field input:focus, .lt-field select:focus, .lt-field textarea:focus { border-color: var(--lt-primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
-.lt-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+/* Field row: two columns when ≥180px each, stacks automatically on narrow modals */
+.lt-field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 16px; }
 .lt-field-hint { font-size: 12px; color: var(--lt-text-sub); margin-top: 6px; }
 
-/* Detail modal content */
-.lt-detail-header { padding: 20px; border-radius: 12px; background: #F8FAFC; border: 1px solid var(--lt-border); margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+/* Detail modal */
+.lt-detail-header { padding: 20px; border-radius: 12px; background: #F8FAFC; border: 1px solid var(--lt-border); margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
 .lt-detail-role { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
 .lt-detail-title { font-size: 20px; font-weight: 600; color: var(--lt-text-main); line-height: 1.3; }
 .lt-detail-status { font-size: 13px; color: var(--lt-text-sub); margin-top: 4px; text-transform: capitalize; }
@@ -142,7 +215,13 @@
 .lt-detail-progress-bar { flex: 1; height: 8px; background: #E5E7EB; border-radius: 100px; overflow: hidden; }
 .lt-detail-progress-fill { height: 100%; border-radius: 100px; }
 
-.lt-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+/* Detail stat grid: 2-col when wide, wraps automatically in narrow modals */
+.lt-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
 .lt-detail-stat { background: var(--lt-surface); border: 1px solid var(--lt-border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
 .lt-detail-stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--lt-text-sub); }
 .lt-detail-stat-val { font-size: 16px; font-weight: 600; color: var(--lt-text-main); }
@@ -165,38 +244,12 @@
 
 .lt-disclaimer { font-size: 12px; color: var(--lt-text-sub); text-align: center; margin-top: 32px; font-style: italic; }
 
-@media (max-width: 768px) {
-  .lt-hero { grid-template-columns: 1fr; }
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   Only 1 breakpoint remains — everything else is handled intrinsically above.
+   Hides the hero visual decorations below 600px (they're just flourish,
+   not content — content is already readable in the stacked 1-col layout).
+══════════════════════════════════════════ */
+@media (max-width: 600px) {
   .lt-hero-visual { display: none; }
-  .lt-features { grid-template-columns: 1fr; }
-  .lt-steps { grid-template-columns: 1fr; }
-  .lt-summary { grid-template-columns: 1fr; }
-  .lt-detail-grid { grid-template-columns: 1fr; }
-  .lt-landing, .lt-app { padding-left: 20px; padding-right: 20px; padding-top: 32px; }
-  .lt-field-row { grid-template-columns: 1fr; }
-  .lt-modal-box { padding: 24px; }
-}
-
-@media (max-width: 480px) {
-  .lt-landing     { padding: 28px 16px 56px; }
-  .lt-cta-section { padding: 32px 20px; }
-  .lt-cta-title   { font-size: 22px; }
-  /* App title bar: stack name + user block vertically */
-  .lt-app-title-bar   { flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px; }
-  .lt-app-user-block  { text-align: left; }
-  /* Summary and loan list: tighten padding */
-  .lt-summary-section { padding: 16px; }
-  .lt-loan-list       { padding: 0 16px; }
-  .lt-recent-header   { padding: 0 16px; }
-  /* Dash cards: remove min-width so they fill the column */
-  .lt-dash-card       { min-width: unset; }
-  .lt-dash-card-val   { font-size: 22px; }
-  /* Modal: tighten on tiny screens */
-  .lt-modal-box       { padding: 20px 16px; margin: 0 8px; }
-}
-
-@media (max-width: 360px) {
-  .lt-hero-title  { font-size: 28px; }
-  .lt-hero-sub    { font-size: 14px; }
-  .lt-google-btn  { font-size: 13px; padding: 10px 18px; }
 }
