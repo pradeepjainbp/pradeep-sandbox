@@ -73,11 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
   let tab = hash || 'home';
   let preserveHash = false;
   
-  // Handle Supabase OAuth redirects
+  // Handle Supabase OAuth redirects — forward to loans-app which owns the auth
   if (hash.includes('access_token=') || hash.includes('error=')) {
-    tab = 'loans';
-    preserveHash = true;
+    window.location.replace('loans-app/#' + hash);
+    return;
   }
-  
+
   switchTab(tab, preserveHash);
 });
