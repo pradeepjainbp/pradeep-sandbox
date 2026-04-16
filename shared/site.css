@@ -91,7 +91,7 @@ nav::-webkit-scrollbar { display: none; }
   font-family: 'Sora', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  padding: 14px 20px;
+  padding: 14px 13px;
   border: none;
   background: transparent;
   color: rgba(255,255,255,0.5);
@@ -101,7 +101,7 @@ nav::-webkit-scrollbar { display: none; }
   transition: color 0.2s;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .tab-btn .tab-icon {
@@ -126,8 +126,9 @@ nav::-webkit-scrollbar { display: none; }
 .tab-btn[data-tab="economy"].active::after  { background: #10B981; }
 .tab-btn[data-tab="loans"].active::after    { background: #2563EB; }
 .tab-btn[data-tab="plants"].active::after   { background: #4ADE80; }
-.tab-btn[data-tab="judicial"].active::after { background: #818CF8; }
 .tab-btn[data-tab="astrology"].active::after { background: #7B2FBE; }
+.tab-btn[data-tab="chethana"].active::after { background: #8BAF7C; }
+.tab-btn[data-tab="equity"].active::after   { background: #F97316; }
 
 .tab-badge {
   font-size: 10px;

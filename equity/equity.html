@@ -1,0 +1,187 @@
+<div class="equity-launch">
+  <div class="equity-ticker">
+    <span class="et-item"><span class="et-sym">NIFTY</span><span class="et-up">▲ 0.82%</span></span>
+    <span class="et-item"><span class="et-sym">SENSEX</span><span class="et-up">▲ 0.64%</span></span>
+    <span class="et-item"><span class="et-sym">BANKNIFTY</span><span class="et-down">▼ 0.21%</span></span>
+    <span class="et-item"><span class="et-sym">USD/INR</span><span class="et-up">▲ 83.42</span></span>
+  </div>
+
+  <div class="equity-icon">📊</div>
+  <div class="equity-eyebrow">Equity Research</div>
+  <h2 class="equity-title">The market, unpacked</h2>
+  <p class="equity-desc">
+    A personal research desk for Indian equities — screen, track,
+    and reason about businesses through fundamentals, charts, and
+    narrative. Built for the long view, not the ticker flash.
+  </p>
+
+  <div class="equity-pillars">
+    <div class="pillar"><span class="pillar-ico">🔍</span><span class="pillar-label">Screener</span></div>
+    <div class="pillar"><span class="pillar-ico">📈</span><span class="pillar-label">Trend view</span></div>
+    <div class="pillar"><span class="pillar-ico">📑</span><span class="pillar-label">Fundamentals</span></div>
+    <div class="pillar"><span class="pillar-ico">📝</span><span class="pillar-label">Thesis notes</span></div>
+  </div>
+
+  <div class="equity-coming">
+    <span class="equity-dot"></span>
+    Coming soon
+  </div>
+  <p class="equity-note">Personal research tool · Indian equities first</p>
+</div>
+
+<style>
+.equity-launch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 60px 24px 88px;
+  max-width: 640px;
+  margin: 32px auto;
+  gap: 16px;
+  background: #0B1220;
+  color: #E8EEF7;
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(11,18,32,0.4);
+  overflow: hidden;
+  position: relative;
+}
+
+.equity-ticker {
+  width: calc(100% + 48px);
+  margin: -60px -24px 12px;
+  padding: 10px 0;
+  background: #050A13;
+  border-bottom: 1px solid rgba(249,115,22,0.15);
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.et-item {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.74rem;
+}
+
+.et-sym {
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.12em;
+}
+
+.et-up   { color: #10B981; font-weight: 600; }
+.et-down { color: #EF4444; font-weight: 600; }
+
+.equity-icon {
+  font-size: 3.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 16px rgba(249,115,22,0.3));
+  margin-top: 14px;
+}
+
+.equity-eyebrow {
+  font-family: 'Sora', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #F97316;
+}
+
+.equity-title {
+  font-family: 'Fraunces', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+.equity-desc {
+  font-size: 0.98rem;
+  color: rgba(232,238,247,0.65);
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+.equity-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 480px;
+  margin-top: 14px;
+}
+
+.equity-pillars .pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(249,115,22,0.15);
+  border-radius: 14px;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.equity-pillars .pillar:hover {
+  transform: translateY(-2px);
+  border-color: rgba(249,115,22,0.5);
+  background: rgba(249,115,22,0.08);
+}
+
+.equity-pillars .pillar-ico { font-size: 1.4rem; }
+
+.equity-pillars .pillar-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(232,238,247,0.7);
+  letter-spacing: 0.02em;
+}
+
+.equity-coming {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 10px 18px;
+  background: rgba(249,115,22,0.12);
+  border: 1px solid rgba(249,115,22,0.3);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: #F97316;
+  font-weight: 500;
+}
+
+.equity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #F97316;
+  animation: equity-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes equity-pulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.85); }
+}
+
+.equity-note {
+  font-size: 0.75rem;
+  color: rgba(232,238,247,0.4);
+  letter-spacing: 0.05em;
+  margin-top: 6px;
+}
+
+@media (max-width: 520px) {
+  .equity-title { font-size: 1.7rem; }
+  .equity-desc { font-size: 0.92rem; }
+  .equity-pillars { grid-template-columns: repeat(2, 1fr); }
+  .equity-ticker { gap: 16px; font-size: 0.68rem; }
+  .equity-launch { padding: 48px 18px 64px; margin: 20px 12px; }
+}
+</style>
